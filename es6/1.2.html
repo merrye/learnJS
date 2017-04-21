@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		/* 
+		*	赋值的扩展	结构赋值: 可以按照一定的结构进行赋值
+		*		1.对象属性名一定要对上
+		* */
+
+		// 数组结构赋值
+		// let [a,[b,c]] = [1,[2,3]];
+		// console.log(a,b,c);
+
+		// 对象结构赋值
+		// let obj = {
+		// 	arr: [1,2],
+		// 	str: 'Merry'
+		// };
+		// let {arr,str} = obj;
+		// console.log(arr,str);
+
+		let a = 'Merry';
+		let b = 'handsome';
+		[a,b] = [b,a];
+		console.log(a,b);
+	</script>
+</body>
+</html>
