@@ -1,7 +1,7 @@
 {
     "name": "merry",
     "version": "0.0.1",
-    "description": "Hello",
+    "description": "The chapter about how to login or register or save state and delete state",
     "main": "app.js",
     "scripts":{
         "start":"node app.js"
