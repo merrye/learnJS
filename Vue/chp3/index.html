@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../js/vue.js"></script>
+</head>
+<body>
+	<!-- <span>Message: {{ msg }}</span> -->
+	<!-- <div v-html="rawHtml"></div> -->
+	<!-- <div v-bind:id="dynamicId"></div> -->
+	<!-- <span>{{ number + 1 }}</span> -->
+	<!-- <span>{{ message | capitalize('Hi',123456) }}</span> -->
+	<script>
+		// 插值
+			// 文本
+			// var vm = new Vue({
+			// 	el: 'span',
+			// 	data: {
+			// 		msg: 'This is a message‘
+			// 	}
+			// });
+
+			// 纯HTML
+			// var vm = new Vue({
+			// 	el: 'div',
+			// 	data: {
+			// 		rawHtml: '<p></p>'
+			// 	}
+			// });
+
+			// 属性
+			// var vm = new Vue({
+			// 	el: 'div',
+			// 	data: {
+			// 		dynamicId: 'aDiv'
+			// 	}
+			// });
+
+			// 使用JavaScript表达式
+			// var vue = new Vue({
+			// 	el: 'span',
+			// 	data: {
+			// 		number: 1
+			// 	}
+			// });
+
+			// 过滤器
+			// var vm = new Vue({
+			// 	el: 'span',
+			// 	data: {
+			// 		message: 'Hello World'
+			// 	},
+			// 	filters: {
+			// 		capitalize: function(value1,value2,value3){
+			// 			console.log(value1,value2,value3);
+			// 			// if(!value)return '';
+			// 			// value = value.toString();
+			// 			// return value.charAt(0).toUpperCase() + value.slice(1);
+			// 		}
+			// 	}
+			// });
+
+		// 指令
+			// 参数
+			// v-if / v-bind:href="url" / v-on:click="doSomething"
+
+			// 修饰符
+			// v-on:submit.prevent="onSubmit"
+
+		// 缩写
+			// v-bind 缩写
+			// <a v-bind:href="url"></a>	// 完整语法
+			// <a :href="url"></a>			// 缩写
+
+			// v-on 缩写
+			// <a v-on:click="doSomething"></a>	// 完整语法
+			// <a @click="doSomething"></a>			// 缩写
+	</script>
+</body>
+</html>

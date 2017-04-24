@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		li{
+			list-style: none;
+		}
+		#app{
+			width: 300px;
+			height: 190px;
+			background: rgb(243,243,243);
+			padding-top: 10px;
+		}
+		#nav{
+			width: 280px;
+			height: 60px;
+			background: rgb(204,204,204);
+			margin: 0 10px 10px;
+			text-align: center;
+			line-height: 60px;
+		}
+		#view{
+			width: 280px;
+			height: 110px;
+			margin: 10px;
+		}
+		#view div:nth-child(1){
+			width: 170px;
+			height: 80px;
+			background: rgb(204,204,204);
+			float: left;
+			margin-right: 10px;
+			padding-top: 30px;
+		}
+		#view div:nth-child(1) p{
+			width: 150px;
+			height: 35px;
+			background: rgb(153,153,153);
+			margin: 0 0 5px 10px;
+		}
+		#view div:nth-child(2){
+			width: 100px;
+			height: 110px;
+			background: rgb(204,204,204);
+			float: left;
+		}
+		#view div:nth-child(2) ul{
+			overflow: hidden;
+		}
+		#view div:nth-child(2) ul li{
+			width: 27px;
+			height: 24px;
+			background: rgb(153,153,153);
+			float: left;
+			margin: 20px 0px 0 5px;
+		}
+	</style>
+	<script src="../js/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<app-nav v-for="item in app_nav_html" v-bind:todo="item" v-bind:id="app_nav_id"></app-nav>
+		<app-view v-bind:id="app_view_id"></app-content></app-view>
+	</div>
+	<script>
+		Vue.component('app-nav',{
+			props: ['todo'],
+			template: '<div>{{ todo.text }}</div>'
+		});
+		Vue.component('app-view',{
+			template: '<div><app-sidebar></app-sidebar><app-content></app-content></div>'
+		});
+		Vue.component('app-sidebar',{
+			template: '<div><app-siderbar-pitem></app-siderbar-pitem><app-siderbar-pitem></app-siderbar-pitem></div>'
+		});
+		Vue.component('app-content',{
+			template: '<div><app-content-list></app-content-list></div>'
+		});
+		Vue.component('app-siderbar-pitem',{
+			template: '<p></p>'
+		});
+		Vue.component('app-content-list',{
+			template: '<ul><app-content-litem></app-content-litem><app-content-litem></app-content-litem><app-content-litem></app-content-litem></ul>'
+		});
+		Vue.component('app-content-litem',{
+			template: '<li></li>'
+		});
+
+		var app = new Vue({
+			el: '#app',
+			data: {
+				app_nav_html: [
+					{ text: 'Hello Vue.' }
+				],
+				app_nav_id: 'nav',
+				app_view_id: 'view'
+			}
+		});
+	</script>
+</body>
+</html>

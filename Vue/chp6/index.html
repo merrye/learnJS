@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../js/vue.js"></script>
+</head>
+<body>
+	<!-- <h1 v-if="ok">Yes</h1>
+	<h1 v-else>No</h1> -->
+	<div>
+		<template v-if="ok">
+			<h1>Title</h1>
+			<p>Paragraph 1</p>
+			<p>Paragraph 2</p>
+		</template>
+	</div>
+	<!-- <div v-if="Math.random() > 0.5">
+		Sorry
+	</div>
+	<div v-else>
+		Not sorry
+	</div> -->
+	<h1 v-show="ok">Hello!</h1>
+	<script>
+	// 条件渲染
+		// v-if
+		// var vm = new Vue({
+		// 	el: 'h1',
+		// 	data: {
+		// 		ok: false
+		// 	}
+		// });
+
+		// template v-if
+		// Vue.component('template',{
+		// 	template: '<div></div>'
+		// });
+		var vm = new Vue({
+			el: 'div',
+			data: {
+				ok: false
+			}
+		});
+
+		// v-else
+		// var vm = new Vue({
+		// 	el: 'div'
+		// });
+
+		// v-show
+		// var vm = new Vue({
+		// 	el: 'h1',
+		// 	data: {
+		// 		ok: false
+		// 	}
+		// });
+
+	// v-if vs v-show
+
+	</script>
+</body>
+</html>
