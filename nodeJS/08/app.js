@@ -20,7 +20,7 @@ app.use(session({
 }));
 app.use(function(req,res,next){
     if(!res.locals.oneData){
-        navData(req,res,(oneData)=>{
+        navData((oneData)=>{
             res.locals.oneData = oneData;
         });
     };
