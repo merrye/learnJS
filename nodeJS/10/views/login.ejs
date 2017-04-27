@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-2.2.0.min.js"></script>
+</head>
+<body>
+    <h1>登录</h1>
+    <% if(locals.login){ %>
+        已经登录
+        <a href="/logout">退出登录</a>
+    <% }else{ %>
+        <input type="text" name="user" class="user" placeholder="请输入您的账户名">
+        <input type="password" name="pwd" class="pwd" placeholder="请输入您的密码">
+        <input type="submit" class="submit">
+    <% } %>
+    <script>
+        $('.submit').click(function(){
+            $.ajax({
+                type: 'post',
+                url: '/login',
+                dataType: 'json',
+                data: {
+                    user: $('.user').val(),
+                    pwd: $('.pwd').val()
+                },
+                success: function(data){
+                    console.log(data);
+                },
+                error: function(data){
+                    // 规定返回的值不是dataType规定类型 就会触发error函数
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

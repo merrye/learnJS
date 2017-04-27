@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/js/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../ueditor/ueditor.all.min.js"> </script>
+    <script type="text/javascript" charset="utf-8" src="../ueditor/lang/zh-cn/zh-cn.js"> </script>
+</head>
+<body>
+    <form action="/admin/article" method="POST" enctype="multipart/form-data">
+        <p><span>文章标题：</span><input type="text" name="title" /></p>
+        <p><span>作者：</span><input type="text" name="author" /></p>
+        <p><span>标签：</span><input type="text" name="tag" /></p>
+        <p><span>内容：</span><textarea name="content"></textarea></p>
+        <p>封面：<input type="file" name="merry" multiple="multiple" /><input type="file" name="merrye" multiple="multiple" /></p>
+        <p><input type="submit" value="发布文章" /></p>
+    </form>
+    <script id="editor" type="text/plain" style="width: 1024px;height: 500px;"></script>
+    <p>评论区</p>
+    <ul>
+        <% for(let i in data){ %>
+            <li>
+                <a href="/article/<%= data[i].id %>.html">
+                    <div>
+                        <h5><%= data[i].title %></h5>
+                        <p><%= data[i].author %></p>
+                    </div>
+                </a>
+            </li>
+        <% } %>
+    </ul>
+    <script>
+        // 实例化编辑器
+        var ue = UE.getEditor("editor");
+
+        $('.submit').click(function(){
+            $.ajax({
+                type: 'POST',
+                url: '/admin/article',
+                dataType: 'json',
+                contentType: 'multipart/form-data',
+                data: {
+                    tag: $('.tag').val(),
+                    title: $('.title').val(),
+                    author: $('.author').val(),
+                    content: $('.content').val(),
+                    uploadImage: $('.upload').val()
+                },
+                success(data){
+                    console.log(data);
+                },
+                error(data){
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
