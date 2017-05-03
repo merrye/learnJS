@@ -6,7 +6,7 @@
 二:模块(在node中一个文件可以看作是一个模块)
 1.怎么引用	require('./1')
 	1.后缀可以省略
-	2.如果引入模块	是 模块的名字 核心模块	：1.是安装好node就有的一些模块
+	2.如果引入模块	是 模块的名字 核心模块	 1.是安装好node就有的一些模块
 											  2.node_modules这个文件夹下面
 	3.引入的路径	./ 代表当前目录		../引用
 	4.模块的加载机制：filename>filename.js>filename.json>filename.node

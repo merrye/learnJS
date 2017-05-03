@@ -1,8 +1,6 @@
 // JavaScript source code
-//安装好node就有的一个模��?
 //用来创建http服务器的
 const http = require('http');
-
 http.createServer(function (request,response) {
     //request   请求对象    浏览器请求服务器所有的内容保存在这个对象里
     //response  响应对象    服务器响应到浏览器所有的方法
