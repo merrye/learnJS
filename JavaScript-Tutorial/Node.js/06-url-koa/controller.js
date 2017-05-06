@@ -25,6 +25,13 @@ function addMapping(router, mapping){
 };
 
 function addControllers(router,dir){
+    fs.readdirSync(`${__dirname}/${dir}`).filter((f)=>{
+        return f.endsWith('.js');
+    }).forEach((f)=>{
+        console.log(`process controller: ${f}...`);
+        let mapping = require(`${__dirname}/${dir}/${f}`);
+        addMapping(router, mapping);
+    });
     // let files = fs.readdirSync(`${__dirname}/${dir}`),
     // js_files = files.filter((f)=>{
     //     return f.endsWith('.js');
@@ -35,13 +42,6 @@ function addControllers(router,dir){
     //     let mapping = require(__dirname + '/controllers/' + f);
     //     addMapping(router, mapping);
     // };
-    fs.readdirSync(`${__dirname}/${dir}`).filter((f)=>{
-        return f.endsWith('.js');
-    }).forEach((f)=>{
-        console.log(`process controller: ${f}...`);
-        let mapping = require(`${__dirname}/${dir}/${f}`);
-        addMapping(router, mapping);
-    });
 };
 
 module.exports = function(dir){
