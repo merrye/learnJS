@@ -20,7 +20,7 @@ module.exports = {
         ctx.cookies.set('name',value);
         ctx.response.redirect('/');
     },
-    'GET /signin': async(ctx,next)=>{
+    'GET /signinout': async(ctx,next)=>{
         ctx.cookies.set('name','');
         ctx.response.redirect('/signin');
     }

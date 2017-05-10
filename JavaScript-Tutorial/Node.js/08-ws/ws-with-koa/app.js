@@ -1,6 +1,6 @@
 const url = require('url'),
     ws = require('ws'),
-    Cookie = require('cookies'),
+    Cookies = require('cookies'),
     Koa = require('koa'),
     bodyparser = require('koa-bodyparser'),
     controller = require('./controller'),
@@ -21,7 +21,7 @@ app.use(async(ctx,next)=>{
 let staticFiles = require('./static-files');
 app.use(staticFiles('/static/',__dirname + '/static'));
 
-app.use(bodyparser);
+app.use(bodyparser());
 
 app.use(templating('views',{
     noCache: true,
@@ -41,12 +41,14 @@ function parseUser(obj){
     if(typeof obj === 'string'){
         s = obj;
     }else if(obj.headers){
-        let cookies = new cookies(obj,null);
-        s = cokkies.get('name');
+        let cookies = new Cookies(obj,null);
+        s = cookies.get('name');
     };
     if(s){
         try{
             let user = JSON.parse(Buffer.from(s,'base64').toString());
+            console.log(`User: ${user.name}, ID: ${user.id}`);
+            return user;
         }catch(e){
             console.log(e);
         }
@@ -57,7 +59,7 @@ function createWebSocketServer(server, onConnection , onMessage , onClose , onEr
     let wss = new WebSocketServer({
         server: server
     });
-    wss.broadcast = function(data){
+    wss.broadcast = function broadcast(data){
         wss.clients.forEach(function each(client){
             client.send(data);
         });
@@ -76,7 +78,7 @@ function createWebSocketServer(server, onConnection , onMessage , onClose , onEr
     };
 
     onError = onError || function(err){
-        console.log(`[WebSocket] errorS: ${err}`);
+        console.log(`[WebSocket] error: ${err}`);
     };
 
     wss.on('connection',(ws)=>{
@@ -125,7 +127,7 @@ function onConnect(){
     this.send(createMessage('list',user,users));
 };
 
-function createMessage(message){
+function onMessage(message){
     console.log(message);
     if(message && message.trim()){
         let msg = createMessage('chat',this.user,message.trim());
@@ -135,8 +137,10 @@ function createMessage(message){
 
 function onClose(){
     let user = this.user,
-    msg = createMessage('left',user,`${user.name} is left.`);
-    thii.wss.broadcast(msg);
+        msg = createMessage('left',user,`${user.name} is left.`);
+    this.wss.broadcast(msg);
 };
+
+app.wss = createWebSocketServer(server, onConnect , onMessage , onClose);
 
 console.log('app started at port 3000...');

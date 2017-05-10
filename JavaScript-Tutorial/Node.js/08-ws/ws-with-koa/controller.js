@@ -1,6 +1,4 @@
-
 const fs = require('fs');
-
 // add url-route in /controllers:
 
 function addMapping(router, mapping) {
@@ -38,8 +36,7 @@ function addControllers(router, dir) {
 }
 
 module.exports = function (dir) {
-    let
-        controllers_dir = dir || 'controllers',
+    let controllers_dir = dir || 'controllers',
         router = require('koa-router')();
     addControllers(router, controllers_dir);
     return router.routes();

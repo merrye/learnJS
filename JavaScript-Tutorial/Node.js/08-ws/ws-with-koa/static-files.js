@@ -1,6 +1,6 @@
-const path = require('path');
-const mime = require('mime');
-const fs = require('mz/fs');
+const path = require('path'),
+    mime = require('mime'),
+    fs = require('mz/fs');
 
 function staticFiles(url, dir) {
     return async (ctx, next) => {
