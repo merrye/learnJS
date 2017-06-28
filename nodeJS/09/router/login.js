@@ -28,8 +28,11 @@ router.post('/',(req,res)=>{
             // 保存状态 所有后台页面通用
             // session 在关闭页面的时候 session下面保存的所有数据会被清空
             req.session.admin = data[0]['admin'];
-            res.json({
+            /*res.json({
                 result: '登录成功'
+            });*/
+            res.render('index.ejs' , {
+                data: data[0]['username']
             });
         }else{
             // 登录失败
