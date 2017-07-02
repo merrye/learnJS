@@ -23,4 +23,4 @@ require('./module/configData');
 
 app.use('/',require('./router/index'));
 
-http.createServer(app).listen(3000);
+http.createServer(app).listen(5000);
