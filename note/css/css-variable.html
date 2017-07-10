@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>07/09 CSS Variable / CSS custom properties</title>
+	<style type="text/css">
+		:root{
+			--div-width: 100px;
+			--div-height: 100px;
+			--app1-background-color: red;
+			--app2-background-color: orange;
+			--app3-background-color: yellow;
+			--app4-background-color: green;
+			--app5-background-color: purple;
+			--app6-background-color: blue;
+		}
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		div{
+			width: var(--div-width);
+			height: var(--div-height);
+			float: left;
+			margin: 10px;
+			text-align: center;
+			line-height: var(--div-height);
+		}
+		.app1{
+			background-color: var(--app1-background-color);
+		}
+		.app2{
+			background-color: var(--app2-background-color);
+			color: var(--div-color , #fff);
+		}
+		.app3{
+			background-color: var(--app3-background-color);
+		}
+		.app4{
+			background-color: var(--app4-background-color);
+		}
+		.app5{
+			background-color: var(--app5-background-color);
+		}
+		.app6{
+			background-color: var(--app6-background-color);
+		}
+	</style>
+</head>
+<body>
+	<div class="app1"></div>
+	<div class="app2">app2</div>
+	<div class="app3"></div>
+	<div class="app4"></div>
+	<div class="app5"></div>
+	<div class="app6"></div>
+	<script>
+		/*
+			1.变量的声明
+				声明变量的时候，在变量名前面要加两个连词县 ( -- )
+				for example:
+					body{
+						--foo: #7F583F;
+						--bar: #F7EFD2;
+					}
+				变量名区分大小写
+
+			2.var() 函数
+				var() ===> 读取变量
+				for example:
+					a{
+						color: var(--foo);
+						background: var(--bar);
+					}
+				var() 可以使用第二个参数
+					第二个参数表示变量的默认值，如果该变量不存在就会使用这个默认值
+					第三个参数不处理内部的逗号或空格 , 都视作参数的一部分
+
+				var() 函数也可用在变量的声明
+				for example
+					:root{
+						--primary-color: red;
+						--logo-text: var(--primary-color);
+					}
+				变量值只能用作属性值，不能用作属性名
+				for example
+					.foo{
+						--slide: margin-top;
+						// w无效
+						var(--slide): 20px;
+					}
+
+			3.变量值的类型
+				如果变量值是一个字符串，可以与其他字符串连接、
+				for example:
+					--bar: 'hello';
+					--foo: var(--bar)' world';
+
+				变量值是数值，不能与数值单位直接连用
+					.foo{
+						--gap: 20;
+						margin-top: var(gap)px; // 无效
+						margin-right: calc(var(gap) * 1px);	// 有效
+						--foo: '20px';	// 无效
+						--bar: 20px;	// 有效
+					}
+
+			4.作用域
+				<style>
+					:root{
+						--color: blue;
+					}
+					div{
+						--color: green;
+					}
+					#alert{
+						--color: red;
+					}
+					*{
+						color: var(--color);
+					}
+				</style>
+				<p>blue</p>
+				<div>green</div>
+				<div id="alert">red</div>
+
+			5.响应式布局
+				body {
+				    --primary: #7F583F;
+				    --secondary: #F7EFD2;
+				}
+
+				a {
+				    color: var(--primary);
+				    text-decoration-color: var(--secondary);
+				}
+
+				@media screen and (min-width: 768px) {
+				    body {
+				        --primary:  #F7EFD2;
+				        --secondary: #7F583F;
+				    }
+				}
+
+			6.兼容性处理
+				a {
+				    color: #7F583F;
+				    color: var(--primary);
+				}
+
+				@supports ( (--a: 0)) {
+				 	// supported
+				}
+
+				@supports ( not (--a: 0)) {
+					// not supported
+				}
+
+			7.JavaScriot 操作
+				检测是否支持
+				const isSupported =
+				    window.CSS &&
+				    window.CSS.supports &&
+				    window.CSS.supports('--a', 0);
+
+				if (isSupported) {
+				    // supported
+				} else {
+				    // not supported
+				}
+
+				操作方法
+				document.body.style.setProperty('--primary' ,'#7F583F');	// 设置变量
+				document.body.style.getPropertyValue('--primary').trim();	// 读取变量
+				document.body.style.removeProperty('--primary');			// 删除变量
+		*/	
+	</script>
+</body>
+</html>
