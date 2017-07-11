@@ -1,18 +1,19 @@
 (() => {
 	const $nav = $('.nav'),
 		$slideWrap = $('.slide .slideWrap'),
-		$slideLi = $('.slide .slideList li.item'),
 		$sort = $('.slide .slideList li.sort'),
 		$cover = $('.slide .slideWrap .cover'),
 		$allCover = $('.slide .allCover'),
 		$copy = $('.slide .slideList li.copy')
 		$to_top = $('.to-top');
+
 	let index,
 		timer = null,
 		isSort = false,
 		isScroll = true,
 		isCover = false,
 		length = $nav.length,
+		$slideLi = $('.slide .slideList li.item'),
 		maxHeight = length * $slideLi.height();
 
 	init();
@@ -41,6 +42,7 @@
 	});
 
 	$sort.click(function(){
+		$slideLi = $('.slide .slideList li.item');
 		isCover = !isCover;
 		if(isCover){
 			isSort = true;
@@ -50,12 +52,14 @@
 			$slideLi.addClass('move');
 			$slideLi.eq(index).removeClass('click');
 
-			$slideLi.on('mousedown', function(e){
+			$('.slide .slideList li.item').on('mousedown', function(e){
 				let startY = e.clientY,
 					endY = minusY = 0,
 					nowIndex = $(this).index(),
+					lastIndex,
 					html = $slideLi.eq(nowIndex).html(),
 					top = $slideLi.eq(nowIndex).position().top;
+
 				$slideLi.off('mouseenter');
 				$slideLi.off('mouseleave');
 				$slideLi.eq(nowIndex).css('opacity' , 0);
@@ -68,24 +72,44 @@
 					minusY = endY - startY;
 					endTop = top + minusY;
 					if(endTop < $slideLi.eq(nowIndex).position().top){
-						let lastIndex = nowIndex -1,
-							nowHtml = $slideLi.eq(nowIndex).html(),
-							lastHtml = $slideLi.eq(lastIndex).html();
-						$slideLi.eq(nowIndex).removeClass('click hover');
-						$slideLi.eq(nowIndex).css('opacity' , 1).html(lastHtml);
+						lastIndex = nowIndex - 1;
+						let nowLi = $slideLi.eq(nowIndex).clone(),
+							lastLi = $slideLi.eq(lastIndex).clone();
+						$slideLi.eq(lastIndex).remove();
+						$slideLi.eq(nowIndex).remove();
+						$slideLi.eq(lastIndex-1).after(lastLi).after(nowLi);
+						nowIndex --;
+					}else if(nowIndex  !== length - 1 && endTop + $slideLi.height() > $slideLi.eq(nowIndex + 1).position().top){
+						lastIndex = nowIndex + 1;
+						let nowLi = $slideLi.eq(nowIndex).clone(),
+							lastLi = $slideLi.eq(lastIndex).clone();
+						$slideLi.eq(lastIndex).remove();
+						$slideLi.eq(nowIndex).remove();
+						$slideLi.eq(nowIndex - 1).after(nowLi).after(lastLi);
+						nowIndex ++;
 					};
+					$slideLi = $('.slide .slideList li.item');
 					$copy.css({
 						top: endTop + 'px'
 					});
 				});
 
 				$(document).on('mouseup' , function(){
+					$slideLi = $('.slide .slideList li.item');
 					let lastTop = $slideLi.eq(length - 1).position().top
-					if(endTop > lastTop){
-						$copy.css('top' , lastTop);
+					$copy.hide();
+					if(nowIndex === length - 1){
+						$slideLi.eq(nowIndex).css('opacity' , 1).removeClass('hover');
 					};
+					$slideLi.eq(lastIndex).css('opacity' , 1).removeClass('hover');
 					$(this).off('mousedown');
 					$(this).off('mousemove');
+					$slideLi.on('mouseenter' , function(){
+						$(this).addClass('hover');
+					});
+					$slideLi.on('mouseleave' , function(){
+						$(this).removeClass('hover');
+					});
 				});
 			});
 
@@ -161,6 +185,7 @@
 		if(isSort){
 			return;
 		};
+		let x = index;
 		for(let i = 0;i < length;i ++){
 			let top = $nav.eq(i).position().top - $(document).scrollTop(),
 				win_height = $(window).height();
@@ -174,7 +199,9 @@
 		if(index === -1){
 			$slideLi.removeClass('click')
 		}else{
-			$slideLi.eq(index).addClass('click').siblings().removeClass('click');
+			if(x !== index){
+				$slideLi.eq(index).addClass('click').siblings().removeClass('click');
+			}
 		};
 	};
 
