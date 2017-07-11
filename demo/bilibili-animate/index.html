@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Bilibili</title>
+	<style type="text/css">
+		:root{
+			--width: 980px;
+			--height: 300px;
+			--bottom: 30px;
+			--li-width: 50px;
+			--li-height: 34px;
+		}
+		*{
+			margin: 0;
+			padding: 0;
+			user-select: none;
+		}
+		header , footer , .nav{
+			width: var(--width);
+			height: var(--height);
+			text-align: center;
+			line-height: var(--height);
+			margin: 0 auto var(--bottom);
+			font-size: 36px;
+		}
+		header , footer{
+			height: calc(var(--height) * 2.5);
+			line-height: calc(var(--height) * 2.5);
+		}
+		header{
+			background: rgb(127,127,127);
+		}
+		footer{
+			background: rgb(136,0,21);
+		}
+		.slide{
+			width: var(--width);
+			height: 0px;
+			margin: 0 auto;
+		}
+		.slide .slideWrap{
+			width: var(--li-width);
+			height: calc(var(--li-height) * 13 + 115);
+			position: fixed;
+			top: 230px;
+			box-sizing: border-box;
+			transition: top .3s;
+			margin-left: 990px;
+			z-index: 10;
+		}
+		.slide .slideWrap.move{
+			top: 135px;
+		}
+		.slide .slideWrap .slideList{
+			width: var(--li-width);
+			height: calc(var(--li-height) * 13 + 55);
+			background: rgb(246,249,250);
+			border-radius: 3px;
+			overflow: hidden;
+			border: 1px solid rgb(229,233,239);
+			z-index: 9;
+			position: relative;
+		}
+		.slide .slideWrap .slideList li{
+			list-style: none;
+			cursor: pointer;
+			font-size: 12px;
+			text-align: center;
+			transition: background .3s , color .3s
+		}
+		.slide .slideWrap .slideList li.item{
+			width: var(--li-width);
+			height: var(--li-height);
+			line-height: var(--li-height);
+		}
+		.slide .slideWrap .slideList li.hover{
+			color: #fff;
+			background: rgb(0,161,214);
+		}
+		.slide .slideWrap .slideList li.click{
+			color: #fff;
+			background: rgb(0,161,214);
+		}
+		.slide .slideWrap .slideList li.item.move{
+			cursor: move;
+		}
+		.slide .slideWrap .slideList li.sort{
+			height: 55px;
+			line-height: 55px;
+			box-sizing: border-box;
+			border-top: 1px solid rgb(229,233,239);
+		}
+		.slide .slideWrap .slideList li.copy{
+			width: var(--li-width);
+			height: var(--li-height);
+			line-height: var(--li-height);
+			position: absolute;
+			top: 0;
+			left: 0;
+			display: none;
+		}
+		.slide .slideWrap .slideList li.copy.show{
+			background: rgb(0,161,214);
+			color: #fff;
+		}
+		.slide .slideWrap .line{
+			height: 10px;
+			border: 1px solid #ddd;
+			border-width: 0 1px;
+			width: 40px;
+			margin-left: 5px;
+		}
+		.slide .slideWrap .to-top{
+			width: var(--li-width);
+			height: 50px;
+			border: 1px solid rgb(229,233,239);
+			background: rgb(246,249,250);
+			cursor: pointer;
+			position: relative;
+		}
+		.slide .slideWrap .to-top::after{
+			content: '';
+			position: absolute;
+			width: 15px;
+			height: 15px;
+			border: solid rgb(153,162,170);
+			border-width: 3px 0 0 3px;
+			top: 60%;
+			left: 50%;
+			transform: translate(-50% , -50%) rotate(45deg);
+		}
+		.slide .slideWrap .to-top.hover{
+			background: rgb(0,161,214);
+		}
+		.slide .slideWrap .to-top.hover::after{
+			border-color: #fff;
+		}
+		.slide .slideWrap .cover{
+			width: calc(var(--li-width) * 1.1);
+			height: calc(var(--li-height) * 16.8);
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: -1;
+			transition: margin .3s, width .3s , height .3s;
+		}
+		.slide .slideWrap .cover.open{
+			width: 200px;
+			height: 600px;
+			background: rgb(229,229,229);
+			margin: -20px 0 0 -128px;
+		}
+		.slide .allCover{
+			position: fixed;
+			top: 0;
+			left: 0;
+			background: rgba(0,0,0,.2);
+			display: none;
+			z-index: 2;
+		}
+	</style>
+	<script src="js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+	<!-- header start -->
+	<header>Header</header>
+	<!-- header  end -->
+	<!-- nav start -->
+	<div class="nav" style="background: rgb(200, 191, 231);">直播</div>
+	<div class="nav" style="background: rgb(237, 28, 36);">番剧</div>
+	<div class="nav" style="background: rgb(255 , 127, 39);">动画</div>
+	<div class="nav" style="background: rgb(255 , 242, 0);">舞蹈</div>
+	<div class="nav" style="background: rgb(34 , 177 , 76);">音乐</div>
+	<div class="nav" style="background: rgb(0 , 162 , 232);">科技</div>
+	<div class="nav" style="background: rgb(63, 72 , 204);">游戏</div>
+	<div class="nav" style="background: rgb(163 , 70 , 164);">生活</div>
+	<div class="nav" style="background: rgb(195 , 195 , 195);">鬼畜</div>
+	<div class="nav" style="background: rgb(185 ,122 ,87);">时尚</div>
+	<div class="nav" style="background: rgb(255 ,174 ,201);">娱乐</div>
+	<div class="nav" style="background: rgb(255 , 201 , 14);">电影</div>
+	<div class="nav" style="background: rgb(153,217 ,234);">TV剧</div>
+	<!-- nav end -->
+	<div class="slide">
+		<div class="slideWrap">
+			<ul class="slideList">
+				<li class="item">直播</li>
+				<li class="item">番剧</li>
+				<li class="item">动画</li>
+				<li class="item">舞蹈</li>
+				<li class="item">音乐</li>
+				<li class="item">科技</li>
+				<li class="item">游戏</li>
+				<li class="item">生活</li>
+				<li class="item">鬼畜</li>
+				<li class="item">时尚</li>
+				<li class="item">娱乐</li>
+				<li class="item">电影</li>
+				<li class="item">TV剧</li>
+				<li class="sort">排序</li>
+				<li class="copy"></li>
+			</ul>
+			<div class="line"></div>
+			<div class="to-top"></div>
+			<div class="cover"></div>
+		</div>
+		<div class="allCover"></div>
+	</div>
+	<!-- footer start -->
+	<footer>Footer</footer>
+	<!-- footer end -->
+	<script src="js/index.js"></script>
+</body>
+</html>
