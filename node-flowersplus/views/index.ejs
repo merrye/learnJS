@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>FlowersPlus</title>
+	<link rel="stylesheet" href="css/style_index.css">
+	<script src="js/jquery-1.12.1.min.js"></script>
+    <script src="js/layer/layer.js"></script>
+</head>
+<body>
+    <!-- wrap start -->
+	<div id="wrap">
+		<!-- header start -->
+		<div id="header">
+			<div class="h-main">
+				<div class="logo">
+					<img src="img/index/pc_newlogo1.png" width="149" height="22.5" alt="">
+				</div>
+				<div class="menu">
+					<ul class="menuList">
+						<li><a href="javascript:void(0)">首页</a></li>
+						<li><a href="javascript:void(0)">产品套餐</a></li>
+						<li><a href="javascript:void(0)">鲜花故事</a></li>
+						<li><a href="javascript:void(0)">如何购买</a></li>
+						<li><a href="javascript:void(0)">关于花+</a></li>
+						<li><a href="javascript:void(0)">联系我们</a></li>
+						<li><a href="javascript:void(0)">花+动态</a></li>
+					</ul>
+					<div class="reg" value=<%= locals.flowersPlusAdministrator %>>
+                        <% if(data.length || locals.flowersPlusUserName){ %>
+                            <a href="/userCenter/name=<%= locals.flowersPlusUserName %>.html" class="img">
+                                <img src="img/index/0.jpg" width="22" height="22" alt="">
+							</a>
+							<% if(locals.flowersPlusAdministrator || data.admin){ %>
+								<a href="/admin/products/Merry.html" class="admin">产品管理</a>
+							<% } %>
+						    <a href="/logout" class="exit">退出</a>
+                        <% }else{ %>
+                            <span class="login">登录</span>
+                        <% } %>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- header end -->
+		<!-- banner start -->
+		<div id="banner">
+			<div class="bg">
+				<ul>
+					<li style="width: 100%;height: 635px;background: url(img/index/banner.jpg) center center /cover no-repeat;"></li>
+					<li style="width: 100%;height: 635px;background: url(img/index/banner-2.jpg) center center /cover no-repeat;"></li>
+				</ul>
+			</div>
+			<div class="dec">
+				<p>STAY</p>
+				<p>SIMPLE</p>
+				<p>STAY</p>
+				<p>TRUE</p>
+				<span>用鲜花点亮生活</span>
+			</div>
+			<div class="drop">
+				<img src="img/index/index-pc-arr.png" alt="">
+			</div>
+		</div>
+		<!-- banner end -->
+		<!-- share start -->
+		<div id="share">
+			<p class="dec">"    <span>用一杯咖啡的花费，把鲜花带回家</span>，只要你尝试过在生活的地方，放上一瓶美美的鲜花，你就能体会到那种鲜花可以点亮生活的感觉，并且再也不能缺少她，我们有过这种体验，所以希望把这种体验带给更多热爱生活的人们    "</p>
+			<img src="img/index/index-pc-erw.jpg" width="105" height="105" alt="">
+			<p class="scan">扫描二维码  开始体验</p>
+		</div>
+		<!-- share end -->
+		<!-- producitonBanner start -->
+		<div id="producitonBanner">
+			<div class="product">
+				<div class="img">
+					<ul>
+						<a href="/products/pro=f0&name=<%= locals.flowersPlusUserName %>.html" value="/products/pro=f0">
+							<li style="background: url(img/index/index-product1.jpg) center center / cover;">
+								<span></span>
+								<div>
+									<p class="tip">简花·单品鲜花月套餐</p>
+									<p>精选当季时令花材，每周一次，每月四束，品种随机</p>
+								</div>
+							</li>
+						</a>
+						<a href="/products/pro=f1&name=<%= locals.flowersPlusUserName %>.html" value="/products/pro=f1">
+							<li style="background: url(img/index/index-product2.jpg) center center / cover;">
+								<span></span>
+								<div>
+									<p class="tip">繁花·混合鲜花月套餐</p>
+									<p>精选当季4-5种花材，搭配花束，每周一次每月4次，花束随机</p>
+								</div>
+							</li>
+						</a>
+						<a href="/products/pro=f2&name=<%= locals.flowersPlusUserName %>.html" value="/products/pro=f2">
+							<li style="background: url(img/index/index-product8.jpg) center center / cover;">
+								<span></span>
+								<div>
+									<p class="tip">繁花·混合鲜花月套餐</p>
+									<p>谜藏系列之秘密花盒，致力于给您更丰富多彩的混合花束体验，探索来自全球的美丽鲜花</p>
+								</div>
+							</li>
+						</a>
+						<a href="/products/pro=f3&name=<%= locals.flowersPlusUserName %>.html" value="/products/pro=f3">
+							<li style="background: url(img/index/index-product3.jpg) center center / cover;">
+								<span></span>
+								<div>
+									<p class="tip">专业花艺剪</p>
+									<p>花＋独家定制，致一双纤纤玉手的你</p>
+								</div>
+							</li>
+						</a>
+						<a href="/products/pro=f4&name=<%= locals.flowersPlusUserName %>.html" value="/products/pro=f4">
+							<li style="background: url(img/index/index-product4.jpg) center center / cover;">
+								<span></span>
+								<div>
+									<p class="tip">保鲜液</p>
+									<p>荷兰进口，养花必备神仙水</p>
+								</div>
+							</li>
+						</a>
+						<a href="/products/pro=f5&name=<%= locals.flowersPlusUserName %>.html" value="/products/pro=f5">
+							<li style="background: url(img/index/index-product6.jpg) center center / cover;">
+								<span></span>
+								<div>
+									<p class="tip">围裙</p>
+									<p>牛仔布与牛皮的相遇，不被流行左右，扎实的材质保障使用寿命</p>
+								</div>
+							</li>
+						</a>
+					</ul>
+				</div>
+				<div class="product-btn">
+					<a href="javascript:void(0)" class="prev"></a>
+					<a href="javascript:void(0)" class="next"></a>
+				</div>
+			</div>
+		</div>
+		<!-- producitonBanner end -->
+		<!-- flowerStory start -->
+		<div id="flowerStory">
+			<div class="dec">
+				<p class="topDec">-THE STORY OF THE FLOWERS-</p>
+				<p class="cenDec">鲜花故事</p>
+				<p class="botDec">云南等鲜花原产地直送，没有中间环节，只有更好的品质、更快的速度、更透明的价格</p>
+			</div>
+			<div class="topImg">
+				<ul>
+					<li>
+						<p>天地人和，道法自然。种花如育人，依时令季节轮作，一天24小时实时调控湿度光温，辛勤投入，精耕细作。</p>
+					</li>
+					<li>
+						<p>天地人和，道法自然。种花如育人，依时令季节轮作，一天24小时实时调控湿度光温，辛勤投入，精耕细作。</p>
+					</li>
+					<li>
+						<p>把握黄金时间点做好采后保鲜，花床般的养护条件，鲜花自然冻龄，始终如一的蓬勃生命力。</p>
+					</li>
+				</ul>
+			</div>
+			<div class="botImg">
+				<ul>
+					<li>
+						<p>北回归线穿越的彩云之南，隐匿于高山谷地的丰饶深田，红土地，将自然力量注入鲜花，处处是生机。</p>
+					</li>
+					<li>
+						<p>即摘即包即发，航空级鲜花包装箱，小量多次，专业鲜花空运航班，全程呵护，点对点恒温衔接，最大程度缩短到达时间。</p>
+					</li>
+					<li>
+						<p>周末晨光，让花香把你叫醒。与鲜花相依相伴，结庐在人境，心远地自偏。</p>
+					</li>
+					<li>
+						<p>绚丽清晨，满载花盒的花车即刻启程，专业鲜花快递，精细化分区配送，传递花朵正能量。</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- flowerStory end -->
+		<!-- buyPro start -->
+		<div id="buyPro">
+			<div class="leftCon"><img src="img/index/index-pc-phone.png" width="300" height="535" alt=""></div>
+			<div class="rightCon">
+				<p class="buy">怎么购买我们的产品？</p>
+				<p class="flow">关注<img src="img/index/index-px-wx1.png" width="28" height="22">FlowerPlus 微信公众号</p>
+				<p class="clicked">点击左下角鲜花预定</p>
+				<img src="img/index/index-pc-erw.jpg" width="106" height="106" alt="">
+				<p class="b-scan">扫二维码，或者搜索FlowerPlus</p>
+				<img src="img/index/index-pc-phone-r.png" width="370" height="50" alt="">
+			</div>
+		</div>
+		<!-- buyPro end -->
+		<!-- about start -->
+		<div id="about">
+			<p class="aboutus">ABOUT US</p>
+			<p class="aboutf">关于FlowerPlus花＋</p>
+			<p class="intro">花+（Flower Plus）品牌成立于2015年初，颠覆了传统鲜花消费多在节庆、纪念日的礼品花模式，捕捉都市人日常鲜花消费的市场空白，通过手机端下单、包月制宅配，向客户传递随时随地用 鲜花点亮生活、点亮心情的理念，培育日常用花的消费模式。</p>
+		</div>
+		<!-- about end -->
+		<!-- contact start -->
+		<div id="contact">
+			<div class="contactCon">
+				<p>
+					<span>CONTACT US</span>
+					<br>
+					联系我们
+				</p>
+				<div class="loc">
+					<span>如果您有意合作 请发邮件至handz@flowerplus.cn</span><br>
+					<span>上海分尚网络科技有限公司</span><br>
+					<span>上海市嘉定区江桥镇鹤望路679号亿达北虹创业园2号楼4楼flower plus 花＋</span>			
+				</div>
+			</div>
+		</div>
+		<!-- contact end -->
+		<!-- dynamic start -->
+		<div id="dynamic">
+			<div class="topDy">
+				<ul>
+					<li>
+						<img src="img/index/index-pc-car.png" alt="">
+						<p>
+							<span>鲜花送到家</span>
+							<br>
+							一周一花, 周六周一送达
+						</p>
+					</li>
+					<li>
+						<img src="img/index/index-px-wx.png" alt="">
+						<p>
+							<span>微信下单</span>
+							<br>
+							省力、方便、快捷
+						</p>
+					</li>
+					<li>
+						<img style="margin: 25px 0 0 100px;width: 106px;height: 106px;" src="img/index/index-pc-erw.jpg" width="106" height='106' alt="">
+					</li>
+				</ul>
+			</div>
+			<div class="botDy">
+				<span>花+友情链接:</span>
+				<ul>
+					<li><a href="">繁花</a></li>
+					<li><a href="">简花</a></li>
+					<li><a href="">谜藏</a></li>
+					<li><a href="">花剪</a></li>
+					<li><a href="">保鲜液</a></li>
+					<li><a href="">围裙</a></li>
+					<li><a href="">58同城</a></li>
+					<li><a href="">携程</a></li>
+					<li><a href="">喜马拉雅FM</a></li>
+					<li><a href="">花+友链</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- dynamic end -->
+		<!-- footer start -->
+		<div id="footer">
+			<p>&copy; 2017-06-27</p>
+		</div>
+		<!-- footer end -->
+	</div>
+	<!-- wrap end  -->
+	<script src="js/index.js"></script>
+</body>
+</html>

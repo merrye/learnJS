@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="../../css/my/style_myinfo.css">
+</head>
+<body>
+	<!-- wrap start -->
+	<div id="wrap">
+		<!-- main start -->
+		<div id="main">
+			<a href="/userCenter/userInfo/mobile/<%= userInfo.name %>.html">
+				<span>绑定手机</span>
+				<% if(!userInfo.phoneNumber){ %>
+					<span class="bindphone">未绑定</span>
+				<% } %>
+			</a>
+			<a href="/userCenter/userInfo/address/<%= userInfo.name %>.html">
+				<span>常用地址</span>
+			</a>
+			<a href="fapiao.html">
+				<span>申请发票</span>
+			</a>
+			<a href="../../index.html">
+				<span>刷新账号</span>
+			</a>
+		</div>
+		<!-- main end -->
+	</div>
+	<!-- wrap end -->
+</body>
+</html>

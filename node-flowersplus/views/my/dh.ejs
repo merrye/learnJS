@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FlowerPlus 兑换码</title>
+	<link rel="stylesheet" href="../../css/my/style_db.css">
+	<script src='../../js/jquery-1.12.1.min.js'></script>
+	<script src="../../js/areaData.js"></script>
+</head>
+<body>
+	<!-- wrap start -->
+	<div id="wrap">
+		<!-- main start -->
+		<div id="main">
+			<div class="header"></div>
+			<div>
+				<span>兑换码<font>Redemption Code</font></span>
+				<input type="text">
+			</div>
+			<div>
+				<span>收花人<font>Consignee</font></span>
+				<input type="text">
+			</div>
+			<div>
+				<span>手机号码<font>Mobile</font></span>
+				<input type="text">
+			</div>
+			<div>
+				<span>省/市/区<font>Province /City /District</font></span>
+				<p>
+					<select name="province" id="province">
+						<option value="" index="0"></option>
+					</select>
+					<select name="City" id="city">
+						<option value="" index="0"></option>
+					</select>
+					<select name="county" id="county"></select>
+				</p>
+			</div>
+			<div>
+				<span>详细地址<font>Detail Address</font></span>
+				<textarea></textarea>
+			</div>
+			<div>
+				<span>收花时间<font>Delivery Time</font></span>
+				<p>
+					<input type="radio" name="time">
+					<span>星期一<font>Mon.</font></span>
+					<input type="radio" name="time">
+					<span>星期六<font>Sat.</font></span>
+				</p>
+			</div>
+			<div>
+				<input type="text" class="submit" value="确认兑换（Confirm）"  disabled>
+			</div>
+		</div>
+		<!-- main end -->
+	</div>
+	<!-- wrap end -->
+	<script>
+		const $main = $('#main'),
+			$div = $('#main > div'),
+			$select = $('#main div > p > select'),
+			INIT_WIDTH = $main.width(),
+			provinceData = areaData.sheng,
+			cityData = areaData.shi,
+			countyData = areaData.xian;
+		let pSelectedIndex , pValue , cSelectedIndex , cValue;
+
+		change($(window).innerWidth());
+
+		$(window).resize(function() {
+			change($(window).innerWidth());
+		});
+
+		generateOption($select.eq(0),provinceData);
+
+		$select.eq(0).change(function() {
+			let $obj = $select.eq(1),
+				$obj2 = $select.eq(2);
+			pValue = $(this).get(0).value,
+			pSelectedIndex = $(this).get(0).selectedIndex;
+			$obj.html($('<option value="选择城市" index="0">选择城市</option>'));
+			$obj2.html($('<option value="选择区县" index="0">选择区县</option>'));
+			if(pValue){
+				let data = cityData['a_' + (pSelectedIndex - 1)];
+				generateOption($obj,data);
+			};
+		});
+
+		$select.eq(1).change(function() {
+			let $obj = $select.eq(2);
+			cValue = $(this).get(0).value,
+			cSelectedIndex = $(this).get(0).selectedIndex;
+			$obj.html($('<option value="选择区县" index="0">选择区县</option>'));
+			if(cValue){
+				let data = countyData['a_' + (pSelectedIndex - 1) + '_' + (cSelectedIndex - 1)];
+				generateOption($obj,data);
+			};
+		});
+
+		function change(val){
+			let bTrue = val < INIT_WIDTH;
+			$main.css({
+				width: bTrue ? val : INIT_WIDTH,
+				margin: bTrue ? '0 auto' : '32px auto'
+			});
+			$div.css({
+				width: (bTrue ? val : INIT_WIDTH) - 30
+			});
+			$select.css('width' , bTrue ? ($div.width() - 27 * 2) /3 : '132px');
+		};
+
+		function generateOption($obj,data){
+			let length = data.length;
+			for(let i = 0;i < length;i ++){
+				$option = $('<option>' + data[i] + '</option>');
+				$option.attr({
+					value: data[i],
+					index: i + 1
+				});
+				$obj.append($option);
+			};
+		};
+	</script>
+</body>
+</html>

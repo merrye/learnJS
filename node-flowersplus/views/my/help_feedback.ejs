@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>吐槽&建议</title>
+	<link rel="stylesheet" href="../../css/my/style_help.css">
+	<script src="../../js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+	<!-- wrap start -->
+	<div id="wrap">
+		<!-- main start -->
+		<div id="main">
+			<div class="img"></div>
+			<form action="">
+				<p>如果需要解决问题，请找客服提交工单，这里仅用于收集客户建议.</p>
+				<label for="">
+					<span>反馈类型:</span>
+					<select name="" id="problem">
+						<option value="">质量问题</option>
+						<option value="">物流问题</option>
+						<option value="">产品建议</option>
+						<option value="">功能使用</option>
+					</select>
+				</label>
+				<label for="" style="display: none;">
+					<span>吐槽类别:</span>
+					<select name="" id="category">
+						<option value="">请选择吐槽类别</option>
+					</select>
+				</label>
+				<label for="">
+					<span>你的邮箱:</span>
+					<input type="text">
+				</label>
+				<label for="">
+					<span>收花人手机:</span>
+					<input type="text">
+				</label>
+				<textarea name="" id="" cols="30" rows="10" placeholder="反馈内容请写在这里..."></textarea>
+				<input type="submit" value="发送">
+			</form>
+		</div>
+		<!-- main end -->
+	</div>
+	<!-- wrap end -->
+	<script>
+		const $wrap = $('#wrap'),
+			$main = $('#main'),
+			$input = $('#main > form > label > input'),
+			$select = $('#main > form > label > select'),
+			$problem = $('#problem'),
+			$category = $('#category'),
+			INIT_WIDTH = 640,
+			INIT_INPUT_WIDTH = 400,
+			kdProblemArr = ['送达后没有通知本人','送花时间延误','打扰了我的休息','快递导致物品破损','快递小哥态度差','物流信息不准确','其他'],
+			proProblemArr = ['单品99套餐','混合169套餐','惠花plus套餐','迷藏399套餐','mini套餐','miniplus套餐'];
+		let winWidth = $(window).innerWidth();
+
+		changeWidth(winWidth < INIT_WIDTH);
+
+		$(window).resize(function(){
+			winWidth = $(window).innerWidth();
+			let bTrue = winWidth < INIT_WIDTH;
+			changeWidth(bTrue);
+		});
+
+		$problem.change(function(){
+			let selectedIndex = $problem.get(0).selectedIndex;
+			$category.html('<option value="">请选择吐槽类别</option>');
+			switch(selectedIndex){
+				case 1:
+					$category.parent().show();
+					produceOption(kdProblemArr);
+					break;
+				case 2:
+					$category.parent().show();
+					produceOption(proProblemArr);
+					break;
+				default:
+					$category.parent().hide();
+			};
+		});
+
+		function changeWidth(bTrue){
+			$wrap.css({
+				margin: bTrue ? '15px 10px' : '15px auto',
+				width: bTrue ? winWidth - 20 : INIT_WIDTH
+			});
+			$main.width((bTrue ? $wrap.width() : INIT_WIDTH) - 30);
+			$input.width(bTrue ? winWidth - 242 : INIT_INPUT_WIDTH - 2);
+			$select.width(bTrue ? winWidth - 240 : INIT_INPUT_WIDTH);
+		};
+
+		function produceOption(data){
+			let length = data.length;
+			for(let i = 0;i< length;i ++){
+				let $option = $('<option value="">'+ data[i] +'</option>');
+				$category.append($option);
+			};
+		};
+	</script>
+</body>
+</html>

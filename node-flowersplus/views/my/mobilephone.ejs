@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		#main{
+			width: 640px;
+			height: 145px;
+			border: 1px solid #f1f1f1;
+			margin: 0 auto;
+			box-sizing: border-box;
+		}
+		input{
+			width: 610px;
+			height: 40px;
+			display: block;
+			margin: 0 auto;
+			border-radius: 3px;
+			outline: none;
+			border: 1px solid #ddd;
+			margin-top: 15px;
+		}
+		input.mobile{
+			text-indent: 12px;
+		}
+		input.mobile :focus{
+			border-color: red;
+		}
+		input.confim{
+			border-radius: 5px;
+			background: #5DD55B;
+			color: #fff;
+			font-size: 18px;
+			text-align: center;
+		}
+		p.mobNum{
+			width: 100%;
+			text-align: center;
+			height: 145px;
+			line-height: 145px;
+			position: relative;
+		}
+		p.mobNum span{
+			width: 30px;
+			height: 30px;
+			display: block;
+			position: absolute;
+			top: 50%;
+			margin-top: -15px;
+			cursor: pointer;
+		}
+		p.mobNum span:nth-of-type(1){
+			background: url(../../../img/personalCenter/update.png) center center / cover no-repeat;
+			right: 60px;
+		}
+		p.mobNum span:nth-of-type(2){
+			background: url(../../../img/personalCenter/delete.png) center center / cover no-repeat;
+			right: 20px;
+		}
+	</style>
+</head>
+<body>
+	<!-- wrap start -->
+	<div id="wrap">
+		<!-- main start -->
+		<div id="main">
+			<% if(phoneNumber.length === 11){ %>
+				<p class="mobNum">
+					<%= phoneNumber %>
+					<span></span>
+					<span></span>
+				</p>
+			<% }else{ %>
+				<input type="text" placeholder="手机号码" class="mobile"/>
+				<input type="text" value="确定添加" class="confim" />
+			<% } %>
+		</div>
+		<!-- main end -->
+	</div>
+	<!-- wrap end-->
+</body>
+</html>

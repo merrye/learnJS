@@ -1,0 +1,178 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+#wrap{
+	width: 642px;
+	margin: 0 auto;
+	overflow: hidden;
+	position: relative;
+}
+/* pro */
+	#wrap .pro{
+		width: 100%;
+		height: 642px;
+		position: relative;
+	}
+	#wrap .pro > ul{
+		width: 2568px;
+	}
+	#wrap .pro > ul > li{
+		width: 642px;
+		height: 642px;
+		float: left;
+	}
+	#wrap .pro > ul > li > img{
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+	#wrap .pro .tab{
+		position: absolute;
+		bottom: 10px;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	#wrap .pro .tab > ul > li{
+		width: 8px;
+		height: 8px;
+		border-radius: 100%;
+		background-color: #ccc;
+		float: left;
+		margin-right: 12px;
+		cursor: pointer;
+	}
+	#wrap .pro .tab > ul > li.on{
+		background-color: #F73F65;
+	}
+
+/* price */
+	#wrap .price{
+		width: 100%;
+		padding-top: 20px;
+	}
+	#wrap .price .dec{
+		width: 100%;
+		text-align: left;
+		text-indent: 20px;
+	}
+	#wrap .price .money{
+		padding-top: 10px;
+		color: #f6325b;
+		text-indent: 20px;
+		font-size: 24px;
+	}
+	#wrap .price .size{
+		text-indent: 20px;
+		font-size: 14px;
+		padding-top: 10px;
+	}
+	#wrap .price .sizeContent{
+		width: 100%;
+		height: 30px;
+		padding-top: 20px;
+	}
+	#wrap .price .sizeContent span{
+		margin-left: 40px;
+		border: 1px solid #ccc;
+		padding: 5px 20px;
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+	}
+	#wrap .price .allNum{
+		text-indent: 20px;
+		font-size: 14px;
+		padding-top: 5px;
+	}
+	#wrap .price .numberContent{
+		width: 120px;
+		height: 35px;
+		line-height: 35px;
+		padding-top: 10px;
+		padding-left: 20px;
+	}
+	#wrap .price .numberContent span{
+		width: 20px;
+		height: 100%;
+		box-sizing: border-box;
+		display: block;
+		float: left;
+		line-height: 35px;
+		text-align: center;
+		font-size: 26px;
+		cursor: pointer;
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+	}
+	#wrap .price .numberContent input{
+		width: 80px;
+		height: 100%;
+		display: block;
+		float: left;
+		line-height: 35px;
+		text-align: center;
+		box-sizing: border-box;
+		border: 1px solid #ccc;
+		font-size: 18px;
+		user-select: none;
+		-moz-user-select: none;
+		-webkit-user-select: none;
+	}
+	#wrap .price .allMoney{
+		padding-top: 20px;
+		text-indent: 20px;
+	}
+
+/* details */
+	.details{
+		width: 100%;
+	}
+	.details p img{
+		width: 100%;
+	}
+
+
+/* footer */
+	#wrap .footer{
+		width: 642px;
+		height: 50px;
+		margin: 0 auto;
+		position: fixed;
+		bottom: 0;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+	#wrap .footer a:nth-child(1){
+		float: left;
+		display: block;
+		width: 70px;
+		height: 49px;
+		border-top: 1px solid #ccc;
+		background-image: url(../../img/products/logo.png);
+		background-size: 35px;
+		background-repeat: no-repeat;
+		background-position: 20px 7px;
+		text-decoration: none;
+		cursor: pointer;
+	}
+	#wrap .footer .buy{
+		float: right;
+		height: 100%;
+		width: 572px;
+		color: #fff;
+		background-color: #F73F65;
+		border: none;
+		outline: none;
+		line-height: 50px;
+		text-align: center;
+		font-size: 22px;
+		cursor: pointer;
+	}
