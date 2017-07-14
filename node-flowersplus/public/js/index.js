@@ -95,7 +95,7 @@
 								let $reg = $(".menu .reg"),
 									url = "/userCenter/name=" + data.name + ".html",
 									url2 = "&name=" + data.name + ".html",
-									url3 = "/admin/products/" + data.name + ".html",
+									url3 = "/admin/" + data.name + ".html",
 									$a1 = $('<a class="img"></a>'),
 									$a2 = $('<a href="/logout" class="exit">退出</a>'),
 									$a3 = $('<a class="admin">产品管理</a>'),
@@ -142,7 +142,7 @@
 								success: function(data){
 									let $reg = $(".menu .reg"),
 										url = "/userCenter/name=" + data.name + ".html",
-										url3 = "/admin/products/" + data.name + ".html",
+										url3 = "/admin/" + data.name + ".html",
 										$a1 = $('<a href="/userCenter" class="img"></a>'),
 										$a2 = $('<a href="/logout" class="exit">退出</a>'),
 										$a3 = $('<a class="admin">产品管理</a>'),
