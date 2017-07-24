@@ -1,0 +1,22 @@
+当前文件路径  -->  __filename
+
+当前文件目录  -->  __dirname
+
+process
+    process.cwd()     进程工作目录
+
+模块
+    一个文件可以看作是一个模块
+
+    引用  require()   后缀可以省略
+    如果引入模块是模块的名字 那就是核心模块 -->   安装好node就有的模块
+                                              node_modules下的文件
+    引入路径    ./ --> 代表当前目录
+    加载机制    文件名 > name.js  > name.json > name.node
+    模块之间相互使用
+
+node目录的配置
+    1.配置文件
+    2.router    路由文件
+    3.views     模板文件
+    4.module    自己写的模板

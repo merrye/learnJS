@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+
+    <form action="/reg" method="post">
+        <input type="text" name="name" />
+        <input type="password" name="password" />
+        <input type="submit" />
+    </form>
+
+    <!-- <input type="text" class="name" />
+    <input type="password" class="password" />
+    <input type="submit" class="submit" /> -->
+
+    <!--<form action="/reg" method="get">
+        <input type="text" name="name" />
+        <input type="password" name="password" />
+        <input type="submit" />
+    </form> -->
+    <!--<% include header.ejs %>
+    <p><%= name %></p>
+    <p><%= html %></p>
+    <p><%- html %></p>
+    <p><%  %></p>-->
+    <script>
+        let $name = $('.name'),
+            $pwd = $('.password'),
+            $submit = $('.submit');
+
+        $submit.click(() => {
+            $.ajax({
+                url: '/reg',
+                type: 'get',
+                data: {
+                    name: $name.val(),
+                    password: $pwd.val()
+                },
+                success: (data) => {
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
