@@ -9,11 +9,20 @@
 </head>
 <body>
 
-    <form action="/reg" method="post">
+    index
+    <% if(locals.login){ %>
+        <p>欢迎<%= locals.login %></p>  
+        <% if(locals.admin){ %>
+            管理员
+        <% } %>
+        <a href="/logout">退出登录</a>
+    <% } %>
+
+    <!-- <form action="/reg" method="post">
         <input type="text" name="name" />
         <input type="password" name="password" />
         <input type="submit" />
-    </form>
+    </form> -->
 
     <!-- <input type="text" class="name" />
     <input type="password" class="password" />
