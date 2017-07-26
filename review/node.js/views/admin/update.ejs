@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+    用户修改<br />
+    &nbsp;&nbsp;<span class="accout" data=<%= data[0].id %>>用户名</span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="oldName" data=<%= data[0].name %>></span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp;<input class="name" type="text"><br />
+    &nbsp;&nbsp;admin<br />
+    &nbsp;&nbsp;&nbsp;&nbsp;<span class="oldAdmin"><%= data[0].admin %></span><br />
+    &nbsp;&nbsp;&nbsp;&nbsp; <input class="admin" type="text"><br />
+    <button class="update">update</button>
+
+    <script>
+        $(".update").click(() => {
+            $.ajax({
+                url: '/admin/user/update',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    id: $('.accout').attr('data'),
+                    name: $('.name').val() || $('.oldName').attr('data'),
+                    admin: $('.admin').val() || $('.oldAdmin').attr('data'),
+                },
+                success(data){
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

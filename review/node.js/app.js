@@ -34,7 +34,7 @@ app.use((req , res , next) => {
     };
     if(!req.session.admin && res.locals.login){
         sql('SELECT * FROM users WHERE name = ?' , [res.locals.login] , (err , data) => {
-            req.session.admin = data[0].admin;
+            data.length && (req.session.admin = data[0].admin);
             next();
         });
     }else{

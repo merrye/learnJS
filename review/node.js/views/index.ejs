@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,6 +16,19 @@
             管理员
         <% } %>
         <a href="/logout">退出登录</a>
+    <% } %>
+
+    <% for(let i = 0;i < data.length;i ++){ %>
+        <div>
+            <a href="/article/<%= data[i].id %>.html">
+                <p>第<%= i + 1 %>篇</p>
+                <p>title: <%= data[i].title %></p>
+                <p>tag: <%= data[i].tag %></p>
+                <p>author: <%= data[i].author %></p>
+                <p>content: <%= data[i].content %></p>
+                <p>time: <%= data[i].time %></p>
+            </a>
+        </div>
     <% } %>
 
     <!-- <form action="/reg" method="post">

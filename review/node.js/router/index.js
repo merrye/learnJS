@@ -12,9 +12,49 @@ router.get('/' , (req , res) => {
     // res.render();
     // res.sendFile(process.cwd() + '/views/index.html');   // 绝对路径
     res.locals.admin = req.session.admin;
-    res.render('index' , {
-        name: 'merrye',
-        html: '<h1>123</h1>'
+    // LIMIT 从第几开始搜索多少条记录
+    // ORDER IN DESC    根据id排序 
+    sql("SELECT * FROM articles ORDER BY id DESC LIMIT 0,6" , (err , data) => {
+        res.render('index' , {
+            name: 'merrye',
+            html: '<h1>123</h1>',
+            data
+        });
+    });
+});
+
+router.get('/article/:id.html' , (req , res) => {
+    const id = req.params.id;
+
+    sql("SELECT * FROM articles WHERE id = ?" , [id] , (err , data) => {
+        if(err){
+            res.render("err");
+            return;
+        };
+        sql("SELECT * FROM comments WHERE article_id = ?" , [id] ,(err , cdata) => {
+            res.render('article',{
+                data: data[0],
+                comments: cdata
+            });
+        });
+    });
+});
+
+router.post('/article/:id.html' , (req , res) => {
+    const id = req.params.id,
+        comment = req.body.comment;
+
+    sql("INSERT INTO comments (user_id , article_id , content) VALUES(41 , ? , ?)" , [id , comment] , (err , data) => {
+        if(err){
+            res.render("err");
+            return;
+        };
+        sql("SELECT * FROM comments WHERE article_id = ?" , [id] ,(err , cdata) => {
+            res.render('article',{
+                //data: data[0],
+                comments: cdata
+            });
+        });
     });
 });
 
