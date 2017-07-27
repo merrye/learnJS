@@ -6,6 +6,11 @@ const http = require('http'),
     app = express(),    // 初始化
     sql = require('./module/mysql');
 
+module.exports = app;
+
+// config 没有暴露出去任何内容 引入所有代码
+require('./module/config');
+
 // 设置模板引擎目录
 app.set('views' , __dirname + '/views');
 // 设置使用的模板引擎
@@ -28,20 +33,20 @@ app.use(session({
 }));
 
 // use / get / post 
-app.use((req , res , next) => {
-    if(req.cookies.login){
-        res.locals.login = req.cookies.login.name;
-    };
-    if(!req.session.admin && res.locals.login){
-        sql('SELECT * FROM users WHERE name = ?' , [res.locals.login] , (err , data) => {
-            data.length && (req.session.admin = data[0].admin);
-            next();
-        });
-    }else{
-        next();
-    };
-    // next();     // 继续往下执行
-});
+// app.use((req , res , next) => {
+//     if(req.cookies.login){
+//         res.locals.login = req.cookies.login.name;
+//     };
+//     if(!req.session.admin && res.locals.login){
+//         sql('SELECT * FROM users WHERE name = ?' , [res.locals.login] , (err , data) => {
+//             data.length && (req.session.admin = data[0].admin);
+//             next();
+//         });
+//     }else{
+//         next();
+//     };
+//     // next();     // 继续往下执行
+// });
 
 // // 响应浏览器的方法
 // app.get('/' , (req , res) => {
