@@ -1,18 +1,23 @@
 const express = require('express'),
     router = express.Router(),
-    multer = require('multer'),
+    // multer = require('multer'),
+    // path = require('path'),
+    upload = require("../module/multer"),
     sql = require('../module/mysql');
 
-let storage = multer.diskStorage({  // 上传路径处理   重命名处理
-        // 上传路径设置
-        destination: `${process.cwd()}/public`,
-        filename: (req , file , callback) => {
-            console.log(req , file)
-        }
-    }),
-    upload = multer({
-        storage
-    });
+// let storage = multer.diskStorage({  // 上传路径处理   重命名处理
+//         // 上传路径设置
+//         destination: path.join(process.cwd() , 'public'),
+//         filename: (req , file , callback) => {
+//             let filename = (file.originalname).split(".")，
+//             name = filename[filename.length - 1];
+//             // 重命名
+//             callback(null , `${Date.now()}.${name}`);
+//         }
+//     }),
+//     upload = multer({
+//         storage
+//     });
 
 router.use((req , res , next) => {
     if(req.session.admin){
@@ -69,16 +74,21 @@ router.post('/user/update', (req , res) => {
 router.get('/article' , (req , res) => {
     res.render('admin/article');
 });
-
+                        // 接收单个文件   upload.single(name)
+                        // 多个文件       upload.array(name , num)
+                        // 文件组         upload.fields([{name , maxCount} , {name , maxCount}])
 router.post('/article' , upload.single('file') , (req , res) => {
+    // console.log(req.file);
 
     // const title = req.body.title,
     //     tag = req.body.tag,
     //     author = req.body.author,
     //     content = req.body.content,
+    //     img = '/upload/' + req.file.filename;
     //     time = new Date().toLocaleString();
+    //     console.log(req.body)
 
-    // sql("INSERT INTO articles (title , tag , author , content , time) VALUES(? , ? , ? , ? , ?)" , [title , tag , author , content , time] , (err , data) => {
+    // sql("INSERT INTO articles (title , tag , author , content , time , img) VALUES(? , ? , ? , ? , ? , ?)" , [title , tag , author , content , time , img] , (err , data) => {
     //     if(err){
     //         res.send("fail");
     //     };

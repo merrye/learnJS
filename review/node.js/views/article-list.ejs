@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <% for(let i = 0;i < data.length;i ++){ %>
+        <div>
+            <a href="/article/<%= data[i].id %>.html">
+                <p>title: <%= data[i].title %></p>
+                <p>tag: <%= data[i].tag %></p>
+                <p>img: <img src=<%= data[i].img %> /></p>
+                <p>author: <%= data[i].author %></p>
+                <p>content: <%= data[i].content %></p>
+                <p>time: <%= data[i].time %></p>
+                <hr/>
+            </a>
+        </div>
+    <% } %>
+    <% for(let i = 0;i < n / 2;i ++ ){ %>
+        <a href="/article/list-<%= i + 1 %>.html"><%= i + 1 %></a>
+    <% }; %>
+    <!-- <a href="/article/list-1.html">1</a>
+    <a href="/article/list-2.html">2</a>
+    <a href="/article/list-3.html">3</a>
+    <a href="/article/list-4.html">4</a>
+    <a href="/article/list-5.html">5</a> -->
+</body>
+</html>

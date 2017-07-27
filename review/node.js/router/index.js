@@ -23,6 +23,21 @@ router.get('/' , (req , res) => {
     });
 });
 
+router.get('/article/list-:page.html' , (req , res) => {
+    sql("SELECT * FROM articles ORDER BY id DESC LIMIT ? , 2" , [(req.params.page - 1) * 2] , (err , data) => {
+        if(data.length === 0){
+            res.render('err');
+            return;
+        };
+        sql("SELECT COUNT(*) AS number FROM articles" , (e , d) => {
+            res.render('article-list' , {
+                data,
+                n: d[0]['number']
+            });
+        });
+    });
+});
+
 router.get('/article/:id.html' , (req , res) => {
     const id = req.params.id;
 
@@ -82,5 +97,11 @@ router.use('/admin' , require('./admin'))
 router.use('/login' , require('./login'));
 
 router.use('/reg' , require('./reg'));
+
+// router.use('/nav' , require('./nav'));
+router.get('/nav' , (req , res) => {
+    console.log(res.locals.data)
+    res.render('nav');
+});
 
 module.exports = router;
