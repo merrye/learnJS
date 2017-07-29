@@ -21,6 +21,28 @@ router.get('/' , (req , res) => {
             data
         });
     });
+
+    // 查询的数据 不相关联
+    let arr = [];
+    let fn = (m) => {
+        return new Promise((resolve , reject) => {
+            sql(m , (err , data) => {
+                resolve(data);
+            });
+        });
+    };
+    arr = [
+        "SELECT * FROM articles ORDER BY id DESC LIMIT 0,6",
+        "SELECT * FROM articles ORDER BY id DESC LIMIT 6,6"
+    ];
+    Promise.all(arr).then((d) => {
+        console.log(d)
+        // d ---> arr
+        // d = [
+        //  [第一个查询出来的数据]
+        //  [第二个查询出来的数据]
+        // ]
+    });
 });
 
 router.get('/article/list-:page.html' , (req , res) => {

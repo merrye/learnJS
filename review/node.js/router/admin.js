@@ -3,7 +3,8 @@ const express = require('express'),
     // multer = require('multer'),
     // path = require('path'),
     upload = require("../module/multer"),
-    sql = require('../module/mysql');
+    sql = require('../module/mysql'),
+    fs = require('fs');
 
 // let storage = multer.diskStorage({  // 上传路径处理   重命名处理
 //         // 上传路径设置
@@ -110,6 +111,50 @@ router.post('/nav' , (req , res) => {
     sql("INSERT INTO nav (title , navid , level , url) VALUES(? , ? , 1 , ?)",[] , (err , data) => {
         res.render("admin/nav");
     });
+});
+
+router.get('/views' , (req , res) => {
+    let dir = fs.readdirSync(`${process.cwd()}/views`);
+    res.render('views' , {
+        dir
+    });
+});
+
+router.post('/views' , (req , res) => {
+    const dirname = req.body.dirname,
+        dirtype = req.body.dirtype,
+        val = req.body.val;
+
+    if(dirtype === "1"){
+        // console.log(`${process.cwd()}/views/${dirname}`)
+        fs.readFile(`${process.cwd()}/views/${dirname}` , 'utf-8' , (err , data) => {
+            res.json({
+                data,
+                type: 1,
+                name: dirname
+            });
+        });
+    }else if(dirtype === '2'){
+        fs.readdir(`${process.cwd()}/views/${dirname}` , (err , data) => {
+            res.json({
+                data,
+                type: 2,
+                name: dirname
+            });
+        });
+    }else if(dirtype === '3'){
+        fs.writeFile(`${process.cwd()}/views/${dirname}` ,val , (err , data) => {
+            res.json({
+                result: 'ok'
+            });
+        });
+    };
+
+    // 在后台把所有的一起读取出来 返回给前台
+    let dir = fs.readdirSync(`${process.cwd()}/views`);
+    // for(let i in dir){
+        
+    // };
 });
 
 module.exports = router;

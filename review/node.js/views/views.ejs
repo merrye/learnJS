@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+    <% for(let i in dir){ %>
+        <% if(dir[i].includes('.')){ %>
+            <p data-dirtype="1" onclick="next(this)"><%= dir[i] %></p>
+        <% }else{ %>
+            <p data-dirtype="2" onclick="next(this)"><%= dir[i] %></p>
+        <% } %>
+    <% } %>
+    <script>
+        let dirname,
+            dirtype;
+        function next(_this){
+            let name = $(_this).data("name"),
+                text = $(_this).text();
+            if(name){
+                dirname = `${name}/${text}`;
+            }else{
+                dirname = text;
+            };
+            // console.log(dirname);
+            dirtype = $(_this).data("dirtype");
+            // console.log(dirname , dirtype);
+            $.ajax({
+                url: '/admin/views',
+                type: 'post',
+                data: {
+                    dirname,
+                    dirtype
+                },
+                success(d){
+                    console.log(d);
+                    if(d.type === 1){
+                        document.body.innerHTML = `
+                            <span data-dirname=${dirname} onclick=back(this)>返回</span>
+                            <textarea>${d.data}</textarea>
+                            <button onclick=update()>修改</button>
+                        `;
+                    }else if(d.type === 2){
+                        document.body.innerHTML = '';
+                        for(let i in d.data){
+                            if(d.data[i].includes('.')){
+                                document.body.innerHTML += `<p data-name=${d.name} data-dirtype="1" onclick="next(this)">${d.data[i]}</p>`;
+                            }else{
+                                document.body.innerHTML += `<p data-name=${d.name} data-dirtype="2" onclick="next(this)">${d.data[i]}</p>`;
+                            }
+                        };
+                    };
+                }
+            });
+        };
+
+        function back(_this){
+            // console.log(_this.getAttribute("data-dirname"))
+            let d = $(_this).data("dirname"),
+                dirname = "";
+            if(d.includes('/')){
+                dirname = d.split('/')[0];
+            };
+            $.ajax({
+                url: '/admin/views',
+                type: 'post',
+                data: {
+                    dirname,
+                    dirtype: 2
+                },
+                success(d){
+                    document.body.innerHTML = "";
+                    for(let i in d.data){
+                        if(d.data[i].includes('.')){
+                            document.body.innerHTML += `<p data-dirtype="1" onclick="next(this)">${d.data[i]}</p>`;
+                        }else{
+                            document.body.innerHTML += `<p data-dirtype="2" onclick="next(this)">${d.data[i]}</p>`;
+                        }
+                    };
+                },
+            });
+        };
+
+        function update(){
+            let val = $('textarea').val();
+            console.log(val);
+            $.ajax({
+                url: '/admin/views',
+                type: 'post',
+                data: {
+                    dirtype: 3,
+                    dirname: dirname,
+                    val
+                },
+                success(d){
+                    console.log(d)
+                }
+            });
+        };
+    </script>
+</body>
+</html>

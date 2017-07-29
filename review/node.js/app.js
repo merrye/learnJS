@@ -4,7 +4,8 @@ const http = require('http'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
     app = express(),    // 初始化
-    sql = require('./module/mysql');
+    sql = require('./module/mysql'),
+    ws = require('socket.io');
 
 module.exports = app;
 
@@ -60,6 +61,95 @@ app.use('/' , require('./router/index'));
 
 // app.use('/admin' , require('./router/admin'));
 
-http.createServer(app).listen(3000 , (err , data) => {
+const fs = require('fs');
+app.post('/fs' , (req , res) => {
+    const data = req.body.data,
+        d = data.replace(/^data:image\/\w+;base64,/,""),
+        db = Buffer.from(d , 'base64'),
+        filename = Date.now();
+    console.log(req.body, d);
+    fs.writeFile(`./${filename}.png` , db , (err , data) => {
+        res.json({
+            success: filename
+        });
+    });
+})
+
+let server = http.createServer(app).listen(3000 , (err , data) => {
     console.log("app start at port 3000...");
+});
+
+let io = ws(server),
+    userList = {},
+    userNum = 0;
+
+// 监听事件 
+// connection 打开前端页面触发
+// socket 是独立的
+io.on('connection' , socket => {
+    // console.log(socket)
+
+    // 发送消息的方法  name content
+    io.emit('Merry' , {
+       c: 'welcome'
+    });
+
+    socket.on('thanks' , (d) => {
+        console.log(d)
+    });
+
+    // 接收前台返回回来的内容
+    socket.on('ms' , (d) => {
+        console.log(d)
+
+        // 把内容广播出去
+        io.emit('chat' , {
+            txt: d.txt,
+            name: socket.name
+        });
+    });
+
+    socket.on('login' , (d) => {
+        userList[d.userid] = d.name;
+        socket.name = d.name;
+        socket.userid = d.userid;
+        userNum ++;
+        io.emit('login' , {
+            name: d.name,
+            userid: d.userid,
+            userNum,
+            userList
+        });
+    });
+
+    // disconnect 退出时触发的事件
+    socket.on('disconnect' , () => {
+        console.log("用户" + socket.name + "退出聊天室。")
+        delete userList[socket.userid];
+        userNum --;
+        io.emit('logout' , {
+            name: socket.name,
+            userNum,
+            userList
+        })
+    });
+
+    socket.on('chatroom' , (d) => {
+        // 加入房间的方法
+        socket.join('cr');
+        io.sockets.in('cr').emit('hello' , {
+            d: 'welcome'
+        });
+    });
+
+    socket.on('outcr' , (d) => {
+        socket.leave('cr');
+        io.sockets.in('cr').emit('hello' , {
+            d: 'leave'
+        });
+    });
+
+    socket.on('meetroom' , (d) => {
+        socket.join('mr');
+    });
 });

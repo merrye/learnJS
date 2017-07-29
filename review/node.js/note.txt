@@ -25,3 +25,7 @@ node目录的配置
 SELECT * FROM article WHERE title LIKE %img%
 
 %img%   匹配 *img* 只要带有img都可以匹配
+
+websocket   
+    连接协议 ws / wss
+    服务器   <===>   浏览器   双向  及时通讯
