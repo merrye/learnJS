@@ -20,3 +20,8 @@ node目录的配置
     2.router    路由文件
     3.views     模板文件
     4.module    自己写的模板
+
+
+SELECT * FROM article WHERE title LIKE %img%
+
+%img%   匹配 *img* 只要带有img都可以匹配

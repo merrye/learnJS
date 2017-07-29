@@ -3,10 +3,10 @@ const app = require('../app'),
     navdata = require('./nav');
 
 app.use((req , res , next) => {
-    if(req.cookies.login){
+    if(req.cookies && req.cookies.login){
         res.locals.login = req.cookies.login.name;
     };
-    if(!req.session.admin && res.locals.login){
+    if(req.session && !req.session.admin && res.locals.login){
         sql('SELECT * FROM users WHERE name = ?' , [res.locals.login] , (err , data) => {
             data.length && (req.session.admin = data[0].admin);
             next();
@@ -17,7 +17,7 @@ app.use((req , res , next) => {
 });
 
 app.use((req , res , next) => {
-    if(!req.session.navdata){
+    if(req.session && !req.session.navdata){
         navdata(data => {
             req.session.navdata = data;
             next();

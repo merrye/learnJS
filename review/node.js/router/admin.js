@@ -98,4 +98,18 @@ router.post('/article' , upload.single('file') , (req , res) => {
     // });
 });
 
+router.get('/nav' , (req , res) => {
+    sql("SELECT * FROM nav WHERE level = 1" , (err , data) => {
+        res.render("admin/nav" , {
+            data
+        });
+    });
+});
+
+router.post('/nav' , (req , res) => {
+    sql("INSERT INTO nav (title , navid , level , url) VALUES(? , ? , 1 , ?)",[] , (err , data) => {
+        res.render("admin/nav");
+    });
+});
+
 module.exports = router;

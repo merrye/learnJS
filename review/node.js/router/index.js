@@ -104,4 +104,10 @@ router.get('/nav' , (req , res) => {
     res.render('nav');
 });
 
+router.get('/search' , (req , res) => {
+    sql("SELECT * FROM articles WHERE title LIKE ?" , ['%'+req.query.search+'%'] ,(err , data) => {
+        res.send(data);
+    });
+});
+
 module.exports = router;
