@@ -81,22 +81,22 @@ router.get('/article' , (req , res) => {
 router.post('/article' , upload.single('file') , (req , res) => {
     // console.log(req.file);
 
-    // const title = req.body.title,
-    //     tag = req.body.tag,
-    //     author = req.body.author,
-    //     content = req.body.content,
-    //     img = '/upload/' + req.file.filename;
-    //     time = new Date().toLocaleString();
-    //     console.log(req.body)
+    const title = req.body.title,
+        tag = req.body.tag,
+        author = req.body.author,
+        content = req.body.content,
+        img = '/upload/' + req.file.filename;
+        time = new Date().toLocaleString();
+        // console.log(req.body);
 
-    // sql("INSERT INTO articles (title , tag , author , content , time , img) VALUES(? , ? , ? , ? , ? , ?)" , [title , tag , author , content , time , img] , (err , data) => {
-    //     if(err){
-    //         res.send("fail");
-    //     };
-    //     res.json({
-    //         result: 'ok'
-    //     });
-    // });
+    sql("INSERT INTO articles (title , tag , author , content , time , img) VALUES(? , ? , ? , ? , ? , ?)" , [title , tag , author , content , time , img] , (err , data) => {
+        if(err){
+            res.send("fail");
+        };
+        res.json({
+            result: 'ok'
+        });
+    });
 });
 
 router.get('/nav' , (req , res) => {
