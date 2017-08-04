@@ -46,10 +46,34 @@
     function F(n , total = 1){
         return n === 1 ? total : F(n - 1 , total * n)
     };
-    console.time(1)
-    console.log(f(20));
-    console.timeEnd(1)
-    console.time(1)
-    console.log(F(20));
-    console.timeEnd(1)
+    // console.time(1)
+    // console.log(f(20));
+    // console.timeEnd(1)
+    // console.time(1)
+    // console.log(F(20));
+    // console.timeEnd(1)
+   
+    // 尾递归优化的实现
+    // 蹦床函数
+    function tco(f){
+        let value,
+            active = false,
+            accumulated = [];
+        return function accumulator(){
+            accumulated.push(arguments);
+            if(!active){
+                active = true;
+                while(accumulated.length){
+                    value = f.apply(this,accumulated.shift());
+                };
+                active = false;
+                return value;
+            };
+        };
+    };
+
+    let sum = tco(function(x , y){
+        return y > 0 ? sum(x + 1,y -1) : x;
+    });
+    console.log(sum(1 , 5));
 }
