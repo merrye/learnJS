@@ -17,7 +17,6 @@ router.post('/',(req,res)=>{
             // 加密
             let newPwd = md5.update(pwd).digest('hex');
             sql('INSERT INTO user (id,username,pwd,admin) VALUES (NULL , ? , ? , 0)',[user,newPwd],(err,data)=>{
-                // console.log(err);
                 if(err){
                     res.render('err');
                     return;
