@@ -1,0 +1,22 @@
+.content .title{
+    padding: 1em 10px;
+}
+.content .text{
+    color: rgba(0 ,0 ,0 ,.6);
+    padding: 1em 2em;
+}
+.content .text > li{
+    list-style-type: disc;
+    height: 35px;
+    line-height: 35px;
+}
+.content .text > li > a{
+    font-size: 1.2em;
+    text-decoration: underline;
+}
+.content .text > li > a:hover{
+    color: #1296db;
+}
+.content .text > li > font{
+    font-size: 1.2em;
+}

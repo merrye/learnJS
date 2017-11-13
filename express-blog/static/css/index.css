@@ -1,0 +1,51 @@
+#Blog #content.container{
+    top: 30%;
+}
+#Blog #content{
+    width: 400px;
+    height: 220px;
+    transition: .3s;
+    transform-style: preserve-3d;
+    transform: rotateX(0deg) rotateY(0deg);
+    transform-origin: 50% 50%;
+    margin-left: -200px;
+}
+#Blog #content .home{
+    position: absolute;
+    top: 45%;
+    height: 40px;
+    cursor: pointer;
+    border-bottom: 2px solid rgb(150 , 150 , 150);
+}
+#Blog #content .home::before{
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 10px;
+    width: 15px;
+    height: 15px;
+    border: 0px solid rgb(150 , 150 , 150);
+    border-width: 1px 1px 0 0;
+    transform: rotateZ(45deg);
+}
+#Blog #content .home::after{
+    content: '';
+    position: absolute;
+    top: 40%;
+    left: 20px;
+    width: 15px;
+    height: 15px;
+    border: 0px solid rgb(150 , 150 , 150);
+    border-width: 1px 1px 0 0;
+    transform: rotateZ(45deg);
+}
+#Blog #content .home .home-text{
+    width: 100%;
+    height: 40px;
+    text-indent: 50px;
+    font: 32px / 50px 'Segoe Print';
+    display: block;
+    position: relative;
+    color: #000;
+    text-decoration: none;
+}

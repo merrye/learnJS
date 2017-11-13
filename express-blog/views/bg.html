@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <link rel="icon" href="/images/favicon.ico" />
+    <link rel="bookmark" href="/images/favicon.ico" />
+    {% block css %}{% endblock %}
+    <link rel="stylesheet" href="/css/bg.css">
+    <script src="/js/merry.js"></script>
+    <script src="/js/jquery-3.2.1.min.js"></script>
+</head>
+<body>
+    <!-- Blog start -->
+    <div id="Blog">
+        {% block main %}{% endblock %}
+        <!-- canvas start -->
+        <canvas id="canvas"></canvas>
+        <!-- canvas end -->
+    </div>
+    <!-- Blog end -->
+    <script src="/js/bg.js"></script>
+    {% block js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,144 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body , html{
+    height: 100%;
+    overflow: hidden;
+}
+a{
+    color: rgb(50 ,50 ,50);
+    text-decoration: none;
+}
+li{
+    list-style: none;
+}
+.icon{
+    width: 1.5em;
+    height: 1.5em;
+    overflow: hidden;
+    fill: currentColor;
+    vertical-align: -0.15em;
+}
+#container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    display: -webkit-flex;
+}
+/*
+    introduction
+*/
+#introduction{
+    flex: 3.5;
+    border-right: 1px solid rgba(150, 150, 150, .3);
+    position: relative;
+}
+.intro-content{
+    width: 100%;
+    height: 250px;
+    margin: 150px auto 0;
+}
+.intro-content .intro-avator #intro-avator-canvas{
+    width: 130px;
+    height: 150px;
+    display: block;
+    margin: 0 auto;
+}
+.intro-content > h3{
+    text-align: center;
+    font-size: 36px;
+    padding: 10px 0;
+    cursor: pointer;
+    user-select: none;
+}
+.intro-content > ul{
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+}
+.intro-content > ul > li{
+    float: left;
+    width: 2.5em;
+    height: 2.5em;
+    position: relative;
+    cursor: pointer;
+}
+.intro-content > ul > li > a{
+    width: 100%;
+    height: 100%;
+    display: block;
+    position: absolute;
+    left: 0;
+}
+.intro-content > ul > li:hover > a{
+    animation: a_move .5s;
+}
+@keyframes a_move{
+    0%{
+        top: 0;
+    }
+    60%{
+        top: -100%;
+    }
+    70%{
+        top: 50%;
+    }
+    100%{
+        top: -0%;
+    }
+}
+.intro-content > ul > li > a > svg{
+    margin: .5em;
+}
+.intro-footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 20px;
+    color: rgb(50 ,50 ,50);
+}
+
+/* #main */
+#main{
+    flex: 6.5;
+    display: flex;
+    flex-direction: column;
+}
+.nav-list{
+    flex: 0 0 21px;
+    width: 100%;
+    padding: 20px;
+    border: 1px solid rgba(150 ,150 ,150, .2);
+    position: relative;
+    overflow: hidden;
+}
+.nav-list > ul{
+    overflow: hidden;
+}
+.nav-list > ul > li{
+    float: left;
+    margin: 0 15px;
+    cursor: pointer;
+    user-select: none;
+}
+.nav-list > ul > li:hover > a{
+    color: #1296db;
+}
+.nav-list > ul > li.clicked > a{
+    color: #1296db;
+}
+.nav-list .nav-line{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    display: none;
+    background-color: #1296db;
+}
+#main .content{
+    flex: 1;
+    padding: 20px;
+}
