@@ -79,4 +79,7 @@ for(let type of TYPES){
     exp[type] = Sequelize[type];
 };
 
-module.exports = exp;
+module.exports = {
+    exp,
+    sequelize
+};
