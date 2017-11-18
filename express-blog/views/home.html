@@ -3,7 +3,16 @@
     <link rel="stylesheet" href="/css/home.css">
 {% endblock %}
 {% block main %}
-    <h3>Test</h3>
+    {% for article in article_list %}
+        <div class="article-list">
+            <h3 class="title"><a href={{article.href}}>{{ article.title }}</a></h3>
+            <div class="dec">{{ article.description }}</div>
+            <div class="article-info">
+                <span class="time"><i class="fa fa-sun-o" aria-hidden="true"></i>{{ article.createdAt }}</span>
+                <span class="tag"><i class="fa fa-tag" aria-hidden="true"></i>{{ article.tag }}</span>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
 {% block js %}
     <script src="/js/home.js"></script>

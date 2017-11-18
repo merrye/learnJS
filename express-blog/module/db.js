@@ -32,11 +32,11 @@ function defineModel(name,attributes){
         primaryKey: true
     };
     attrs.createdAt = {
-        type: Sequelize.BIGINT,
+        type: Sequelize.STRING(255),
         allowNull: false
     };
     attrs.updatedAt = {
-        type: Sequelize.BIGINT,
+        type: Sequelize.STRING(255),
         allowNull: false
     };
     attrs.version = {
@@ -48,7 +48,7 @@ function defineModel(name,attributes){
         timestamps: false,
         hooks: {
             beforeValidate: function(obj){
-                let now = Date.now();
+                let now = Date.now().toLocaleDateString();
                 if(obj.isNewRecord){
                     obj.createdAt = now;
                     obj.updatedAt = now;

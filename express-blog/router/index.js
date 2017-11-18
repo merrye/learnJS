@@ -1,8 +1,7 @@
 const express = require("express"),
     {aseEncrypt, aesDecrypt} = require("../module/encrypt"),
     model = require("../module/model"),
-    User = model.User,
-    Article = model.Article,
+    {Tag , User , Image , Article} = model,
     router = express.Router();
 
 router.get("/" , (req , res) => {
@@ -13,7 +12,7 @@ router.get("/" , (req , res) => {
 
 router.get("/home" , (req , res) => {
     res.render("home" , {
-        title: "Home | Merry's Blog"
+        title: "Home | Merry's Blog",
     });
 });
 
