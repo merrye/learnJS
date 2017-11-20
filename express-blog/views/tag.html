@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="/css/tag.css">
 {% endblock %}
 {% block main %}
+<<<<<<< HEAD
     <div class="article-list">
         {% for article_list in articles_list %}
             {% for title,articles in article_list %}
@@ -16,4 +17,17 @@
             {% endfor %}
         {% endfor %}
     </div>
+=======
+    {% for article_list in articles_list %}
+        {% for title,articles in article_list %}
+            <h3 class="year_title">{{ title }}</h3>
+            {% for article in articles %}
+                <div class="article">
+                    <span class="title"><a href="{{article.href}}">{{article.title}}</a></span>
+                    <span class="date">{{article.createdAt.substr(5)}}</span>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endfor %}
+>>>>>>> f1885f9a50f9cc5f889874123d7ecc879259ba8d
 {% endblock %}

@@ -59,8 +59,6 @@
 }
 .article > span{
     display: inline-block;
-}
-.article > span.title{
     text-indent: 32px;
 }
 .article .title >a{
