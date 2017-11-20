@@ -1,0 +1,21 @@
+.year_title{
+    padding: 15px 0;
+    font: bold 26px / 30px "Microsoft yahei";
+}
+.article{
+    line-height: 40px;
+    color: rgba(0,0,0,.6);
+    display: flex;
+    justify-content: space-between;
+}
+.article > span{
+    display: inline-block;
+    text-indent: 12px;
+}
+.article .title >a{
+    color: rgba(0,0,0,.6);
+    cursor: pointer;
+}
+.article .title >a:hover{
+    color: #1296db;
+}

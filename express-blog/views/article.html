@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block css %}
+    <link rel="stylesheet" href="/css/article.css">
+{% endblock %}
+{% block main %}
+    <div class="article">
+        <h3>{{ article.title }}</h3>
+        <div class="article-info">
+                <span class="time">
+                    <i class="fa fa-sun-o" aria-hidden="true"></i>
+                    {{ article.createdAt }}
+                </span>
+                <span class="tag">
+                    <i class="fa fa-tag" aria-hidden="true"></i>
+                    {% for tag in article.tags %} 
+                        <a href="/tag/{{tag.content}}">{{ tag.content }}</a>&nbsp;&nbsp;
+                    {% endfor %}
+                </span>
+            </div>
+        <div class="article-content">{{ article.content }}</div>
+    </div>
+    <div class="nav">
+        {% if prevArticle %}
+            <a class="prev" href="{{prevArticle.href}}" title="{{prevArticle.title}}">
+                <p>Previous</p>
+                <p>{{ prevArticle.title }}</p>
+            </a>
+        {% endif %}
+        {% if nextArticle %}
+            <a class="next" href="{{nextArticle.href}}" title="{{nextArticle.title}}">
+                <p>Next</p>
+                <p>{{ nextArticle.title }}</p>
+            </a>
+        {% endif %}
+    </div>
+{% endblock %}

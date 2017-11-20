@@ -1,6 +1,5 @@
 const express = require("express"),
     {aseEncrypt, aesDecrypt} = require("../module/encrypt"),
-    sequelize = require("../module/db").sequelize,
     model = require("../module/model"),
     {Tag , User , Image , Article} = model,
     router = express.Router();
@@ -10,41 +9,33 @@ router.get("/" , (req , res) => {
         title: "Merry's Blog"
     });
 });
+
 router.get("/home" , (req , res) => {
     (async () => {
-        const result = await sequelize.query("SELECT a.*, t.content as tag FROM articles a LEFT JOIN tags t ON a.id = t.article_id");
-        // const [article_list ,tag_list ] = await Promise.all([getArtilce() , getTag()]);
-        // const result = await Article.findAll({
-        //     // limit: 10,
-        //     // order: [
-        //     //     ['createdAt', 'DESC']
-        //     // ],
-        //     include: [{
-        //         model: Tag
-        //     }]
-        // });
-        res.json({
-            // article_list,tag_list
-            result
+        const [article_list] = await Promise.all([getArtilce()]);
+        let arr = [];
+        [...article_list].forEach((ele) => {
+            arr.push((async (ele) => {
+                return await Tag.findAll({
+                    where: {
+                        article_id: ele.id
+                    }
+                });
+            })(ele));
         });
-        // res.render("home" , {
-        //     title: "Home | Merry's Blog",
-        //     article_list
-        // });
+        const r = await Promise.all(arr);
+        [...article_list].forEach((ele , index) => {
+            ele.tags = r[index];
+        });
+        res.render("home" , {
+            title: "Home | Merry's Blog",
+            article_list
+        });
 
         async function getArtilce(){
             return await Article.findAll({
                 order: [
                     ['createdAt', 'DESC']
-                ],
-                limit: 10
-            });
-        };
-        
-        async function getTag(){
-            return await Tag.findAll({
-                order: [
-                    ['id', 'DESC']
                 ],
                 limit: 10
             });
@@ -116,5 +107,9 @@ router.get("/logout" , (req , res) => {
 });
 
 router.use("/admin" , require("./admin"));
+
+router.use("/article" , require("./article"));
+
+router.use("/tag" , require("./tag"));
 
 module.exports = router;

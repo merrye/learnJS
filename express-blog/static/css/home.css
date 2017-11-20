@@ -1,5 +1,5 @@
 #main .content .article-list{
-    padding: 20px 10px;
+    padding: 20px 0px;
     border-bottom: 1px solid rgba(150 ,150 ,150, .5);
 }
 #main .content .article-list .title{
@@ -21,4 +21,7 @@
 }
 #main .content .article-list .article-info > span > i{
     margin-right: 5px;
+}
+#main .content .article-list .article-info > span > a:hover{
+    color: #1296db;
 }
