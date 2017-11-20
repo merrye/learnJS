@@ -10,7 +10,7 @@
 }
 .article > span{
     display: inline-block;
-    text-indent: 12px;
+    text-indent: 32px;
 }
 .article .title >a{
     color: rgba(0,0,0,.6);
