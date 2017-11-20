@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+    <!-- <p>title:   <input class="title" type="text" /></p>
+    <p>tag:     <input class="tag" type="text" /></p>
+    <p>author:  <input class="author" type="text" /></p>
+    <p>content: <textarea class="content"></textarea></p>
+    <p>img: <input type="file" class="file"/></p>
+    <button>发布文章</button> -->
+    <form action="/admin/article" enctype="multipart/form-data" method="post">
+        <p>title:   <input name="title" type="text" /></p>
+        <p>tag:     <input name="tag" type="text" /></p>
+        <p>author:  <input name="author" type="text" /></p>
+        <p>img:     <input type="file" name="file" multiple="multiple" /></p>
+        <p>content: <textarea name="content"></textarea></p>
+        <p><input type="submit"></p>
+    </form> 
+    <script>
+        $("button").click(() => {
+            $.ajax({
+                url: '/admin/article',
+                type: 'post',
+                dataType: 'json',
+                contentType: 'multipart/form-data',
+                data: {
+                    title: $('.title').val(),
+                    tag: $('.tag').val(),
+                    author: $('.author').val(),
+                    content: $('.content').val(),
+                },
+                success(data){
+
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+a{
+	text-decoration: none;
+}
+a,span{
+	display: block;
+}
+a{
+	color: #000;	
+}
+body{
+	background: #F0F0F0;
+}
+/* wrapper */
+#wrapper{
+	width: 640px;
+	height: 1000px;
+	border: 1px solid #E3E3E3;
+	border-top: none;
+	margin: 0 auto;
+	background: #F0F0F0;
+}
+/* header */
+	#header{
+		width: 100%;
+		height: 245px;
+		position: relative;
+		background: #fff;
+	}
+	#header .bg{
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	#header .account{
+		width: 65px;
+		height: 100px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -50px 0 0 -32.5px;
+		z-index: 2;
+	}
+	#header .account .headerImg{
+		width: 100%;
+		height: 65px;
+		border-radius: 100%;
+		display: block;
+		overflow: hidden;
+	}
+	#header .account .name{
+		width: 100%;
+		height: 30px;
+		display: block;
+		text-align: center;
+		line-height: 30px;
+		margin-top: 5px;
+		font-size: 14px;
+	}
+	#header .info{
+		width: 128px;
+		height: 40px;
+		position: absolute;
+		top: 50%;
+		right: 0;
+		font-size: 12px;
+		background: #fff;
+		border-radius: 20px 0 0 20px;
+		cursor: pointer;
+	}
+	#header .info a{
+		width: 100%;
+		height: 100%;
+	}
+	#header .info a .myAccount{
+		width: 100%;
+		text-align: center;
+		display: block;
+		margin-top: 3px;
+		color: #ccc;
+	}
+	#header .info a .bindTel{
+		width: 100%;
+		text-align: center;
+		display: block;
+		margin-left: 0px;
+		color: #FD567C;
+	}
+	#header .info a .leftArrow{
+		position: absolute;
+		top: 15px;
+		right: 10px;
+		display: block;
+		width: 6px;
+		height: 6px;
+		border: 2px solid #DEDEE1;
+		border-width: 2px 2px 0 0;
+		transform: rotateZ(45deg);
+	}
+/* order */
+	#order{
+		width: 100%;
+		height: 270px;
+		background: #fff;
+	}
+	#order .myOrder{
+		width: 100%;
+		height: 40px;
+		color: #8D9596;
+		font-size: 15px;
+		line-height: 40px;
+		position: relative;
+	}
+	#order .myOrder a .orderTxt{
+		float: left;
+		padding-left: 15px;
+		color: #8D9596;
+	}
+	#order .myOrder a .allOrder{
+		float: right;
+		margin-right: 40px;
+		font-size: 13px;
+		color: #8D9596;
+	}
+	#order .myOrder .leftArrow{
+		position: absolute;
+		top: 15px;
+		right: 10px;
+		display: block;
+		width: 6px;
+		height: 6px;
+		border: 2px solid #DEDEE1;
+		border-width: 2px 2px 0 0;
+		transform: rotateZ(45deg);
+	}
+	#order .menu{
+		width: 100%;
+		height: 80px;
+	}
+	#order .menu .menuList{
+		width: 100%;
+		height: 100%;
+	}
+	#order .menu .menuList li{
+		float: left;
+		width: 40px;
+		height: 50px;
+		margin: 15px 60px;
+		cursor: pointer;
+	}
+	#order .menu .menuList li a .img{
+		height: 30px;
+		text-align: center;
+		display: block;
+		margin-left: 5px;
+	}
+	#order .menu .menuList li a .txt{
+		height: 20px;
+		line-height: 20px;
+		text-align: center;
+		color: #8D9596;
+		font-size: 12px;
+	}
+	#order .record{
+		width: 100%;
+		height: 150px;
+	}
+	#order .record .recordList li{
+		width: 97%;
+		margin-left: 3%;
+		height: 50px;
+		box-shadow: 0 1px 1px rgb(229,229,229);
+	}
+	#order .record .recordList li a{
+		width: 100%;
+		height: 50px;
+		position: relative;
+	}
+	#order .record .recordList li a .recordImg{
+		float: left;
+		margin-top: 10px;
+	}
+	#order .record .recordList li a .recordTxt{
+		float: left;
+		line-height: 50px;
+		font-size: 15px;
+		color: #8D9596;
+		margin-left: 10px;
+	}
+	#order .record .recordList li a .balloon{
+		position: absolute;
+		top: 10px;
+		right: 35px;
+	}
+	#order .record .recordList li a .leftArrow{
+		margin: 25px 15px 0 0;
+		float: right;
+		display: block;
+		width: 6px;
+		height: 6px;
+		border: 2px solid #DEDEE1;
+		border-width: 2px 2px 0 0;
+		transform: rotateZ(45deg);
+	}
+/* myInfo */
+	#myInfo{
+		width: 100%;
+		height: 150px;
+		margin-top: 10px;
+		background: #fff;
+	}
+	#myInfo .myInfoList li{
+		width: 97%;
+		margin-left: 3%;
+		height: 50px;
+		box-shadow: 0 1px 1px rgb(229,229,229);
+	}
+	#myInfo .myInfoList li a{
+		width: 100%;
+		height: 50px;
+		position: relative;
+	}
+	#myInfo .myInfoList li a .myInfoImg{
+		float: left;
+		margin-top: 10px;
+	}
+	#myInfo .myInfoList li a .myInfoTxt{
+		float: left;
+		line-height: 50px;
+		font-size: 15px;
+		color: #8D9596;
+		margin-left: 10px;
+	}
+	#myInfo .myInfoList li a .leftArrow{
+		margin: 25px 15px 0 0;
+		float: right;
+		display: block;
+		width: 6px;
+		height: 6px;
+		border: 2px solid #DEDEE1;
+		border-width: 2px 2px 0 0;
+		transform: rotateZ(45deg);
+	}
+/* otherInfo */
+	#otherInfo{
+		width: 100%;
+		height: 150px;
+		margin-top: 10px;
+		background: #fff;
+	}
+	#otherInfo .otherInfoList li{
+		width: 97%;
+		margin-left: 3%;
+		height: 50px;
+		box-shadow: 0 1px 1px rgb(229,229,229);
+	}
+	#otherInfo .otherInfoList li a{
+		width: 100%;
+		height: 50px;
+		position: relative;
+	}
+	#otherInfo .otherInfoList li a .myInfoImg{
+		float: left;
+		margin-top: 10px;
+	}
+	#otherInfo .otherInfoList li a .myInfoTxt{
+		float: left;
+		line-height: 50px;
+		font-size: 15px;
+		color: #8D9596;
+		margin-left: 10px;
+	}
+	#otherInfo .otherInfoList li a .leftArrow{
+		margin: 25px 15px 0 0;
+		float: right;
+		display: block;
+		width: 6px;
+		height: 6px;
+		border: 2px solid #DEDEE1;
+		border-width: 2px 2px 0 0;
+		transform: rotateZ(45deg);
+	}
+/* footer */
+	#footer{
+		width: 100%;
+		height: 100px;
+		background: #F0F0F0;
+	}
+	#footer .footerList{
+		width: 245px;
+		height: 25px;
+		margin: 30px auto 0;
+	}
+	#footer .footerList li{
+		float: left;
+		margin: 0 5px;
+		line-height: 25px;
+	}
+	#footer .footerList li a::after{
+		content: '·';
+		margin-left: 15px;
+		font-weight: bold;
+		line-height: 25px;
+	}
+	#footer .footerList li:nth-child(3) a::after{
+		content: '';
+		width: 0;
+		height: 0;
+		display: none;
+	}
+	#footer .footerList li:nth-child(3){
+		margin-right: 0;
+	}
+	#footer .footerList li a span{
+		font-size: 14px;
+		color: #000;
+		float: left;
+	}
+	#footer .footerImg{
+		width: 130px;
+		height: 40px;
+		margin: 15px auto 0;
+	}

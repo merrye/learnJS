@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>用JavaScript获取元素页面的位置</title>
+	<style type="type/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+</head>
+<body>
+	
+	<script>
+		/**
+		* 网页的大小和浏览器窗口的大小
+		* 	浏览器窗口大小 ---->  浏览器窗口看到的面积	
+		*/
+
+		window.onload = () => {
+			console.log(getViewport());
+			console.log(getPagearea());
+		};
+
+		// 获取网页的大小
+		function getViewport(){
+			if(document.compatMode === "BackCompat"){
+				return {
+					width: document.body.clientWidth,
+					height: document.body.clientHeight
+				};
+			}else{
+				return {
+					width: document.documentElement.clientWidth,
+					height: document.documentElement.clientHeight
+				};
+			};
+		};
+
+		function getPagearea(){
+			if(document.compatMode === "BackCompat"){
+				return {
+					width: Math.max(document.body.scrollWidth,document.body.clientWidth),
+					height: Math.max(document.body.scrollHeight,document.body.clientHeight)
+				};
+			}else{
+				return {
+					width: Math.max(document.documentElement.scrollWidth,document.documentElement.clientWidth),
+					height: Math.max(document.documentElement.scrollHeight,document.documentElement.clientHeight)
+				};
+			};
+		};
+
+		// 获取网页元素的绝对 / 相对位置 
+		function getElementLocation(element){
+			let absoluteTop = absoluteLeft= 0,	// 绝对位置
+				relativeTop = relativeLeft = 0, // 相对位置
+				scrollTop = scrollLeft = 0;
+			while (ellement !== nlull){
+				absoluteTop += element.offsetTop;
+				absoluteLeft += element.offsetLeft;
+				element = element.offsetPatent;
+			};
+			if(document.compatMode === "BackCompat"){
+				scrollTop = absoluteTop - document.body.scrollTop;
+				scrollLeft = absoluteLeft - document.body.scrollLeft; 
+			}else{
+				scrollTop = relativeTop - document.documentElement.scrollTop;
+				scrollLeft = relativeLeft - document.documentElement.scrollLeft; 
+			};
+			return {
+				absoluteTop,
+				absoluteLeft,
+				relativeTop,
+				relativeLeft
+			};
+		};
+	</script>
+</body>
+</html>

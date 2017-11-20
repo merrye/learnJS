@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>物流查询</title>
+	<style type="text/css">
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background-color: #E5E5E5;
+		}
+		#main{
+			width: 96%;
+			height: 220px;
+			margin: 20px auto 0;
+		}
+		input{
+			border: none;
+			outline: none;
+		}
+		.text{
+			width: 100%;
+			height:  50px;
+			line-height: 50px;
+			text-indent: 15px;
+			color: #000;
+			position: relative;
+			margin-bottom: 15px;
+		}
+		.get{
+			width: 30%;
+			height: 35px;
+			line-height: 35px;
+			position: absolute;
+			top: 28px;
+			right: 35px;
+			color: #fff;
+			background-color: #FCDCAD;
+			text-align: center;
+		}
+		.find{
+			width:40%;
+			height: 45px;
+			line-height: 45px;
+			color: #fff;
+			text-align: center;
+			background-color: #FF6686;
+			min-width: 175px;
+		}
+		#main p{
+			width: 182px;
+			font-size: 12px;
+			color: #333;
+			margin-top: 10px;
+		}
+	</style>
+	<script src="../../js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+	<!-- wrap start -->
+	<div id="wrap">
+		<!-- main start -->
+		<div id="main">
+			<input class="text" type="text" placeholder="收货人手机号码">
+			<input class="get" type="text" value="获取验证码" disabled>
+			<input class="text" type="text" placeholder="请输入验证码">
+			<input class="find" type="text" value="查询">
+			<p>非收花人请在订单详情中查询物流</p>
+		</div>
+		<!-- main end -->
+	</div>
+	<!-- wrap end -->
+	<script>
+		const $p = $('#main p'),
+			$find = $('#main .find');
+	
+		$p.css('marginLeft', $(window).innerWidth() / 2 - parseInt($p.width()) / 2 + 'px');
+		$find.css('marginLeft', $(window).innerWidth() / 2 - parseInt($find.width()) / 2 + 'px');
+		$(window).resize(function() {
+			$p.css('marginLeft', $(window).innerWidth() / 2 - parseInt($p.width()) / 2 + 'px');
+			$find.css('marginLeft', $(window).innerWidth() / 2 - parseInt($find.width()) / 2 + 'px');
+		});
+	</script>
+</body>
+</html>

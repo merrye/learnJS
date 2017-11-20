@@ -1,0 +1,27 @@
+{
+    "name": "hello-mysql",
+    "version": "0.0.1",
+    "description": "hello-mysql",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js",
+        "test": "mocha"
+    },
+    "keywords": [
+        "mysql"
+    ],
+    "author": "Merre Ye",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/merrye/learnJS.git"
+    },
+    "dependencies":{
+        "assert": "1.4.1",
+        "koa": "latest"
+    },
+    "devDependencies":{
+        "mysql": "2.11.1",
+        "sequelize": "3.24.1"
+    }
+}

@@ -1,0 +1,115 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a{
+    text-decoration: none;
+}
+body,html{
+    height: 100%;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.header{
+    flex: 0 0 60px;
+    width: 100%;
+    background-color: #23262E;
+    color: rgba(255,255,255,.7);
+    display: flex;
+    justify-content: space-between;
+    user-select: none;
+}
+.header > div{
+    flex: 0 0 200px;
+    cursor: text;
+}
+.header .logo{
+    font: normal 26px / 60px "Microsoft yahei";
+    padding-left: 30px;
+}
+.header .userInfo{
+    padding-right: 30px;
+    display: flex;
+}
+.header .userInfo > img,.header .userInfo > span{
+    flex: 1;
+    line-height: 60px;
+    cursor: pointer;
+    text-align: center;
+}
+.header .userInfo > img{
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    flex: 0 0 50px;
+    margin: 5px 0;
+}
+.header .userInfo > span > a{
+    color: rgba(255,255,255,.7);
+}
+.header .userInfo > span:hover , .header .userInfo > span > a:hover{
+    color: rgb(255,255,255);
+}
+.content{
+    flex: 1;
+    display: flex;
+}
+.content .slideMenu{
+    flex: 0 0 225px;
+    background-color: #393D49;
+    position: relative;
+}
+.content .slideMenu .item{
+    width: 100%;
+    text-indent: 12px;
+    font: normal 16px / 50px "Microsoft yahei";
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    color: #FFF;
+}
+.content .slideMenu .item::after{
+    content: "";
+    width: 0;
+    height: 0;
+    border: 0 solid transparent;
+    border-top: 10px solid #FFF;
+    border-left-width: 8px;
+    border-right-width: 8px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    transform: rotateZ(0deg);
+    transition: .2s;
+}
+.content .slideMenu .item.clicked::after{
+    transform: rotateZ(180deg);
+}
+.content .slideMenu .item:hover{
+    background-color: #4E5465;
+}
+.content .slideMenu .item .sub-item{
+    display: none;
+}
+.content .slideMenu .item .sub-item > li{
+    background-color: rgba(0,0,0,.3)!important;
+    text-indent: 24px;
+    font: normal 14px / 50px "Microsoft yahei";
+    color: rgba(255,255,255,.7);
+}
+.content .slideMenu .item .sub-item > li:hover{
+    color: #FFF;
+}
+.content .slideMenu .slider{
+    width: 8px;
+    height: 0px;
+    background-color: #5FB878;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: .15s;
+}

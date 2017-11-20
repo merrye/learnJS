@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="../css/style_personalCente.css">
+    <title>会员中心</title>
+</head>
+<body>
+    <!-- wrapper start -->
+	<div id="wrapper">
+		<!-- header start -->
+		<div id="header">
+			<div class="bg">
+				<img src="../img/personalCenter/banner.png" width="640" height="245" alt="">
+			</div>
+			<div class="account">
+				<span class="headerImg"><img src="../img/personalCenter/0.jpg" width="65" height="65" alt=""></span>
+				<span class="name"><%= userInfo.name %></span>
+			</div>
+			<div class="info">
+				<a href="/userCenter/userInfo/<%= userInfo.name %>.html">
+					<span class="myAccount">我的账户</span>
+					<span class="bindTel">绑定手机即送1积分</span>
+					<span class="leftArrow"></span>
+				</a>
+			</div>
+		</div>
+		<!-- header end -->
+		<!-- order start -->
+		<div id="order">
+			<div class="myOrder">
+				<a href="/userCenter/orders/<%= userInfo.name %>&state=5.html"><span class="orderTxt">我的订单</span></a>
+				<a href="/userCenter/orders/<%= userInfo.name %>&state=5.html"><span class="allOrder">查看全部订单</span></a>
+				<span class="leftArrow"></span>
+			</div>
+			<div class="menu">
+				<ul class="menuList">
+					<li>
+						<a href="/userCenter/orders/<%= userInfo.name %>&state=1.html">
+							<img class="img" src="../img/personalCenter/dai.png" width="30" height="25" alt="">
+							<span class="txt">待付款</span>
+						</a>
+					</li>
+					<li>
+						<a href="/userCenter/orders/<%= userInfo.name %>&state=2.html">
+							<img class="img" src="../img/personalCenter/Group 3@3x.png" width="30" height="25" alt="">
+							<span class="txt">服务中</span>
+						</a>
+					</li>
+					<li>
+						<a href="/userCenter/orders/<%= userInfo.name %>&state=3.html">
+							<img class="img" src="../img/personalCenter/Group 2@3x.png" width="30" height="25" alt="">
+							<span class="txt">已完成</span>
+						</a>
+					</li>
+					<li>
+						<a href="/userCenter/orders/<%= userInfo.name %>&state=4.html">
+							<img class="img" src="../img/personalCenter/Combined Shape@3x.png" width="30" height="25" alt="">
+							<span class="txt">待评价</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="record">
+				<ul class="recordList">
+					<li>
+						<a href="javascript:void(0)">
+							<img class="recordImg" width="30" height="30" src="../img/personalCenter/iconfont-gd@3x.png" alt="">
+							<span class="recordTxt">工单记录</span>
+							<span class="leftArrow"></span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)">
+							<img class="recordImg" width="30" height="30" src="../img/personalCenter/icon-wl@3x.png" alt="">
+							<span class="recordTxt">查询物流</span>
+							<span class="leftArrow"></span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0)">
+							<img class="recordImg" width="30" height="30" src="../img/personalCenter/year.png" alt="">
+							<span class="recordTxt">我的尾款</span>
+							<img class="balloon" src="../img/personalCenter/525.png" width="35" height="35" />
+							<span class="leftArrow"></span>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- order end -->
+		<!-- myInfo start -->
+		<div id="myInfo">
+			<ul class="myInfoList">
+				<li>
+					<a href="/userCenter/jifen/<%= userInfo.name %>.html">
+						<img  width="30" height="30" src="../img/personalCenter/icon-jifen@3x.png" alt="" class="myInfoImg">
+						<span class="myInfoTxt">我的积分</span>
+						<span class="leftArrow"></span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0)">
+						<img  width="30" height="30" src="../img/personalCenter/icon-quan@3x.png" alt="" class="myInfoImg">
+						<span class="myInfoTxt">我的优惠券</span>
+						<span class="leftArrow"></span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0)">
+						<img  width="30" height="30" src="../img/personalCenter/icon-tg@3x.png" alt="" class="myInfoImg">
+						<span class="myInfoTxt">我的团购</span>
+						<span class="leftArrow"></span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!-- myInfo end -->
+		<!-- otherInfo start -->
+		<div id="otherInfo">
+			<ul class="otherInfoList">
+				<li>
+					<a href="my/orders.html">
+						<img  width="30" height="30" src="../img/personalCenter/icon-gift@3x.png" alt="" class="myInfoImg">
+						<span class="myInfoTxt">收花人或第三方订单查阅</span>
+						<span class="leftArrow"></span>
+					</a>
+				</li>
+				<li>
+					<a href="my/dh.html">
+						<img  width="30" height="30" src="../img/personalCenter/icon-dh@3x.png" alt="" class="myInfoImg">
+						<span class="myInfoTxt">鲜花卡兑换</span>
+						<span class="leftArrow"></span>
+					</a>
+				</li>
+				<li>
+					<a href="my/help_feedback.html">
+						<img  width="30" height="30" src="../img/personalCenter/icon-feedback@3x.png" alt="" class="myInfoImg">
+						<span class="myInfoTxt">吐槽&建议</span>
+						<span class="leftArrow"></span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<!-- otherInfo end -->
+		<!-- footer start -->
+		<div id="footer">
+			<ul class="footerList">
+				<li>
+					<a href="/">
+						<span>首页</span>
+					</a>
+				</li>
+				<li>
+					<a href="/userCenter/name=<%= userInfo.name %>.html">
+						<span>会员中心</span>
+					</a>
+				</li>
+				<li>
+					<a href="javascript:void(0)">
+						<span>常见问题</span>
+					</a>
+				</li>
+			</ul>
+			<div class="footerImg">
+				<a href="/"><img src="../img/personalCenter/logo_open.png" width="130" height="40" alt=""></a>
+			</div>
+		</div>
+		<!-- footer end -->
+	</div>
+	<!-- wrapper end -->
+</body>
+</html>

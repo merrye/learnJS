@@ -1,0 +1,58 @@
+.article{
+    border-bottom: 1px solid rgba(150 ,150 ,150, .2);
+}
+.article h3{
+    letter-spacing: 1px;
+    font: bold 22px / 32px "Microsoft yahei";
+    text-align: center;
+}
+.article .article-info{
+    padding: 5px 0;
+    font-size: 14px;
+    text-align: center;
+    color: rgba(0,0,0,.6);
+}
+.article .article-info > span{
+    margin-right: 5px;
+}
+.article .article-info > span > i{
+    margin-right: 5px;
+}
+.article .article-info > span > a{
+    color: rgba(0,0,0,.6);
+}
+.article .article-info > span > a:hover{
+    color: #1296db;
+}
+.article-content{
+    padding-bottom: 20px;
+    color: rgba(0,0,0,.6);
+}
+.nav{
+    padding-top: 30px;
+}
+.nav > a{
+    width: 200px;
+    height: 50px;
+    display: inline-block;
+    color: rgba(0,0,0,.6);
+    border: 1px solid rgba(0,0,0,.6);
+}
+.nav > a.next{
+    float: left;
+}
+.nav > a.next{
+    float: right;
+}
+.nav > a:hover{
+    color: rgb(0,0,0);
+    border: 1px solid rgb(0,0,0);
+}
+.nav > a > p{
+    text-align: center;
+    line-height: 25px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

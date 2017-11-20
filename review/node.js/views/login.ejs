@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+    <p>login</p>
+    <% if(locals.login){ %>
+        <p>欢迎<%= locals.login %></p>
+    <% }else{ %>
+        <form action="/login" method="post">
+            <input type="text" name="name" />
+            <input type="password" name="password" />
+            <input type="submit" />
+        </form>
+    <% } %>
+    <script>
+        // $('.subimt').click(() => {
+        //     $.ajax({
+        //         url: '/login',
+        //         type: 'post',
+        //         dataType: 'json',
+        //         data: {
+        //             name: $('.name').val(),
+        //             password: $('.password').val()
+        //         },
+        //         success: (data) => {
+
+        //         }
+        //     });
+        // });
+    </script>
+</body>
+</html>

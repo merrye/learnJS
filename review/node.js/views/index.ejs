@@ -1,0 +1,75 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+
+    index
+    <% if(locals.login){ %>
+        <p>欢迎<%= locals.login %></p>  
+        <% if(locals.admin){ %>
+            管理员
+        <% } %>
+        <a href="/logout">退出登录</a>
+    <% } %>
+
+    <% for(let i = 0;i < data.length;i ++){ %>
+        <div>
+            <a href="/article/<%= data[i].id %>.html">
+                <p>title: <%= data[i].title %></p>
+                <p>tag: <%= data[i].tag %></p>
+                <p>img: <img src=<%= data[i].img %> alt=""></p>
+                <p>author: <%= data[i].author %></p>
+                <p>content: <%= data[i].content %></p>
+                <p>time: <%= data[i].time %></p>
+                <hr/>
+            </a>
+        </div>
+    <% } %>
+
+    <!-- <form action="/reg" method="post">
+        <input type="text" name="name" />
+        <input type="password" name="password" />
+        <input type="submit" />
+    </form> -->
+
+    <!-- <input type="text" class="name" />
+    <input type="password" class="password" />
+    <input type="submit" class="submit" /> -->
+
+    <!--<form action="/reg" method="get">
+        <input type="text" name="name" />
+        <input type="password" name="password" />
+        <input type="submit" />
+    </form> -->
+    <!--<% include header.ejs %>
+    <p><%= name %></p>
+    <p><%= html %></p>
+    <p><%- html %></p>
+    <p><%  %></p>-->
+    <script>
+        let $name = $('.name'),
+            $pwd = $('.password'),
+            $submit = $('.submit');
+
+        $submit.click(() => {
+            $.ajax({
+                url: '/reg',
+                type: 'get',
+                data: {
+                    name: $name.val(),
+                    password: $pwd.val()
+                },
+                success: (data) => {
+                    console.log(data);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

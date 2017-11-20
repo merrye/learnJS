@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/admin/nav" method="post">
+        添加一级导航：<input type="text" name="oneTitle" /><br />
+        添加一级导航网址：<input type="text" name="oneUrl" /><br />
+        navid：<input type="text" name="oneId" /><br />
+        <input type="submit" />
+    </form>
+    <br />
+    <form action="/admin/nav" method="post">
+        添加二级导航：<input type="text" name="twoTitle" /><br />
+        添加二级导航网址：<input type="text" name="twoUrl" /><br />
+        navid：<input type="text" name="twoId" /><br />
+        父级：  <select name="navid" id="">
+                    <% for(let i of data){ %>
+                        <option value=<%= i.navid %>><%= i.title %></option>
+                    <% }; %>
+                </select>
+        <input type="submit" />
+    </form>
+</body>
+</html>

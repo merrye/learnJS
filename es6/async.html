@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// async
+		// await关键字后面必须是Promise对象
+		// 当遇到await自动执行关键字后面的Promise对象
+		// 当Promise对象变为成功或者失败 会自动继续执行下一个await后面的Promise
+
+		let p1 = function(){
+			return new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					console.log(1);
+					resolve(`this a data`);
+				},2000);
+			});
+		};
+
+		let p2 = function(data){
+			return new Promise((resolve,reject)=>{
+				setTimeout(()=>{
+					console.log(`${data} 2`);
+					resolve(`全部完成`);
+				},1000);
+			});
+		};
+
+		async function fn(){
+			let data = await p1();
+			let pp2 = await p2(data);
+			return pp2;
+		};
+		fn().then((data)=>{
+			console.log(data);
+		});
+	</script>
+</body>
+</html>

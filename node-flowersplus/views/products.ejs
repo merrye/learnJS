@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../css/style_product.css">
+	<script src="../js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+	<!-- wrap start -->
+	<div id="wrap">
+		<div class="pro">
+			<ul>
+				<% for(let i=0;i<dirData.length;i++){ %>
+					<li>
+						<img src="../img/products/<%= pNo %>/<%= dirData[i] %>" alt="" />
+					</li>
+				<% } %>
+			</ul>
+			<div class="tab">
+				<ul>
+					<% for(let i=0;i<dirData.length;i++){ %>
+						<% if(i === 0){ %>
+							<li class="on"></li>
+						<% }else{ %>
+							<li></li>
+						<% } %>
+					<% } %>
+				</ul>
+			</div>
+		</div>
+		<div class="price">
+			<h3 class="dec"><%= data[0].name %>&nbsp;:&nbsp;&nbsp;<%= data[0].description %></h3>
+			<p class="money">￥<%= data[0].price %></p>
+			<p class="size">选择规格:</p>
+			<div class="sizeContent">
+				<span><%= data[0].name %></span>
+			</div>
+			<p class="allNum">剩余：<span><%= data[0].num %></span></p>
+			<div class="numberContent" maxNum=<%= data[0].num %>>
+				<span>-</span>
+				<input type="text" value="0" %>/>
+				<span>+</span>
+			</div>
+			<p class="allMoney">共计<span price=<%= data[0].price %>>0</span>元</p>
+		</div>
+		<div class="details">
+			<p><img src="../img/products/same_1.jpg" alt=""></p>
+			<p><img src="../img/products/same_2.jpg" alt=""></p>
+			<p><img src="../img/products/same_3.jpg" alt=""></p>
+			<p><img src="../img/products/same_4.gif" alt=""></p>
+			<p><img src="../img/products/same_5.jpg" alt=""></p>
+			<p><img src="../img/products/same_6.jpg" alt=""></p>
+			<p><img src="../img/products/same_7.jpg" alt=""></p>
+			<p><a href="/" style="cursor:pointer;"><img src="../img/products/same_8.jpg" alt=""></a></p>
+			<p><img src="../img/products/same_9.jpg" alt=""></p>
+		</div>
+		<div class="footer">
+			<a href="/"></a>
+			<a href="/buy/name=<%= name %>&pNo=<%= pNo %>&num=" class="buy">立即购买</a>
+		</div>
+	</div>
+	<!-- wrap end -->
+	<script src="../js/product.js"></script>
+</body>
+</html>

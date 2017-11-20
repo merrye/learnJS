@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>表单控件绑定</title>
+	<script src="../js/vue.js"></script>
+</head>
+<body>
+	<div id="example-1">
+		<input v-model="message" placeholder="edit me">
+		<p>Message is: {{ message }}</p>
+	</div>
+	<div id="example-2">
+		<span>Multiline message is:</span>
+		<p style="white-space: pre">{{ message }}</p>
+		<br>
+		<textarea v-model="message" placeholder="add multiline lines"></textarea>
+	</div>
+	<div id="example-3">
+		<input type="checkbox" id="checkbox" v-model="checked">
+		<label for="checkbox">{{ checked }}</label>
+	</div>
+	<div id="example-3-1">
+		<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+		<label for="jack">Jack</label>
+		<input type="checkbox" id="john" value="John" v-model="checkedNames">
+		<label for="john">John</label>
+		<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+		<label for="mike">Mike</label>
+		<br>
+		<span>Checked names: {{ checkedNames }}</span>	
+	</div>
+	<div id="example-4">
+		<input type="radio" id="one" value="One" v-model="picked">
+		<label for="one">One</label>
+		<input type="radio" id="two" value="Two" v-model="picked">
+		<label for="two">Two</label>
+		<br>
+		<span>Picked : {{ picked }}</span>
+	</div>
+	<div id="example-5">
+		<select v-model="selected" multiple>
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<br>
+		<span>Selected: {{ selected }}</span>
+	</div>
+	<div id="example-5-1">
+		<select v-model="selected">
+			<option v-for="option in options" :value="option.value">
+				{{ option.text }}
+			</option>
+		</select>
+		<span>Selected: {{ selected }}</span>
+	</div>
+	<div id="example-6">
+		<input
+			type="checkbox"
+			v-model="toggle"
+			:true-value="a"
+			:false-value="b"
+		>
+		<span>{{ toggle }}</span>
+		<br>
+		<input type="radio" v-model="pick" :value="radioA">
+		<span>{{ pick }}</span>
+		<br>
+		<select v-model="selected">
+			<option :value="{number: 123}">123</option>
+		</select>
+		<span>{{ selected }}</span>
+	</div>
+	<div id="example-7">
+		
+	</div>
+	<script>
+		// 基础用法
+			// 文本
+			var example1 = new Vue({
+				el: '#example-1',
+				data: {
+					message: ''
+				}
+			});
+
+			// 多行文本
+			var example2 = new Vue({
+				el: '#example-2',
+				data:{
+					message: ''
+				}
+			});
+
+			// 复选框
+			var examole3 = new Vue({
+				el: '#example-3',
+				data: {
+					checked: false
+				}
+			});
+			var example3_1 = new Vue({
+				el: '#example-3-1',
+				data: {
+					checkedNames: []
+				}
+			});
+
+			// 单选按钮
+			var example4 = new Vue({
+				el: '#example-4',
+				data: {
+					picked: ''
+				}
+			});
+
+			// 选择列表
+			var example5 = new Vue({
+				el: '#example-5',
+				data: {
+					selected: [] // '' / []
+				}
+			});
+			var example5_1 = new Vue({
+				el: '#example-5-1',
+				data: {
+					selected: 'A',
+					options: [
+						{ text: 'One',value: 'A' },
+						{ text: 'Two',value: 'B' },
+						{ text: 'Three',value: 'C' }
+					]
+				}
+			});
+
+		// 绑定value
+			var example6 = new Vue({
+				el: '#example-6',
+				data: {
+					// 复选框
+					toggle: false,
+					a: 'true-value',
+					b: 'false-value',
+
+					// 单选按钮
+					pick: false,
+					radioA: 'a',
+
+					// 选择列表设置
+					selected: '',
+				}
+			});
+
+		// 修饰符
+			// .lazy
+
+	</script>
+</body>
+</html>

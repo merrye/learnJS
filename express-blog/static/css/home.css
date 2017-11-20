@@ -1,0 +1,27 @@
+#main .content .article-list{
+    padding: 20px 0px;
+    border-bottom: 1px solid rgba(150 ,150 ,150, .5);
+}
+#main .content .article-list .title{
+    letter-spacing: 1px;
+    font: bold 22px / 45px "Microsoft yahei";
+    cursor: pointer;
+}
+#main .content .article-list .title:hover a{
+    text-decoration: underline;
+}
+#main .content .article-list > div{
+    padding-top: 20px;
+}
+#main .content .article-list .article-info{
+    font-size: 14px;
+}
+#main .content .article-list .article-info > span{
+    margin: 0 5px;
+}
+#main .content .article-list .article-info > span > i{
+    margin-right: 5px;
+}
+#main .content .article-list .article-info > span > a:hover{
+    color: #1296db;
+}

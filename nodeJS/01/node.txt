@@ -1,0 +1,23 @@
+一:浏览器中的js 和 node有什么区别
+1.this => window	this => global
+2.作用域：一个文件是一个作用域
+3.调试 只有console.log()
+
+二:模块(在node中一个文件可以看作是一个模块)
+1.怎么引用	require('./1')
+	1.后缀可以省略
+	2.如果引入模块	是 模块的名字 核心模块	 1.是安装好node就有的一些模块
+											  2.node_modules这个文件夹下面
+	3.引入的路径	./ 代表当前目录		../引用
+	4.模块的加载机制：filename>filename.js>filename.json>filename.node
+	模块之间的互相使用
+
+node目录的配置
+	1.配置文件	package.json
+		dependencies:	当前项目所使用到的依赖模块
+		安装方式：npm install 自动读取package.json自动安装
+	2.router目录 -->	用来存放路由文件
+	3.views目录	 -->	用来存放html模板文件
+	4.module目录 -->	自己写的一些模板
+
+../	--> 上一级目录	./ --> 	当前目录	/	-->	根目录

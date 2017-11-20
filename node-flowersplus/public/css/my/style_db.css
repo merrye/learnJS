@@ -1,0 +1,110 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	background: url(../../img/my/banner-2.jpg) #f2f2f2 no-repeat center fixed;
+	background-size: cover;
+}
+#main{
+	width: 482px;
+	margin: 32px auto;
+	background: #F3F2ED;
+}
+#main .header{
+	width: 100%;
+	height: 155px;
+	background: url(../../img/my/flower_dh.jpg) center center / cover;
+	margin-bottom: 20px;
+}
+#main div{
+	width: 100%;
+	margin: 15px auto 0;
+}
+#main div:nth-of-type(1){
+	margin: 0 auto;
+} 
+#main div > span{
+	color: #333;
+}
+#main div > span > font{
+	color: #999;
+	margin-left: 10px;
+}
+#main div > input[type="text"]{
+	width: 100%;
+	height: 33px;
+	border-radius: 5px;
+	outline: none;
+	border: 1px solid #ccc;
+	text-indent: 12px;
+	margin-top: 10px;
+	line-height: 35px;
+	font-size: 18px;
+}
+#main div > textarea{
+	width: 100%;
+	height: 110px;
+	border-radius: 5px;
+	outline: none;
+	border: 1px solid #ccc;
+	text-indent: 12px;
+	margin-top: 10px;
+	line-height: 35px;
+	font-size: 18px;
+}
+#main div > input:focus,#main div > p > select:focus,#main div > textarea{
+	border-color: rgb(102 ,175 ,233);
+}
+#main div > p > select{
+	width: 132px;
+	height: 33px;
+	border-radius: 5px;
+	outline: none;
+	border: 1px solid #ccc;
+	text-indent: 12px;
+	line-height: 35px;
+	font-size: 18px;
+	margin: 10px 20px 0 0;
+	font-size: 14px;
+}
+#main div > p > select:nth-child(3){
+	margin: 10px 0px 0 0;
+}
+#main div > p > select > option{
+	text-indent: 20px;
+	font-size: 14px;
+}
+#main div > p{
+	margin-top: 10px;
+}
+#main div > p > input[type="radio"]{
+	width: 18px;
+	height: 18px;
+	border: 1px solid #9c9c9c;
+	background-color: transparent;
+	vertical-align: middle;
+	-webkit-appearance: none;
+	border-radius: 100%;
+	outline: none;
+}
+#main div > p > input[type="radio"]:checked{
+	width: 18px;
+	height: 18px;
+	outline: none;
+	border-radius: 100%;
+	background: url(../../img/my/check.png) no-repeat center center;
+	background-size: 18px;
+	-webkit-background-size: 18px;
+}
+#main div input.submit{
+	width: 100%;
+	height: 45px;
+	border-radius: 25px;
+	line-height: 45px;
+	text-align: center;
+	background: #FBA5B2;
+	color: #fff;
+	margin: 20px auto 30px;
+	cursor: pointer;
+}

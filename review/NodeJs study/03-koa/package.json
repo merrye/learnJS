@@ -1,0 +1,27 @@
+{
+    "name": "merry",
+    "version": "0.0.1",
+    "description": "koa demo",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "keywords": [
+        "koa",
+        "async"
+    ],
+    "author": "Merry",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/merrye/learnJS.git"
+    },
+    "dependencies": {
+        "koa": "2.3.0",
+        "koa-bodyparser": "^4.2.0",
+        "koa-router": "^7.2.1",
+        "mime": "^1.3.6",
+        "mz": "^2.6.0",
+        "nunjucks": "^3.0.1"
+    }
+}

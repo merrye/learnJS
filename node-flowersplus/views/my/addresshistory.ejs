@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>常用地址</title>
+	<link rel="stylesheet" href="../../../css/my/style_addresshistory.css">
+	<script src="../../../js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+	<!-- wrap start -->
+	<div id="wrap">
+		<!-- main start -->
+		<div id="main" value=<%= name %>>
+			<h3>常用地址</h3>
+			<% if(data.length !== 0){ %>
+				<ul class="list">
+					<li>
+						<span>序号</span>
+						<span>姓名</span>
+						<span>地址</span>
+						<span>联系方式</span>
+					</li>
+					<% for(let i = 0;i < data.length;i ++){ %>
+						<li value=<%= data[i].id %>>
+							<span><%= i + 1 %></span>
+							<span><%= data[i].name %></span>
+							<span><%= data[i].location %></span>
+							<span><%= data[i].phoneNumber %></span>
+							<span><img src='../../../img/buy/iconfont-close-tiny.png'></span>
+						</li>
+					<% } %>
+				</ul>
+			<% }else{ %>
+				<div class="none">
+					<img class="img" src="../../../img/my/iconfont-empty.png" alt="">
+					<p class="tip">没有记录</p>
+				</div>
+			<% } %>
+			<div class="add">添加新地址</div>
+		</div>
+		<!-- main end -->
+	</div>
+	<!-- wrap end -->
+	<script src="../../../js/addresshistory.js"></script>
+</body>
+</html>

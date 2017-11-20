@@ -1,0 +1,23 @@
+{
+    "name": "merry",
+    "version": "0.0.1",
+    "description": "Hello",
+    "main": "app.js",
+    "scripts":{
+        "start":"node app.js"
+    },
+    "license":"Apache-2.0",
+    "repository": {
+        "type":"git",
+        "url":"https://github.com/merrye/learnJS.git"
+    },
+    "dependencies":{
+        "express": "latest",
+        "ejs": "latest",
+        "mysql": "latest",
+        "body-parser": "latest",
+        "cookie-parser": "latest",
+        "crypto": "latest",
+        "express-session": "latest"
+    }
+}

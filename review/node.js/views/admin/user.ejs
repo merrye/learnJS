@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/jquery-1.12.1.min.js"></script>
+</head>
+<body>
+    <p>用户管理</p>
+    <form action="/admin/user" method="post">
+        <% for(let i = 0;i < data.length;i ++){ %>
+            用户名：<span><%= data[i].name %></span>
+            管理员：<span><%= data[i].admin %></span>
+            删除：<input type="radio" name="id" value=<%= data[i].id %>>
+            <a href="/admin/user/update?id=<%= data[i].id %>">update</a>
+            <br />
+        <% } %>
+        <input type="submit">
+    </form>
+    <button class="but"></button>
+    <script>
+        $('.but').click(() => {
+            $.ajax({
+                url: '/admin/user',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    name: $('.name').val(),
+                    admin: $('.admin').val(),
+                    id: ''
+                },
+                success(data){
+
+                }
+            });
+        });
+    </script>
+</body>
+</html>

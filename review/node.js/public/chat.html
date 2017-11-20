@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="socket.io.js"></script>
+</head>
+<body>
+    name: <input type="text" class="name"><button class="into">进入聊天室</button><br />
+    <input type="text" class="content"/>
+    <button onclick="submit()">发送</button>
+    <div class="num"></div>
+    <hr />
+    <div class="msg"></div>
+    <hr />
+    <div class="userList"></div>
+    <button class="chat">聊天房间</button>
+    <button class="meet">相亲房间</button>
+    <button class="leavechat">离开聊天房间</button>
+    <button class="meet">相亲房间</button>
+    <script>
+        const txt = document.getElementsByClassName('content')[0],
+            div = document.getElementsByClassName('msg')[0],
+            into = document.querySelector('.into'),
+            name = document.querySelector('.name'),
+            num = document.querySelector('.num'),
+            userList = document.querySelector('.userList'),
+            chat = document.querySelector('.chat'),
+            meet = document.querySelector('.meet'),
+            leavechat = document.querySelector('.leavechat');
+
+        let socket;
+
+        into.onclick = () =>{
+            init(name.value);
+            // socket.emit('login' , {
+            //     name: name.value,
+            //     userid: Date.now()
+            // });
+        };
+
+        chat.onclick = () => {
+            socket.emit('chatroom');
+            socket.on('hello' , (d) => {
+                console.log(d);
+            });
+        };
+
+        leavechat.onclick = () => {
+            socket.emit('outcr');
+        };
+
+        meet.onclick = () => {
+            socket.emit('meetroom');
+        };
+
+        function init(name){
+            socket = io.connect('/');
+            socket.emit('login' , {
+                name,
+                userid: Date.now()
+            });
+
+            socket.on('login' , (d) => {
+                div.innerHTML += d.name + '加入了聊天室。  <br />';
+                num.innerHTML = "当前人数" + d.userNum +  '<br />';
+                // console.log(d.userList)
+                userList.innerHTML = '';
+                for(let i in d.userList){
+                    userList.innerHTML += d.userList[i] + '<br />';
+                };
+            });
+
+            socket.on('logout' , (d) => {
+                div.innerHTML += d.name + '退出了聊天室。  <br />';
+                num.innerHTML = "当前人数" + d.userNum +  '<br />';
+                userList.innerHTML = '';
+                for(let i in d.userList){
+                    userList.innerHTML += d.userList[i] + '<br />';
+                };
+            })
+
+            socket.on('chat' , (d) => {
+                div.innerHTML += `${d.name}: ${d.txt} <br />`;
+            });
+        };
+
+        // 当引入socket的时候会在window下添加一个 io 全局
+        // websocket
+        //      1.http连接方式进行连接 并且告诉服务器要创建一个websocket连接
+        //      2.服务器没问题
+        //      3。正式建立websocket连接
+        // socket = io.connect('/');
+        // socket.on('Merry' , (d) => {
+        //     console.log(d)
+
+        //     socket.emit('thanks' , {
+        //         c: 'receive'
+        //     });
+        // });
+
+        function submit(){
+            socket.emit('ms' , {
+                txt: txt.value
+            });
+        };
+
+        // socket.on('chat' , (d) => {
+        //     // console.log(d)
+        //     div.innerHTML += d.d + '<br />';
+        // });
+        
+        // socket.on('login' , (d) => {
+        //     div.innerHTML += d.name + '加入了聊天室。  <br />';
+        // });
+    </script>
+</body>
+</html>

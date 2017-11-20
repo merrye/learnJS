@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购买</title>
+    <link rel="stylesheet" href="../css/style_buy.css">
+</head>
+<body>
+    <div id="wrap">
+        <div class="header" name=<%= name %> address=<%= aData.length %>>
+            <% if(aData.length === 0){ %>
+                <span>请填写收货地址</span>
+            <% }else{ %>
+                <p>收货人：<span><%= aData[0].name %></span><span style="float: right; padding-right: 10px;"><%= aData[0].phoneNumber %></span></p>
+                <p>请填写收货地址：<span><%= aData[0].location %></span></p>
+            <% }; %>
+        </div>
+        <div class="dec">
+            <div class="leftCon">
+                <img src="../img/products/<%= pNo %>/0.jpg" alt="">
+            </div>
+            <div class="middleCon">
+                <p class="top"><%= pData[0].name %></p>
+                <p class="bot"><%= pData[0].description %></p>
+            </div>
+            <div class="rightCon"><span>￥<%= pData[0].price %> * <%= num %></span></div>
+        </div>
+        <div class="calc">
+            <p>商品总额:<span class="money">￥<%= Number(pData[0].price) * Number(num) %></span></p>
+            <p>运费:<span class="money">￥0.00</span></p>
+        </div>
+        <div class="pay">
+            <p>付款金额：<span class="money">￥<%= Number(pData[0].price) * Number(num) %></span></p>
+        </div>
+        <div class="submit">
+            确认下单
+        </div>
+        <div class="footer">
+            <img src="../img/pc_newlogo.png" alt="">
+        </div>
+    </div>
+    <script src="../js/jquery-1.12.1.min.js"></script>
+    <script src="../js/buy.js"></script>
+</body>
+</html>
