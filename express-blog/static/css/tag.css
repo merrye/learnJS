@@ -1,7 +1,7 @@
-.article-list{
+.articles-list{
     position: relative;
 }
-.article-list::after{
+.articles-list::after{
     content: "";
     position: absolute;
     top: 0px;
@@ -11,16 +11,17 @@
     background: #e6e6e6;
     z-index: -1;
 }
-.year_title{
+.tag{
     position: relative;
-    margin: 15px 15px 60px 15px;
-    font: bold 26px / 30px "Microsoft yahei";
+    font-size: 14px;
+    color: rgba(0,0,0,.6);
+    margin: 0px 0px 60px 25px;
 }
-.year_title::after{
+.tag::after{
     content: "";
     position: absolute;
     top: 50%;
-    left: -19px;
+    left: -29px;
     transform: translateY(-50%);
     width: 12px;
     height: 12px;
@@ -28,15 +29,31 @@
     overflow: hidden;
     background-color: #bbb;
 }
+.year_title{
+    position: relative;
+    margin: 15px 15px 60px 25px;
+    font: bold 26px / 30px "Microsoft yahei";
+}
+.year_title::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -28px;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: #bbb;
+}
 .article{
-    cursor: pointer;
-    text-indent: 32px;
+    cursor: text;
+    font-size: 14px;
     color: rgba(0,0,0,.6);
     position: relative;
     margin: 30px 4px;
     border-bottom: 1px dashed rgba(0,0,0,.6);
-    display: flex;
-    justify-content: space-between;
+    text-indent: 40px;
 }
 .article::after{
     content: "";
@@ -57,14 +74,15 @@
 .article:hover::after{
     background-color: #888;
 }
-.article > span{
-    display: inline-block;
-    text-indent: 32px;
-}
-.article .title >a{
+.article > a{
     color: rgba(0,0,0,.6);
     cursor: pointer;
+    font-size: 16px;
+    margin-left: 5px;
 }
-.article .title >a:hover{
+.article:hover > a{
+    color: rgb(0,0,0);
+}
+.article > a:hover{
     color: #1296db;
 }

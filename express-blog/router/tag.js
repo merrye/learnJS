@@ -3,6 +3,10 @@ const express = require("express"),
     {Article , Tag} = model,
     router = express.Router();
 
+router.get("/" , (req , res) => {
+    
+});
+
 router.get("/:tag" , (req , res) => {
     ((async () => {
         const tag = req.params.tag,
@@ -37,8 +41,10 @@ router.get("/:tag" , (req , res) => {
             });
         });
         res.render("tag" , {
+            tag,
+            articles_list,
+            length: articles.length,
             title: `${tag} | Merry's Blog`,
-            articles_list
         });
     }))();
 });    

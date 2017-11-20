@@ -31,7 +31,7 @@ router.get("/:year/:month/:day/:name.html" , (req , res) => {
         article.tags = tags;
         article.images = images;
         res.render("article" , {
-            title: article.title,
+            title: `${article.title} | Merry's Blog`,
             article,
             prevArticle,
             nextArticle
