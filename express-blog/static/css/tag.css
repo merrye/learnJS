@@ -1,15 +1,66 @@
+.article-list{
+    position: relative;
+}
+.article-list::after{
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 4px;
+    height: calc(100% + 15px);
+    background: #e6e6e6;
+    z-index: -1;
+}
 .year_title{
-    padding: 15px 0;
+    position: relative;
+    margin: 15px 15px 60px 15px;
     font: bold 26px / 30px "Microsoft yahei";
 }
+.year_title::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -19px;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: #bbb;
+}
 .article{
-    line-height: 40px;
+    cursor: pointer;
+    text-indent: 32px;
     color: rgba(0,0,0,.6);
+    position: relative;
+    margin: 30px 4px;
+    border-bottom: 1px dashed rgba(0,0,0,.6);
     display: flex;
     justify-content: space-between;
 }
+.article::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -6px;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: #bbb;
+}
+.article:hover{
+    color: rgb(0,0,0);
+    border-bottom-color: rgb(0,0,0);
+}
+.article:hover::after{
+    background-color: #888;
+}
 .article > span{
     display: inline-block;
+}
+.article > span.title{
     text-indent: 32px;
 }
 .article .title >a{
