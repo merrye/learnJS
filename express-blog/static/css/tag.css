@@ -29,6 +29,10 @@
     overflow: hidden;
     background-color: #bbb;
 }
+.tag .tag-con{
+    color: #555;
+    font: bold 24px "Microsoft yahei";
+}
 .year_title{
     position: relative;
     margin: 15px 15px 60px 25px;

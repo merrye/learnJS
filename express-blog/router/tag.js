@@ -4,46 +4,64 @@ const express = require("express"),
     router = express.Router();
 
 router.get("/" , (req , res) => {
-    
+    (async () => {
+        const pArr = [],
+            tagArr = []
+            tag_set = new Set(),
+            tags = await Tag.findAll({attributes: ["content"]});
+        tags.forEach(ele => tag_set.add(ele.content));
+        [...tag_set].forEach(ele => {
+            tagArr.push({
+                content: ele
+            });
+            pArr.push((async ele => await Tag.count({where: {content: ele}}))(ele));
+        });
+        const countArr = await Promise.all(pArr);
+        countArr.forEach((ele,index) => tagArr[index].count = ele);
+        res.render("tag_list" , {
+            tagArr
+        });
+    })();
 });
 
 router.get("/:tag" , (req , res) => {
     ((async () => {
-        const tag = req.params.tag,
+        const pArr = [],
+            tag = req.params.tag,
             tags = await Tag.findAll({
                 where: {
                     content: tag
                 }
-            }),
-            pArr = [];
+            });
         [...tags].forEach(ele => {
-            pArr.push((async (ele) => {
-                return await Article.findById(ele.article_id);
-            })(ele));
+            pArr.push((async ele => await Article.findById(ele.article_id))(ele));
         });
         const articles = await Promise.all(pArr),
+            length = articles.length;
             dateSet = new Set(),
             articles_list = [];
-        articles.sort((x , y) => {
-            const xTime = new Date(x.createdAt).getTime();
-            return new Date(y.createdAt).getTime() - new Date(x.createdAt).getTime();
-        }).forEach(ele => {
-            dateSet.add(ele.createdAt.split("/")[0]);
-        });
-        [...dateSet].forEach((date , index) => {
-            articles_list.push({
-                [date]: []
+        if(length){
+            articles.sort((x , y) => {
+                const xTime = new Date(x.createdAt).getTime();
+                return new Date(y.createdAt).getTime() - new Date(x.createdAt).getTime();
+            }).forEach(ele => {
+                dateSet.add(ele.createdAt.split("/")[0]);
             });
-            articles.forEach(article => {
-                if(article.createdAt.includes(date)){
-                    articles_list[index][date].push(article);
-                };
+            [...dateSet].forEach((date , index) => {
+                articles_list.push({
+                    [date]: []
+                });
+                articles.forEach(article => {
+                    if(article.createdAt.includes(date)){
+                        articles_list[index][date].push(article);
+                    };
+                });
             });
-        });
+        };
         res.render("tag" , {
             tag,
+            length,
             articles_list,
-            length: articles.length,
             title: `${tag} | Merry's Blog`,
         });
     }))();

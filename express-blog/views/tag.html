@@ -4,16 +4,13 @@
 {% endblock %}
 {% block main %}
     <div class="articles-list">
-        <h3 class="tag">分类{{ tag }}：共有{{ length }}篇文章</h3>
+        <h3 class="tag"><span class="tag-con">{{ tag }}</span> 标签：共计{{ length }}篇文章</h3>
         {% for article_list in articles_list %}
             {% for title,articles in article_list %}
-                <h3 class="year_title">{{ title }}</h3>
                 {% for article in articles %}
                     <div class="article">
                         {{article.createdAt.substr(5).replace("/","-")}}
                         <a href="{{article.href}}">{{article.title}}</a>
-                        <!-- <span class="title"><a href="{{article.href}}">{{article.title}}</a></span>
-                        <span class="date">{{article.createdAt.substr(5).replace("/","-")}}</span> -->
                     </div>
                 {% endfor %}
             {% endfor %}

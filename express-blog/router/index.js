@@ -110,6 +110,8 @@ router.use("/admin" , require("./admin"));
 
 router.use("/article" , require("./article"));
 
+router.use("/archives" , require("./archives"));
+
 router.use("/tag" , require("./tag"));
 
 module.exports = router;
