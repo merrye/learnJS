@@ -1,3 +1,7 @@
+.tag_list{
+    width: 70%;
+    text-align: center;
+}
 .title{
     padding: 10px 0;
     text-align: center;
@@ -12,4 +16,7 @@
     word-wrap: break-word;
     display: inline-block;
     border-bottom: 1px solid #999;
+}
+.tag:hover{
+    border-color: #333;
 }

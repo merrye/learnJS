@@ -21,6 +21,15 @@
             </div>
         </div>
     {% endfor %}
+    <nav class="pagination">
+        {% for i in range(1 , count + 1) -%}
+            {% if i === 1 %}
+                <a href="/home">{{ i }}</a>
+            {% else %}
+                <a href="/page/{{i}}">{{ i }}</a>
+            {% endif %}
+        {%- endfor %}
+    </nav>
 {% endblock %}
 {% block js %}
     <script src="/js/home.js"></script>

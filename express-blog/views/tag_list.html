@@ -6,7 +6,14 @@
     <div class="tag_list">
         <h3 class="title">目前共计{{tagArr.length}}个标签</h3>
         {% for tag in tagArr %}
-            <a class="tag" href="/tag/{{tag.content}}" data-count={{tag.count}}>{{ tag.content }}</a>
+            {% if tag.count < 2 %}
+                {% set cssStyle = 'style="font-size: 18px; color: #8e8e8e;"' %}
+            {% elif tag.count < 4 %}
+                {% set cssStyle = 'style="font-size: 24px; color: #4f4f4f;"' %}
+            {% else %}
+                {% set cssStyle = 'style="font-size: 30px; color: #111;"' %}
+            {% endif%}
+            <a class="tag" {{ cssStyle | safe }} href="/tag/{{tag.content}}">{{ tag.content }}</a>
         {% endfor %}
     </div>
 {% endblock %}

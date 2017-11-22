@@ -19,7 +19,8 @@ router.get("/" , (req , res) => {
         const countArr = await Promise.all(pArr);
         countArr.forEach((ele,index) => tagArr[index].count = ele);
         res.render("tag_list" , {
-            tagArr
+            tagArr,
+            title:  "标签 | Merry's Blog"
         });
     })();
 });

@@ -12,24 +12,20 @@ router.get("/" , (req , res) => {
 
 router.get("/home" , (req , res) => {
     (async () => {
-        const [article_list] = await Promise.all([getArtilce()]);
-        let arr = [];
+        const arr = [],
+            [article_list] = await Promise.all([getArtilce()]);
+
         [...article_list].forEach((ele) => {
-            arr.push((async (ele) => {
-                return await Tag.findAll({
-                    where: {
-                        article_id: ele.id
-                    }
-                });
-            })(ele));
+            arr.push((async ele => await Tag.findAll({where: {article_id: ele.id}}))(ele));
         });
-        const r = await Promise.all(arr);
+        const [r , count] = await Promise.all([arr , getCount()]);
         [...article_list].forEach((ele , index) => {
             ele.tags = r[index];
         });
         res.render("home" , {
+            article_list,
             title: "Home | Merry's Blog",
-            article_list
+            count: Math.ceil(count / 10),
         });
 
         async function getArtilce(){
@@ -39,6 +35,9 @@ router.get("/home" , (req , res) => {
                 ],
                 limit: 10
             });
+        };
+        async function getCount(){
+            return await Article.count();
         };
     })();
 });
