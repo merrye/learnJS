@@ -6,9 +6,14 @@ const express = require("express"),
 router.get("/" , (req , res) => {
     (async () => {
         const pArr = [],
-            tagArr = []
+            tagArr = [],
             tag_set = new Set(),
-            tags = await Tag.findAll({attributes: ["content"]});
+            tags = await Tag.findAll({
+                attributes: ["content"],
+                order: [
+                    ['content']
+                ],
+            });
         tags.forEach(ele => tag_set.add(ele.content));
         [...tag_set].forEach(ele => {
             tagArr.push({

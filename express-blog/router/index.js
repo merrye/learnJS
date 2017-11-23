@@ -11,34 +11,28 @@ router.get("/" , (req , res) => {
 });
 
 router.get("/home" , (req , res) => {
-    (async () => {
-        const arr = [],
-            [article_list] = await Promise.all([getArtilce()]);
-
-        [...article_list].forEach((ele) => {
-            arr.push((async ele => await Tag.findAll({where: {article_id: ele.id}}))(ele));
-        });
-        const [r , count] = await Promise.all([arr , getCount()]);
-        [...article_list].forEach((ele , index) => {
-            ele.tags = r[index];
-        });
+    (async() => {
+        const currentIndex = 1,
+        {article_list , count} = await Template(currentIndex);
         res.render("home" , {
             article_list,
+            currentIndex,
             title: "Home | Merry's Blog",
             count: Math.ceil(count / 10),
         });
+    })();
+});
 
-        async function getArtilce(){
-            return await Article.findAll({
-                order: [
-                    ['createdAt', 'DESC']
-                ],
-                limit: 10
-            });
-        };
-        async function getCount(){
-            return await Article.count();
-        };
+router.get("/page/:pageNumber" , (req , res) => {
+    (async () => {
+        const currentIndex = Number(req.params.pageNumber),
+            {article_list , count} = await Template(currentIndex);
+        res.render("home" , {
+            article_list,
+            currentIndex,
+            title: "Home | Merry's Blog",
+            count: Math.ceil(count / 10),
+        });
     })();
 });
 
@@ -112,5 +106,27 @@ router.use("/article" , require("./article"));
 router.use("/archives" , require("./archives"));
 
 router.use("/tag" , require("./tag"));
+
+async function Template(currentIndex){
+    const arr = [],
+        article_list = await Article.findAll({
+            order: [
+                ['createdAt', 'DESC']
+            ],
+            limit: 10,
+            offset: 10 * (currentIndex - 1),
+        });
+    [...article_list].forEach((ele) => {
+        arr.push((async ele => await Tag.findAll({where: {article_id: ele.id}}))(ele));
+    });
+    const [r , count] = await Promise.all([arr , getCount()]);
+    [...article_list].forEach((ele , index) => {
+        ele.tags = r[index];
+    });
+    return {article_list,count};
+    async function getCount(){
+        return await Article.count();
+    };
+};
 
 module.exports = router;

@@ -25,3 +25,26 @@
 #main .content .article-list .article-info > span > a:hover{
     color: #1296db;
 }
+.pagination{
+    text-align: center;
+    line-height: 30px;
+}
+.pagination > a,.pagination > span{
+    color: #555;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    padding: 0 10px;
+    border-top: 1px solid transparent;
+}
+.pagination > a:hover,.pagination > span:hover{
+    color: #222;
+    border-top-color: #222;
+}
+.pagination > a.select{
+    color: #FFF;
+    background-color: #CCC;
+}
+.pagination > a.select:hover{
+    border-top-color: transparent;
+}
