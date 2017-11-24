@@ -37,7 +37,10 @@
     padding: 0 10px;
     border-top: 1px solid transparent;
 }
-.pagination > a:hover,.pagination > span:hover{
+.pagination > span{
+    cursor: text;
+}
+.pagination > a:hover{
     color: #222;
     border-top-color: #222;
 }

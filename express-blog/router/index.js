@@ -1,7 +1,8 @@
 const express = require("express"),
-    {aseEncrypt, aesDecrypt} = require("../module/encrypt"),
     model = require("../module/model"),
     {Tag , User , Image , Article} = model,
+    Template = require("../module/findArticle"),
+    {aseEncrypt, aesDecrypt} = require("../module/encrypt"),
     router = express.Router();
 
 router.get("/" , (req , res) => {
@@ -106,27 +107,5 @@ router.use("/article" , require("./article"));
 router.use("/archives" , require("./archives"));
 
 router.use("/tag" , require("./tag"));
-
-async function Template(currentIndex){
-    const arr = [],
-        article_list = await Article.findAll({
-            order: [
-                ['createdAt', 'DESC']
-            ],
-            limit: 10,
-            offset: 10 * (currentIndex - 1),
-        });
-    [...article_list].forEach((ele) => {
-        arr.push((async ele => await Tag.findAll({where: {article_id: ele.id}}))(ele));
-    });
-    const [r , count] = await Promise.all([arr , getCount()]);
-    [...article_list].forEach((ele , index) => {
-        ele.tags = r[index];
-    });
-    return {article_list,count};
-    async function getCount(){
-        return await Article.count();
-    };
-};
 
 module.exports = router;
