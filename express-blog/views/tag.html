@@ -7,6 +7,7 @@
         <h3 class="tag"><span class="tag-con">{{ tag }}</span> 标签：共计{{ length }}篇文章</h3>
         {% for article_list in articles_list %}
             {% for title,articles in article_list %}
+                <h3 class="year_title">{{ title }}</h3>
                 {% for article in articles %}
                     <div class="article">
                         {{article.createdAt.substr(5).replace("/","-")}}

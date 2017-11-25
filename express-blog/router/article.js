@@ -11,19 +11,19 @@ router.get("/:year/:month/:day/:name.html" , (req , res) => {
                     href: `/article/${year}/${month}/${day}/${name}.html`
                 }
             }),
-            [tags , images , prevArticle , nextArticle] = await Promise.all([await Tag.findAll({
+            [tags , images , prevArticle , nextArticle] = await Promise.all([Tag.findAll({
                 where: {
                     article_id: article.id
                 }
-            }), await Image.findAll({
+            }), Image.findAll({
                 where: {
                     article_id: article.id
                 }
-            }), await Article.findOne({
+            }), Article.findOne({
                 where: {
                     id: article.id - 1
                 }
-            }), await Article.findOne({
+            }), Article.findOne({
                 where: {
                     id: article.id + 1
                 }

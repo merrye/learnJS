@@ -1,16 +1,15 @@
 const express = require("express"),
-    model = require("../module/model"),
-    {Article , Tag} = model,
-    Template = require("../module/findArticle"),
+    getDateSortArticlesList = require("../module/tools").getDateSortArticlesList,
     router = express.Router();
 
 router.get("/" , (req , res) => {
     (async () => {
         const currentIndex = 1,
-        {article_list , count} = await Template(currentIndex);
+            {articles_list , count} = await getDateSortArticlesList(currentIndex);
         res.render("archives" , {
-            article_list,
+            sum: count,
             currentIndex,
+            articles_list,
             title: "归档 | Merry's Blog",
             count: Math.ceil(count / 10),
         });
@@ -20,10 +19,11 @@ router.get("/" , (req , res) => {
 router.get("/page/:pageNumber" , (req , res) => {
     (async () => {
         const currentIndex = Number(req.params.pageNumber),
-            {article_list , count} = await Template(currentIndex);
+            {articles_list , count} = await getDateSortArticlesList(currentIndex);
         res.render("archives" , {
-            article_list,
+            sum: count,
             currentIndex,
+            articles_list,
             title: "归档 | Merry's Blog",
             count: Math.ceil(count / 10),
         });

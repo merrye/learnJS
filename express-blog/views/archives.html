@@ -4,9 +4,10 @@
 {% endblock %}
 {% block main %}
     <div class="articles-list">
-        <h3 class="title">目前共计{{ count }}篇文章</h3>
+        <h3 class="title">目前共计{{ sum }}篇文章。</h3>
         {% for article_list in articles_list %}
             {% for title,articles in article_list %}
+                <h3 class="year_title">{{ title }}</h3>
                 {% for article in articles %}
                     <div class="article">
                         {{article.createdAt.substr(5).replace("/","-")}}
@@ -16,4 +17,80 @@
             {% endfor %}
         {% endfor %}
     </div>
+    <nav class="pagination">
+        {% if count >= 6 %}
+            {% if currentIndex === 1 %}
+                <a class="select" href="/archives">1</a>
+                <a href="/archives/page/{{ currentIndex + 1 }}">{{ currentIndex + 1 }}</a>
+                <span>…</span>
+                <a href="/archives/page/{{ count }}">{{ count }}</a>
+                <a href="/archives/page/{{ currentIndex + 1 }}">&gt;</a>
+            {% elif currentIndex === 2 %}
+                <a href="/archives/page/{{ currentIndex - 1 }}">&lt;</a>
+                <a href="/archives">1</a>
+                <a href="/archives/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
+                <a href="/archives/page/{{ currentIndex + 1 }}">{{ currentIndex + 1 }}</a>
+                <span>…</span>
+                <a href="/archives/page/{{ count }}">{{ count }}</a>
+                <a href="/archives/page/{{ currentIndex + 1 }}">&gt;</a>
+            {% elif currentIndex === 3 %}
+                <a href="/archives/page/{{ currentIndex - 1 }}">&lt;</a>
+                <a href="/archives">1</a>
+                <a href="/archives/page/{{ currentIndex - 1}}">{{ currentIndex - 1}}</a>
+                <a href="/archives/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
+                <a href="/archives/page/{{ currentIndex + 1 }}">{{ currentIndex + 1 }}</a>
+                <span>…</span>
+                <a href="/archives/page/{{ count }}">{{ count }}</a>
+                <a href="/archives/page/{{ currentIndex + 1 }}">&gt;</a>
+            {% elif currentIndex === count - 2 %}
+                <a href="/archives/page/{{ currentIndex - 1 }}">&lt;</a>
+                <a href="/archives">1</a>
+                <span>…</span>
+                <a href="/archives/page/{{ currentIndex - 1}}">{{ currentIndex - 1}}</a>
+                <a href="/archives/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
+                <a href="/archives/page/{{ currentIndex + 1}}">{{ currentIndex + 1}}</a>
+                <a href="/archives/page/{{ currentIndex + 2}}">{{ currentIndex + 2}}</a>
+                <a href="/archives/page/{{ currentIndex + 1 }}">&gt;</a>
+            {% elif currentIndex === count - 1 %}
+                <a href="/archives/page/{{ currentIndex - 1 }}">&lt;</a>
+                <a href="/archives">1</a>
+                <span>…</span>
+                <a href="/archives/page/{{ currentIndex - 1}}">{{ currentIndex - 1}}</a>
+                <a href="/archives/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
+                <a href="/archives/page/{{ currentIndex + 1}}">{{ currentIndex + 1}}</a>
+                <a href="/archives/page/{{ currentIndex + 1 }}">&gt;</a>
+            {% elif currentIndex === count %}
+                <a href="/archives/page/{{ currentIndex - 1 }}">&lt;</a>
+                <a href="/archives">1</a>
+                <span>…</span>
+                <a href="/archives/page/{{ currentIndex - 1}}">{{ currentIndex - 1}}</a>
+                <a href="/archives/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
+            {% else %}
+                <a href="/archives/page/{{ currentIndex - 1 }}">&lt;</a>
+                <a href="/archives">1</a>
+                <span>…</span>
+                <a href="/archives/page/{{ currentIndex - 1}}">{{ currentIndex - 1}}</a>
+                <a href="/archives/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a> 
+                <a href="/archives/page/{{ currentIndex + 1}}">{{ currentIndex + 1}}</a>
+                <span>…</span>
+                <a href="/archives/page/{{ count}}">{{ count }}</a>
+                <a href="/archives/page/{{currentIndex + 1}}">&gt;</a>
+            {% endif %}
+        {% else %}
+            {% if currentIndex !== 1 %}
+                <a href="/archives/page/{{currentIndex - 1}}">&lt;</a>
+            {% endif %}
+            {% for i in range(1 , count + 1) -%}
+                {% set className = "select" if currentIndex === i %}
+                {% if i === 1 %}
+                    <a class="{{className | safe}}" href="/archives">{{ i }}</a>
+                {% else %}
+                    <a class="{{className | safe}}" href="/archives/page/{{ i }}">{{ i }}</a>
+                {% endif %}
+            {%- endfor %}
+            {% if currentIndex !== count %}
+                <a href="/archives/page/{{currentIndex + 1}}">&gt;</a>
+            {% endif %}
+        {% endif %}
+    </nav>
 {% endblock %}

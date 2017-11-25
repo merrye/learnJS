@@ -1,0 +1,117 @@
+.articles-list{
+    position: relative;
+}
+.articles-list::after{
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 0;
+    width: 4px;
+    height: calc(100% + 15px);
+    background: #e6e6e6;
+    z-index: -1;
+}
+.title{
+    position: relative;
+    color: rgba(0,0,0,.6);
+    margin: 0px 0px 60px 25px;
+    font: normal 14px "Microsoft yaheo";
+}
+.title::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -29px;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: #bbb;
+}
+.year_title{
+    position: relative;
+    margin: 15px 15px 60px 25px;
+    font: bold 26px / 30px "Microsoft yahei";
+}
+.year_title::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -28px;
+    transform: translateY(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: #bbb;
+}
+.article{
+    cursor: text;
+    font-size: 14px;
+    color: rgba(0,0,0,.6);
+    position: relative;
+    margin: 30px 4px;
+    border-bottom: 1px dashed rgba(0,0,0,.6);
+    text-indent: 40px;
+}
+.article::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -6px;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    overflow: hidden;
+    background-color: #bbb;
+}
+.article:hover{
+    color: rgb(0,0,0);
+    border-bottom-color: rgb(0,0,0);
+}
+.article:hover::after{
+    background-color: #888;
+}
+.article > a{
+    color: rgba(0,0,0,.6);
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 5px;
+}
+.article:hover > a{
+    color: rgb(0,0,0);
+}
+.article > a:hover{
+    color: #1296db;
+}
+
+.pagination{
+    margin-top: 60px;
+    line-height: 30px;
+    text-align: center;
+    border-top: 1px solid rgba(150 ,150 ,150, .5);
+}
+.pagination > a,.pagination > span{
+    color: #555;
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    padding: 0 10px;
+    border-top: 1px solid transparent;
+}
+.pagination > span{
+    cursor: text;
+}
+.pagination > a:hover{
+    color: #222;
+    border-top-color: #222;
+}
+.pagination > a.select{
+    color: #FFF;
+    background-color: #CCC;
+}
+.pagination > a.select:hover{
+    border-top-color: transparent;
+}

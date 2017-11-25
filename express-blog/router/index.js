@@ -1,7 +1,7 @@
 const express = require("express"),
     model = require("../module/model"),
     {Tag , User , Image , Article} = model,
-    Template = require("../module/findArticle"),
+    getSortArticlesList = require("../module/tools").getSortArticlesList,
     {aseEncrypt, aesDecrypt} = require("../module/encrypt"),
     router = express.Router();
 
@@ -14,7 +14,7 @@ router.get("/" , (req , res) => {
 router.get("/home" , (req , res) => {
     (async() => {
         const currentIndex = 1,
-        {article_list , count} = await Template(currentIndex);
+        {article_list , count} = await getSortArticlesList(currentIndex);
         res.render("home" , {
             article_list,
             currentIndex,
@@ -27,7 +27,7 @@ router.get("/home" , (req , res) => {
 router.get("/page/:pageNumber" , (req , res) => {
     (async () => {
         const currentIndex = Number(req.params.pageNumber),
-            {article_list , count} = await Template(currentIndex);
+            {article_list , count} = await getSortArticlesList(currentIndex);
         res.render("home" , {
             article_list,
             currentIndex,

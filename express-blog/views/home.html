@@ -27,7 +27,7 @@
                 <a class="select" href="/home">1</a>
                 <a href="/page/{{ currentIndex + 1 }}">{{ currentIndex + 1 }}</a>
                 <span>…</span>
-                <a href="/home/{{ count }}">{{ count }}</a>
+                <a href="/page/{{ count }}">{{ count }}</a>
                 <a href="/page/{{ currentIndex + 1 }}">&gt;</a>
             {% elif currentIndex === 2 %}
                 <a href="/page/{{ currentIndex - 1 }}">&lt;</a>
@@ -35,7 +35,7 @@
                 <a href="/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
                 <a href="/page/{{ currentIndex + 1 }}">{{ currentIndex + 1 }}</a>
                 <span>…</span>
-                <a href="/home/{{ count }}">{{ count }}</a>
+                <a href="/page/{{ count }}">{{ count }}</a>
                 <a href="/page/{{ currentIndex + 1 }}">&gt;</a>
             {% elif currentIndex === 3 %}
                 <a href="/page/{{ currentIndex - 1 }}">&lt;</a>
@@ -44,7 +44,7 @@
                 <a href="/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
                 <a href="/page/{{ currentIndex + 1 }}">{{ currentIndex + 1 }}</a>
                 <span>…</span>
-                <a href="/home/{{ count }}">{{ count }}</a>
+                <a href="/page/{{ count }}">{{ count }}</a>
                 <a href="/page/{{ currentIndex + 1 }}">&gt;</a>
             {% elif currentIndex === count - 2 %}
                 <a href="/page/{{ currentIndex - 1 }}">&lt;</a>
@@ -60,7 +60,7 @@
                 <a href="/home">1</a>
                 <span>…</span>
                 <a href="/page/{{ currentIndex - 1}}">{{ currentIndex - 1}}</a>
-                <a href="/home/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
+                <a href="/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
                 <a href="/page/{{ currentIndex + 1}}">{{ currentIndex + 1}}</a>
                 <a href="/page/{{ currentIndex + 1 }}">&gt;</a>
             {% elif currentIndex === count %}
@@ -68,13 +68,13 @@
                 <a href="/home">1</a>
                 <span>…</span>
                 <a href="/page/{{ currentIndex - 1}}">{{ currentIndex - 1}}</a>
-                <a href="/home/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
+                <a href="/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a>
             {% else %}
                 <a href="/page/{{ currentIndex - 1 }}">&lt;</a>
                 <a href="/home">1</a>
                 <span>…</span>
                 <a href="/page/{{ currentIndex - 1}}">{{ currentIndex - 1}}</a>
-                <a href="/home/{{ currentIndex }}" class="select">{{ currentIndex }}</a> 
+                <a href="/page/{{ currentIndex }}" class="select">{{ currentIndex }}</a> 
                 <a href="/page/{{ currentIndex + 1}}">{{ currentIndex + 1}}</a>
                 <span>…</span>
                 <a href="/page/{{ count}}">{{ count }}</a>

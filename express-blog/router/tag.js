@@ -7,14 +7,13 @@ router.get("/" , (req , res) => {
     (async () => {
         const pArr = [],
             tagArr = [],
-            tag_set = new Set(),
             tags = await Tag.findAll({
                 attributes: ["content"],
                 order: [
                     ['content']
                 ],
-            });
-        tags.forEach(ele => tag_set.add(ele.content));
+            }),
+            tag_set = new Set(tags);
         [...tag_set].forEach(ele => {
             tagArr.push({
                 content: ele
@@ -53,14 +52,10 @@ router.get("/:tag" , (req , res) => {
             }).forEach(ele => {
                 dateSet.add(ele.createdAt.split("/")[0]);
             });
-            [...dateSet].forEach((date , index) => {
-                articles_list.push({
-                    [date]: []
-                });
+            [...dateSet].forEach((currentValue , index) => {
+                articles_list.push({[currentValue]: []});
                 articles.forEach(article => {
-                    if(article.createdAt.includes(date)){
-                        articles_list[index][date].push(article);
-                    };
+                    article.createdAt.includes(currentValue) && articles_list[index][currentValue].push(article);
                 });
             });
         };
