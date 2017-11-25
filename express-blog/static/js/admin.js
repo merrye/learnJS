@@ -1,6 +1,7 @@
 const oItem = document.getElementsByClassName("item"),
     oSubItem = document.getElementsByClassName("sub-item"),
-    oSlider = document.getElementsByClassName("slider")[0];
+    oSlider = document.getElementsByClassName("slider")[0],
+    oMeunItem = document.getElementsByClassName("meun-item");
 
 [...oItem].forEach((ele , index) => {
     ele.addEventListener("click" , function(){
@@ -25,4 +26,10 @@ const oItem = document.getElementsByClassName("item"),
             opacity: 0
         });
     } , false);
+});
+
+[...oMeunItem].forEach(currentValue => {
+    currentValue.onclick = ev => {
+        ev.cancalBubble = true;
+    };
 });

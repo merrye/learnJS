@@ -29,6 +29,6 @@ app.use(session({
 
 app.use("/" , require(`${rootdir}/router/index`));
 
-app.listen(3003 , () => {
-    console.log("app start at port 3003");
+app.listen(3000 , () => {
+    console.log("app start at port 3000...");
 });
