@@ -53,16 +53,16 @@ body{
 .header .userInfo > span:hover , .header .userInfo > span > a:hover{
     color: rgb(255,255,255);
 }
-.content{
+.container{
     flex: 1;
     display: flex;
 }
-.content .slideMenu{
+.container .slideMenu{
     flex: 0 0 225px;
     background-color: #393D49;
     position: relative;
 }
-.content .slideMenu .item{
+.container .slideMenu .item{
     width: 100%;
     text-indent: 12px;
     font: normal 16px / 50px "Microsoft yahei";
@@ -71,7 +71,7 @@ body{
     position: relative;
     color: #FFF;
 }
-.content .slideMenu .item::after{
+.container .slideMenu .item::after{
     content: "";
     width: 0;
     height: 0;
@@ -85,25 +85,25 @@ body{
     transform: rotateZ(0deg);
     transition: .2s;
 }
-.content .slideMenu .item.clicked::after{
+.container .slideMenu .item.clicked::after{
     transform: rotateZ(180deg);
 }
-.content .slideMenu .item:hover{
+.container .slideMenu .item:hover{
     background-color: #4E5465;
 }
-.content .slideMenu .item .sub-item{
+.container .slideMenu .item .sub-item{
     display: none;
 }
-.content .slideMenu .item .sub-item > li{
+.container .slideMenu .item .sub-item > li{
     background-color: rgba(0,0,0,.3)!important;
     text-indent: 24px;
     font: normal 14px / 50px "Microsoft yahei";
     color: rgba(255,255,255,.7);
 }
-.content .slideMenu .item .sub-item > li:hover{
+.container .slideMenu .item .sub-item > li:hover{
     color: #FFF;
 }
-.content .slideMenu .slider{
+.container .slideMenu .slider{
     width: 8px;
     height: 0px;
     background-color: #5FB878;
@@ -112,4 +112,64 @@ body{
     left: 0;
     opacity: 0;
     transition: .15s;
+}
+.container .content{
+    flex: 1;
+    position: relative;
+}
+.container .content > footer{
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    background-color: #eee;
+    text-indent: 16px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.container .content .main .welcome{
+    text-indent: 16px;
+    line-height: 60px;
+    text-align: center;
+}
+.container .content .main .loading{
+    width: 11px;
+    height: 44px;
+    margin: 88px auto;
+    position: relative;
+    background-color: #000;
+    animation: p1 1s 0.16s ease-in-out infinite;
+}
+.container .content .main .loading::before{
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: 16px;
+    width: 11px;
+    height: 44px;
+    animation: p1 1s 0.32s ease-in-out infinite;
+    background-color: #000;
+}
+.container .content .main .loading::after{
+    content: "";
+    position: absolute;
+    top: 0px;
+    left: -16px;
+    width: 11px;
+    height: 44px;
+    animation: p1 1s ease-in-out infinite;
+    background-color: #000;
+}
+@keyframes p1 {
+    0%, 80%, 100% {
+        box-shadow: 0 0 #000;
+        height: 44px;
+    }
+    40% {
+        box-shadow: 0 -22px #000;
+        height: 55px;
+    }
+}
+.container .content > footer > a{
+    color: #000;
 }

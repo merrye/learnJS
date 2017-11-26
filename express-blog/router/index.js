@@ -96,7 +96,7 @@ router.post("/reg" , (req , res) => {
 });
 
 router.get("/logout" , (req , res) => {
-    req.clearCookie("login");
+    res.clearCookie("login");
     res.redirect("/");
 });
 

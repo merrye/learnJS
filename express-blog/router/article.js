@@ -1,4 +1,5 @@
 const express = require("express"),
+    Op = require("sequelize").Op,
     model = require("../module/model"),
     {Article , Tag , Image} = model,
     router = express.Router();
@@ -36,6 +37,22 @@ router.get("/:year/:month/:day/:name.html" , (req , res) => {
             nextArticle,
             title: `${article.title} | Merry's Blog`,
         });
+    })();
+});
+router.post("/:year/:month" , (req, res) => {
+    (async() => {
+        console.log(req.params);
+        const {year , month} = req.params,
+            date = `${year}/${month}`,
+            articles = await Article.findAll({
+                where: {
+                    href: {
+                        [Op.like]: `/article/${date}%`
+                    }
+                }
+            });
+        console.log(articles);
+        res.json(articles);
     })();
 });
 

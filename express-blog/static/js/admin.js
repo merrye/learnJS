@@ -1,4 +1,5 @@
 const oItem = document.getElementsByClassName("item"),
+    oMain = document.getElementsByClassName("main")[0],
     oSubItem = document.getElementsByClassName("sub-item"),
     oSlider = document.getElementsByClassName("slider")[0],
     oMeunItem = document.getElementsByClassName("meun-item");
@@ -28,8 +29,31 @@ const oItem = document.getElementsByClassName("item"),
     } , false);
 });
 
-[...oMeunItem].forEach(currentValue => {
-    currentValue.onclick = ev => {
+[...oMeunItem].forEach((ele , index) => {
+    ele.onclick = ev => {
         ev.cancalBubble = true;
+        ev.stopPropagation();
+        oMain.innerHTML = `<div class="loading"></div>`;
+        switch (index){
+            case 0:
+
+                break;
+            case 1:
+                const time = new Date(),
+                    year = time.getFullYear(),
+                    month = time.getMonth() + 1;
+                $.ajax({
+                    url: `/article/${year}/${month}`,
+                    type: "post",
+                    success(data){
+                        if(data.length){
+
+                        }else{
+                            
+                        };
+                    }
+                });
+                break;
+        };
     };
 });
