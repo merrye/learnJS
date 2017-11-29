@@ -59,6 +59,7 @@ li{
     position: relative;
     border: 0 solid rgb(226,226,226);
     border-width: 1px 0;
+    user-select: none;
 }
 .main .content > div{
     height: 30px;
@@ -75,7 +76,7 @@ li{
 .main .content .week > span{
     cursor: default;
 }
-.main .content > div > span.prevMonth , .main > div > span.nextMonth{
+.main .content > div > span.prevMonth , .main .content > div > span.nextMonth{
     color: rgb(210,210,210);
 }
 .main .content > div > span.nowTime{
@@ -85,7 +86,7 @@ li{
 .main .content > div > span.time:hover{
     background-color: rgb(234,234,234);
 }
-.main > div > span.prevMonth:hover , .main > div > span.nextMonth:hover{
+.main > div > span.prevMonth:hover , .main .content > div > span.nextMonth:hover{
     color: #000;
 }
 .main .content > div > span.nowTime:hover{
