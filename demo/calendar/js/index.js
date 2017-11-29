@@ -18,104 +18,96 @@ let [nowYearCount , nowMonthCount , nowDateCount] = nowTime.toLocaleDateString()
 
 init();
 
-oMonth.addEventListener("click" , () => {
-    oMonth.style.display = "none";
-    [...oChangeMonth].forEach(ele => ele.style.opacity = 0);
-    const oUl = document.createElement("ul");
-    for(let i = 0;i < 12;i ++){
-        const oLi = document.createElement("li");
-        oLi.innerHTML = monthArr[i];
-        oLi.className = i === nowMonthCount - 1 ? "month-item now" : "month-item";
-        oUl.appendChild(oLi);
-    };
-    oMain.appendChild(oUl);
-    [...oMonthItem].forEach((ele ,index) => {
-        ele.addEventListener("click" , () => {
-            nowMonthCount = index + 1;
-            const t = new Date(`${nowYearCount}/${nowMonthCount}/${nowDateCount}`);
-            setCalendar(t);
-            oUl.remove();
-            oMonth.style.display = "inline-block";
-            [...oChangeMonth].forEach(ele => ele.style.opacity = 1);
-        } , false);
-    });
-} , false);
-
-oYear.addEventListener("click" , () => {
-    oMonth.style.display = "none";
-    [...oChangeMonth].forEach(ele => ele.style.opacity = 0);
-    oYear.innerHTML = `${nowYearCount - 7}年-${nowYearCount + 7}年`;
-    const oUl = document.createElement("ul");
-    let count = nowYearCount - 7;
-    for(let i = 0;i < 15;i ++){
-        const oLi = document.createElement("li");
-        oLi.innerHTML = `${count}年`;
-        oLi.className = i === 7 ? "year-item now" : "year-item";
-        oUl.appendChild(oLi);
-        count ++;
-    };
-    oMain.appendChild(oUl);
-    [...oChangeYear].forEach((ele , index) => {
-        ele.removeEventListener("click" , index ? yearAdd : yearLess , false);
-        ele.addEventListener("click", index ? yearAddMore : yearLessMore ,false);
-    });
-    [...oYearItem].forEach(ele => {
-        ele.addEventListener("click" , function(){
-            const year = Number.parseInt(ele.innerHTML);
-            nowYearCount = year;
-            const t = new Date(`${nowYearCount}/${nowMonthCount}/${nowDateCount}`);
-            setCalendar(t);
-            oUl.remove();
-            setInitState()
-        } , false);
-    });
-} , false);
-
-oClear.addEventListener("click" , () => {
-    oResult.innerHTML = "yyyy-MM-dd";
-} , false)
-
-oNowTime.addEventListener("click" , () => {
-    [nowYearCount , nowMonthCount , nowDateCount] = nowTime.toLocaleDateString().split("/").map(ele => Number(ele));
-    oResult.innerHTML = `${nowYearCount}-${nowMonthCount}-${nowDateCount}`;
-    setDate();
-    setInitState();
-    [...oMain.children].forEach((ele , index) => index !== 0 && ele.remove());
-} , false);
-
-oConfirm.addEventListener("click" , () => {
-    const oLiLength = oYearItem.length;
-    oLiLength && (nowYearCount = Number.parseInt(oLi[Math.floor(oLiLength / 2)].innerHTML));
-    setInitState();
-    [...oMain.children].forEach((ele , index) => index !== 0 && ele.remove());
-    oYear.innerHTML = `${nowYearCount}年`;
-    oResult.innerHTML = `${nowYearCount}-${nowMonthCount}-${nowDateCount}`;
-} , false);
-
-[...oChangeMonth].forEach((ele , index) => {
-    ele.addEventListener("click" , index ? monthAdd : monthLess , false);
-});
-
-[...oChangeYear].forEach((ele , index) => {
-    ele.addEventListener("click" , index ? yearAdd : yearLess , false);
-});
-
-[...oTime].forEach(ele => {
-    ele.addEventListener("click" , () => {
-        const html = ele.innerHTML,
-            className = ele.className;
-        if(className.includes("prevMonth")){
-            MonthSubtract();
-        }else if(className.includes("nextMonth")){
-            MonthAdd();
-        };
-        nowDateCount = Number(html);
-        setDate();
-    } , false);
-});
-
 function init(){
     setCalendar(nowTime);
+    oMonth.addEventListener("click" , () => {
+        changeDate({
+            loopCount: 12,
+            loopHTMLElements: oMonthItem,
+            getHtml: i => monthArr[i],
+            setDate: (ele , index) => nowMonthCount = index + 1,
+            getClassName: i => i === nowMonthCount - 1 ? "month-item now" : "month-item",
+        });
+    } , false);
+
+    oYear.addEventListener("click" , () => {
+        oYear.innerHTML = `${nowYearCount - 7}年-${nowYearCount + 7}年`;
+        changeDate({
+            loopCount: 15,
+            loopHTMLElements: oYearItem,
+            getHtml: i => `${nowYearCount - 7 + i}年`,
+            getClassName: i => i === 7 ? "year-item now" : "year-item",
+            setDate: (ele , index) => nowYearCount = Number.parseInt(ele.innerHTML),
+        });
+        [...oChangeYear].forEach((ele , index) => {
+            ele.removeEventListener("click" , index ? yearAdd : yearLess , false);
+            ele.addEventListener("click", index ? yearAddMore : yearLessMore ,false);
+        });
+    } , false);
+
+    function changeDate({loopCount , loopHTMLElements , getHtml , getClassName , setDate}){
+        oMonth.style.display = "none";
+        [...oChangeMonth].forEach(ele => ele.style.opacity = 0);
+        const oUl = document.createElement("ul");
+        for(let i = 0;i < loopCount;i ++){
+            const oLi = document.createElement("li");
+            oLi.innerHTML = getHtml(i);
+            oLi.className = getClassName(i);
+            oUl.appendChild(oLi);
+        };
+        oMain.appendChild(oUl);
+        [...loopHTMLElements].forEach((ele , index) => {
+            ele.addEventListener("click" , function(){
+                setDate(ele , index);
+                setCalendar(new Date(`${nowYearCount}/${nowMonthCount}/${nowDateCount}`));
+                oUl.remove();
+                setInitState()
+            } , false);
+        });
+    };
+
+    oClear.addEventListener("click" , () => {
+        oResult.innerHTML = "yyyy-MM-dd";
+    } , false);
+
+    oNowTime.addEventListener("click" , () => {
+        [nowYearCount , nowMonthCount , nowDateCount] = nowTime.toLocaleDateString().split("/").map(ele => Number(ele));
+        oResult.innerHTML = `${nowYearCount}-${nowMonthCount}-${nowDateCount}`;
+        setCalendar(new Date(`${nowYearCount}/${nowMonthCount}/${nowDateCount}`));
+        setInitState();
+        [...oMain.children].forEach((ele , index) => index !== 0 && ele.remove());
+    } , false);
+
+    oConfirm.addEventListener("click" , () => {
+        const oLiLength = oYearItem.length;
+        oLiLength && (nowYearCount = Number.parseInt(oYearItem[Math.floor(oLiLength / 2)].innerHTML));
+        setInitState();
+        [...oMain.children].forEach((ele , index) => index !== 0 && ele.remove());
+        oYear.innerHTML = `${nowYearCount}年`;
+        oResult.innerHTML = `${nowYearCount}-${nowMonthCount}-${nowDateCount}`;
+    } , false);
+
+    [...oChangeMonth].forEach((ele , index) => {
+        ele.addEventListener("click" , index ? monthAdd : monthLess , false);
+    });
+
+    [...oChangeYear].forEach((ele , index) => {
+        ele.addEventListener("click" , index ? yearAdd : yearLess , false);
+    });
+    
+    [...oTime].forEach(ele => {
+        ele.addEventListener("click" , () => {
+            const html = ele.innerHTML,
+                className = ele.className;
+            if(className.includes("prevMonth")){
+                MonthSubtract();
+            }else if(className.includes("nextMonth")){
+                MonthAdd();
+            };
+            nowDateCount = Number(html);
+            setCalendar(new Date(`${nowYearCount}/${nowMonthCount}/${nowDateCount}`));
+        } , false);
+    });
 };
 
 function yearAddMore(){
@@ -172,23 +164,21 @@ function setCalendar(time){
 };
 
 function yearLess(){
-    nowYearCount --;
-    setDate();
+    setCalendar(new Date(`${-- nowYearCount}/${nowMonthCount}/${nowDateCount}`));
 };
 
 function yearAdd(){
-    nowYearCount ++;
-    setDate();
+    setCalendar(new Date(`${++ nowYearCount}/${nowMonthCount}/${nowDateCount}`));
 };
 
 function monthLess(){
     MonthSubtract();
-    setDate();
+    setCalendar(new Date(`${nowYearCount}/${nowMonthCount}/${nowDateCount}`));
 };
 
 function monthAdd(){
     MonthAdd();
-    setDate();
+    setCalendar(new Date(`${nowYearCount}/${nowMonthCount}/${nowDateCount}`));
 };
 
 function MonthAdd(){
@@ -214,8 +204,4 @@ function setInitState(){
         ele.addEventListener("click" , index ? yearAdd : yearLess , false);
         ele.removeEventListener("click", index ? yearAddMore : yearLessMore ,false)
     });
-};
-
-function setDate(){
-    setCalendar(new Date(`${nowYearCount}/${nowMonthCount}/${nowDateCount}`));
 };
