@@ -105,8 +105,8 @@ function setCalendar(time){
         nowMonthDays = (isLeapYear && month === 2) ? 29 : MONTH_NUMBER_ARR[month - 1];
     let rowCount = 0,
         columnCount = -1,
-        count = prevMonthAllDays - day_of_week,
-        className = "time";
+        className = "time",
+        count = prevMonthAllDays - day_of_week;
     for(let i = 0;i < 42;i ++){
         count ++;
         columnCount ++;
