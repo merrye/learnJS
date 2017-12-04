@@ -1,8 +1,6 @@
-const oName = document.getElementById("name"),
-    oPassword = document.getElementById("password"),
-    oInput = document.getElementsByTagName("input"),
+const oInput = document.getElementsByTagName("input"),
     oLabel = document.getElementsByTagName("label"),
-    oSpan = document.getElementsByTagName("span"),
+    oLogin = document.getElementsByClassName("login")[0],
     oSpanWidth = 80;
 
 [...oLabel].forEach((ele , index) => {
@@ -27,3 +25,35 @@ const oName = document.getElementById("name"),
         css(oLabel[index] ,"width" , this.value ? oSpanWidth : "100%");
     };
 });
+
+oLogin.addEventListener("click" , () => {
+    const name = oInput[0].value,
+        password = oInput[1].value;
+    if(name === ""){
+        alert("用户名不能为空！");
+        return;
+    }else if(password === ""){
+        alert("密码为空！");
+        return;
+    };
+    $.ajax({
+        url: "/login",
+        type: "post",
+        data: {
+            name,
+            password
+        },
+        success(data){
+            if(data.msg === "ok"){
+                const {origin} = window.location;
+                window.location.href = `${origin}/admin`;
+            }else{
+                [...oInput].forEach(ele => ele.value = "");
+                alert(data.msg);
+            };
+        },
+        error(error){
+            console.log(error);
+        }
+    });
+} , false);

@@ -2,10 +2,16 @@ const express = require("express"),
     router = express.Router();
 
 router.get("/" , (req , res) => {
-    res.render("admin" , {
-        title: "Administrator | Merry's Blog",
-        userName: res.locals.name
-    });
+    const {name , admin} = req.session;
+    if(admin !== "admin"){
+        res.redirect("/home");
+        res.end();
+    }else{
+        res.render("admin" , {
+            name,
+            title: "Administrator | Merry's Blog",
+        });
+    };
 });
 
 module.exports = router;

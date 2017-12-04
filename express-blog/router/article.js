@@ -39,9 +39,9 @@ router.get("/:year/:month/:day/:name.html" , (req , res) => {
         });
     })();
 });
-router.post("/:year/:month" , (req, res) => {
+
+router.get("/:year/:month" , (req, res) => {
     (async() => {
-        console.log(req.params);
         const {year , month} = req.params,
             date = `${year}/${month}`,
             articles = await Article.findAll({
@@ -51,7 +51,6 @@ router.post("/:year/:month" , (req, res) => {
                     }
                 }
             });
-        console.log(articles);
         res.json(articles);
     })();
 });

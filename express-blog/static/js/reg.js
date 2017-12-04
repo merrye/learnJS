@@ -34,12 +34,10 @@ oReg.addEventListener("click" , function(){
     if(name === ""){
         alert("用户名不能为空！");
         return;
-    };
-    if(password === "" || confirmPassword === ""){
+    }else if(password === "" || confirmPassword === ""){
         alert("密码不能为空！");
         return;
-    };
-    if(password !== confirmPassword){
+    }else if(password !== confirmPassword){
         alert("两次密码输入不一致！");
         return;
     };
@@ -53,8 +51,8 @@ oReg.addEventListener("click" , function(){
         },
         success(data){
             if(data.msg === "ok"){
-                const href = window.location.href;
-                window.location.href = `${href.substr(0 , href.length - 3)}admin`;
+                const origin = window.location.origin;
+                window.location.href = `${origin}/admin`;
             }else{
                 [...oInput].forEach(ele => ele.value = "");
                 alert(data.msg);

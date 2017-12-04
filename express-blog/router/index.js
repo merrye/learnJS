@@ -50,7 +50,30 @@ router.get("/login" , (req , res) => {
 });
 
 router.post("/login" , (req , res) => {
-    
+    (async() => {
+        const {name , password} = req.body,
+            user = await User.findOne({
+                where: {
+                    name,
+                    password: aseEncrypt(password)
+                }
+            }),
+            msg = user ? "ok" : "此用户未注册。";
+        if(user){
+            const {admin} = user;
+            req.session.name  = name;
+            req.session.admin = admin;
+            res.cookie("login" , {
+                name,
+                admin
+            } , {
+                maxAge: 1000 * 60 * 60 * 24
+            });
+        };
+        res.json({
+            msg
+        });
+    })();
 });
 
 router.get("/reg" , (req , res) => {
@@ -74,8 +97,8 @@ router.post("/reg" , (req , res) => {
                 admin: "user"
             }).then(result => {
                 const {name , admin} = result;
-                req.session.name = res.locals.name = name;
-                req.session.admin = res.locals.admin = admin;
+                req.session.name = name;
+                req.session.admin = admin;
                 res.cookie("login" , {
                     name,
                     admin

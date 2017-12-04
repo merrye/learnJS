@@ -44,10 +44,22 @@ const oItem = document.getElementsByClassName("item"),
                     month = time.getMonth() + 1;
                 $.ajax({
                     url: `/article/${year}/${month}`,
-                    type: "post",
+                    type: "get",
                     success(data){
                         if(data.length){
-
+                            oMain.innerHTML = "";
+                            const oDate = document.createElement("div"),
+                                oDateSpan = document.createElement("span"),
+                                oDateInput = document.createElement("input"),
+                                articles = document.createElement("div");
+                            oDate.className = "date";
+                            oDateSpan.innerHTML = "时间";
+                            oDateInput.className = "date-input";
+                            oDateInput.setAttribute("placeholder" , time.toLocaleDateString().replace(/\//g , "-"));
+                            oDate.appendChild(oDateSpan);
+                            oDate.appendChild(oDateInput);
+                            oMain.appendChild(oDate);
+                            oDateInput.addEventListener("click" , switchDate.bind(this)() , false);
                         }else{
                             
                         };
@@ -57,3 +69,14 @@ const oItem = document.getElementsByClassName("item"),
         };
     };
 });
+
+function switchDate(input){
+    console.log(input);
+    return () => {
+
+    };
+};
+
+function generatePageContent(){
+
+};

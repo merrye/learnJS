@@ -7,17 +7,18 @@ router.get("/" , (req , res) => {
     (async () => {
         const pArr = [],
             tagArr = [],
+            tagSet = new Set(),
             tags = await Tag.findAll({
                 attributes: ["content"],
                 order: [
                     ['content']
                 ],
-            }),
-            tag_set = new Set(tags);
-        [...tag_set].forEach(ele => {
-            tagArr.push({
-                content: ele
             });
+        tags.forEach(ele => {
+            tagSet.add(ele.content);
+        });
+        [...tagSet].forEach(ele => {
+            tagArr.push({content: ele});
             pArr.push((async ele => await Tag.count({where: {content: ele}}))(ele));
         });
         const countArr = await Promise.all(pArr);
