@@ -49,7 +49,10 @@ router.get("/:year/:month" , (req, res) => {
                     href: {
                         [Op.like]: `/article/${date}%`
                     }
-                }
+                },
+                order: [
+                    ['createdAt', 'DESC']
+                ]
             });
         res.json(articles);
     })();

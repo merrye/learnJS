@@ -47,19 +47,7 @@ const oItem = document.getElementsByClassName("item"),
                     type: "get",
                     success(data){
                         if(data.length){
-                            oMain.innerHTML = "";
-                            const oDate = document.createElement("div"),
-                                oDateSpan = document.createElement("span"),
-                                oDateInput = document.createElement("input"),
-                                articles = document.createElement("div");
-                            oDate.className = "date";
-                            oDateSpan.innerHTML = "时间";
-                            oDateInput.className = "date-input";
-                            oDateInput.setAttribute("placeholder" , time.toLocaleDateString().replace(/\//g , "-"));
-                            oDate.appendChild(oDateSpan);
-                            oDate.appendChild(oDateInput);
-                            oMain.appendChild(oDate);
-                            oDateInput.addEventListener("click" , switchDate.bind(this)() , false);
+                            generatePageContent(data , time);
                         }else{
                             
                         };
@@ -70,13 +58,49 @@ const oItem = document.getElementsByClassName("item"),
     };
 });
 
+function generatePageContent(data , time){
+    oMain.innerHTML = "";
+    const oDate = createElementByTag("div"),
+        oDateSpan = createElementByTag("span"),
+        oDateInput = createElementByTag("input");
+    oDate.className = "date";
+    oDateSpan.innerHTML = "时间";
+    oDateInput.className = "date-input";
+    oDateInput.setAttribute("placeholder" , time.toLocaleDateString().replace(/\//g , "-"));
+    oDate.appendChild(oDateSpan);
+    oDate.appendChild(oDateInput);
+    oMain.appendChild(oDate);
+    const articles = generateArticles(data);
+    oMain.appendChild(articles);
+    oDateInput.addEventListener("click" , switchDate(oDateInput) , false);
+};
+
+function generateArticles(articles){
+    const oArticles = createElementByTag("div");
+    oArticles.className = "articles";
+    for(let article of articles){
+        const oArticle = createElementByTag("div");
+        oArticle.className = "article";
+        oArticle.innerHTML = article.createdAt.split("/").filter((ele , index) => index !== 0).map(ele => Number(ele) < 10 ? "0" + ele : ele).join("-");
+        const oA = createElementByTag("a");
+        oA.href = article.href;
+        oA.innerHTML = article.title;
+        oArticle.appendChild(oA);
+        oArticles.appendChild(oArticle);
+    };
+    return oArticles;
+};
+
+function createElementByTag(tag){
+    return document.createElement(tag);
+};
+
 function switchDate(input){
-    console.log(input);
     return () => {
 
     };
 };
 
-function generatePageContent(){
-
+function generateCanlendar(){
+    
 };

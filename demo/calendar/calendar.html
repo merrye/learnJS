@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="css/calendar.css">
 </head>
 <body>
-    <div class="result">yyyy-MM-dd</div>
-    <div class="calendar">
+    <input type="text" class="result" />
+    <!-- <div class="result">yyyy-MM-dd</div> -->
+    <!-- <div class="calendar">
         <div class="header">
             <span class="prevYear prev changeYear"><i></i><i></i></span>
             <span class="prevMonth prev changeMonth"><i></i></span>
@@ -93,7 +94,18 @@
             <span class="nowTime">现在</span>
             <span class="confirm">确定</span>
         </div>
-    </div>
-    <script src="js/index.js"></script>
+    </div> -->
+    <script src="js/merry.js"></script>
+    <script>
+        const oResult = document.getElementsByClassName("result")[0];
+        window.onload = () => {
+            oResult.setAttribute("placeholder" , "yyyy-MM-dd");
+        };
+        oResult.addEventListener("click" , () => {
+            merry.open({
+                type: "calendar"
+            });
+        });
+    </script>
 </body>
 </html>
