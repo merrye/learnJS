@@ -8,102 +8,22 @@
     <link rel="stylesheet" href="css/calendar.css">
 </head>
 <body>
-    <input type="text" class="result" />
-    <!-- <div class="result">yyyy-MM-dd</div> -->
-    <!-- <div class="calendar">
-        <div class="header">
-            <span class="prevYear prev changeYear"><i></i><i></i></span>
-            <span class="prevMonth prev changeMonth"><i></i></span>
-            <div>
-                <span class="year"></span>
-                <span class="month"></span>
-            </div>
-            <span class="nextMonth next changeMonth"><i></i></span>
-            <span class="nextYear next changeYear"><i></i><i></i></span>
-        </div>
-        <div class="main">
-            <div class="content">
-                <div class="week">
-                    <span>日</span>
-                    <span>一</span>
-                    <span>二</span>
-                    <span>三</span>
-                    <span>四</span>
-                    <span>五</span>
-                    <span>六</span>
-                </div>
-                <div>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                </div>
-                <div>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                </div>
-                <div>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                </div>
-                <div>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                </div>
-                <div>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                </div>
-                <div>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                    <span class="time"></span>
-                </div>
-            </div>
-            
-        </div>
-        <div class="footer">
-            <span class="clear">清除</span>
-            <span class="nowTime">现在</span>
-            <span class="confirm">确定</span>
-        </div>
-    </div> -->
+    <input type="text" id="result" />
     <script src="js/merry.js"></script>
+    <script src="js/layer.js"></script>
     <script>
-        const oResult = document.getElementsByClassName("result")[0];
+        const oResult = document.getElementById("result");
         window.onload = () => {
             oResult.setAttribute("placeholder" , "yyyy-MM-dd");
         };
-        oResult.addEventListener("click" , () => {
-            merry.open({
-                type: "calendar"
+        oResult.addEventListener("click" , function() {
+            const _this = this,
+                top = _this.offsetTop + _this.offsetHeight + 10,
+                left = _this.offsetLeft;
+            layer.open({
+                elem: "#result",
+                type: "calendar",
+                offset: [top , left]
             });
         });
     </script>
