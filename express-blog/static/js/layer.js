@@ -1,27 +1,29 @@
 ;((window) => {
     "use strict";
-    const jsPath = getJSPath(),
-        INIT_WEEK_NUMBER = 7,
+    const INIT_WEEK_NUMBER = 7,
         INIT_MONTH_NUMBER = 12,
         INIT_YEAR_NUMBER = 15,
         MONTH_NUMBER_ARR = [31,28,31,30,31,30,31,31,30,31,30,31],
         monthArr = ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
         layer = new Proxy({} , {
 			get(target , property){
-				const oHead = document.getElementsByTagName("head")[0],
-					oLink = document.createElement("link");
-				oLink.setAttribute("rel" , "stylesheet");
-				oLink.setAttribute("href" , `${jsPath.substr(0 , jsPath.lastIndexOf("/") + 1)}css/layer.css`);
-				oHead.appendChild(oLink);
 				return (attrs = {} , ...children) => {
 					if(property === "open"){
+                        const styleSheets = document.styleSheets;
+                        if([...styleSheets].findIndex(ele => ele.href.includes("layer")) === -1){
+                            const oHead = document.getElementsByTagName("head")[0],
+                                oLink = document.createElement("link");
+                            oLink.setAttribute("rel" , "stylesheet");
+                            oLink.setAttribute("href" , "/css/layer.css");
+                            oHead.appendChild(oLink);
+                        };
 						const {type , offset = ["c"]} = attrs,
 							[top , left] = getOffset(offset);
 						switch (type) {
 							case "calendar":
 								const oCalendar = document.getElementsByClassName("layer-calendar");
 								if(oCalendar.length === 0){
-									const calendar = generateCalendar(attrs.elem);
+                                    const calendar = generateCalendar(attrs.proxy);
 									calendar.run();
 									css(calendar.oCalendar , {top , left});
 								};
@@ -48,9 +50,8 @@
 				};
 			}
 		});
-    function generateCalendar(elem) {
-        const oElem = document.getElementById(elem.substr(1)),
-            time = oElem.value ? new Date(oElem.value) : new Date();
+    function generateCalendar(proxy) {
+        const time = proxy.value ? new Date(proxy.value) : new Date();
         let [nowYearCount , nowMonthCount , nowDateCount] = time.toLocaleDateString().split("/").map(ele => Number(ele));
         const oCalendar = dom.div({class: "layer-calendar"} , 
                 dom.div({class: "layer-header"} ,
@@ -110,7 +111,7 @@
             ),
             calendar = {oCalendar};
         
-        document.body.appendChild(oCalendar);
+        document.getElementsByClassName("content")[0].appendChild(oCalendar);
         const oTime = document.getElementsByClassName("layer-time"),
             oMain = document.getElementsByClassName("layer-main")[0],
             oYear = document.getElementsByClassName("layer-year")[0],
@@ -137,19 +138,19 @@
             } , false);
 
             oClear.addEventListener("click" , () => {
-                oElem.value = "";
+                proxy.value = "";
                 calendar.destroy();
             } , false);
     
             oNowTime.addEventListener("click" , () => {
-                oElem.value = dateBeautify(new Date());
+                proxy.value = dateBeautify(new Date());
                 calendar.destroy();
             } , false);
 
             oConfirm.addEventListener("click" , () => {
                 const oLiLength = oYearItem.length;
                 oLiLength && (nowYearCount = Number.parseInt(oYearItem[Math.floor(oLiLength / 2)].innerHTML));
-                oElem.value = dateBeautify([nowYearCount,nowMonthCount,nowDateCount]);
+                proxy.value = dateBeautify([nowYearCount,nowMonthCount,nowDateCount]);
                 calendar.destroy();
             } , false);
 
@@ -178,7 +179,7 @@
             
             [...oTime].forEach(ele => {
                 ele.addEventListener("click" , () => {
-                    oElem.value = dateBeautify([nowYearCount , nowMonthCount , Number.parseInt(ele.innerHTML)]);
+                    proxy.value = dateBeautify([nowYearCount , nowMonthCount , Number.parseInt(ele.innerHTML)]);
                     calendar.destroy();
                 } , false);
             });
@@ -188,7 +189,7 @@
             this.init();
             document.body.addEventListener("click" , function(ev) {
                 ev = ev || window.event;
-                !(ev.target === oElem || ev.target === document.getElementsByClassName("layer-calendar")[0])
+                !(ev.target === proxy.target || ev.target === document.getElementsByClassName("layer-calendar")[0])
                     && calendar.destroy();
             } , false);
         };
@@ -329,10 +330,6 @@
             [top , left] = offset;
         };
         return [top , left];
-    };
-    function getJSPath() {
-        const jsPath = document.getElementsByTagName("script")[0].src;
-        return jsPath.substr(0 , jsPath.lastIndexOf("/"));
     };
     window.layer = layer;
 })(window);

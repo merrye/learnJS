@@ -97,14 +97,27 @@ function createElementByTag(tag){
 };
 
 function renderDate(ev) {
-    const target = ev.target,
-        elem = `#${target.id}`,
-        offsetDistance = getOffset(target),
-        offset = [offsetDistance.top + target.offsetHeight + 10 , offsetDistance.left];
+    const oResult = ev.target,
+        elem = `#${oResult.id}`,
+        proxy = new Proxy(oResult , {
+            get(target , key) {
+                return key === "target" ? target : target[key]
+            },
+            set(target , key , value) {
+                target[key] !== "" && target[key] !== value && switchArticles();
+                target[key] = value;
+                return true;
+            }
+        });
 
     layer.open({
+        proxy,
         elem,
         type: "calendar",
-        offset
+        offset: [oResult.offsetTop + oResult.offsetHeight + 10, oResult.offsetLeft]
     });
+};
+
+function switchArticles() {
+    
 };
