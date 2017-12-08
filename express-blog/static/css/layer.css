@@ -1,43 +1,24 @@
-*{
-    margin: 0;
-    padding: 0;
-}
-li{
-    list-style: none;
-}
-html , body{
-    height: 100%;
-}
-#result{
-    width: 160px;
-    height: 30px;
-    border: 1px solid rgb(230,230,230);
-    outline: none;
-    text-indent: 12px;
-    font-size: 16px;
-    color: rgb(150,150,150);
-    margin-left: 15px;
-}
-.calendar{
+.layer-calendar{
     width: 272px;
     height: 324px;
     border: 1px solid rgb(213,213,213);
     display: flex;
     flex-direction: column;
     position: absolute;
+    background: #FFF;
 }
-.header{
+.layer-header{
     display: flex;
     justify-content: space-around;
     flex: 0 0 46px;
-    line-height: 46px;
+    line-height: 50px;
 }
-.header > span{
+.layer-header > span{
     width: 25px;
     cursor: pointer;
     position: relative;
 }
-.header > span > i{
+.layer-header > span > i{
     width: 10px;
     height: 10px;
     display: block;
@@ -47,26 +28,26 @@ html , body{
     top: 50%;
     transform: translateY(-50%) rotateZ(45deg);
 }
-.header > span.prev > i{
+.layer-header > span.layer-prev > i{
     transform: translateY(-50%) rotateZ(-135deg);
 }
-.header > span.prev > i:nth-child(1){
+.layer-header > span.layer-prev > i:nth-child(1){
     margin-right: 8px;
 }
-.header > span.next > i:nth-child(1){
+.layer-header > span.layer-next > i:nth-child(1){
     margin-left: 8px;
 }
-.header > span.prev > i{
+.layer-header > span.layer-prev > i{
     right: 0;
 }
-.header > span:hover > i{
+.layer-header > span:hover > i{
     border-color: #5FB878;
 }
-.header > div > span:hover{
+.layer-header > div > span:hover{
     color: #5FB878;
     cursor: pointer;
 }
-.main{
+.layer-main{
     flex: 1;
     padding: 10px;
     position: relative;
@@ -74,10 +55,10 @@ html , body{
     border-width: 1px 0;
     user-select: none;
 }
-.main .content > div{
+.layer-content > div{
     height: 30px;
 }
-.main .content > div > span{
+.layer-content > div > span{
     width: 26px;
     height: 20px;
     padding: 5px;
@@ -86,27 +67,27 @@ html , body{
     text-align: center;
     cursor: pointer;
 }
-.main .content .week > span{
+.layer-week > span{
     cursor: default;
 }
-.main .content > div > span.prevMonth , .main .content > div > span.nextMonth{
+.layer-main .layer-content > div > span.layer-prevMonth , .layer-main .layer-content > div > span.layer-nextMonth{
     color: rgb(210,210,210);
 }
-.main .content > div > span.nowTime{
+.layer-main .layer-content > div > span.layer-nowTime{
     color: #FFF;
     background-color: rgb(0,150,136);
 }
-.main .content > div > span.time:hover{
+.layer-main .layer-content > div > span.layer-time:hover{
     background-color: rgb(234,234,234);
 }
-.main > div > span.prevMonth:hover , .main .content > div > span.nextMonth:hover{
+.layer-main > div > span.layer-prevMonth:hover , .layer-main .layer-content > div > span.layer-nextMonth:hover{
     color: #000;
 }
-.main .content > div > span.nowTime:hover{
+.layer-main .layer-content > div > span.layer-nowTime:hover{
     color: #FFF;
     background-color: rgb(0,150,136);
 }
-.main > ul{
+.layer-main > ul{
     position: absolute;
     top: 0;
     left: 0;
@@ -116,30 +97,30 @@ html , body{
     padding: 10px;
     box-sizing: border-box;
 }
-.main > ul > li{
+.layer-main > ul > li{
     float: left;
     cursor: pointer;
     text-align: center;
 }
-.main > ul > li.month-item{
+.layer-main > ul > li.layer-month-item{
     width: 25%;
     height: 36px;
     line-height: 36px;
     margin: 17px 0;
 }
-.main > ul > li.year-item{
+.layer-main > ul > li.layer-year-item{
     width: 33.3%;
     height: 42px;
     line-height: 42px;
 }
-.main > ul > li:hover{
+.layer-main > ul > li:hover{
     background-color: rgb(234,234,234);
 }
-.main > ul > li.month-item.now , .main > ul > li.year-item.now{
+.layer-main > ul > li.layer-month-item.layer-now , .layer-main > ul > li.year-item.layer-now{
     color: #FFF;
     background-color: rgb(0,150,136);
 }
-.footer{
+.layer-footer{
     flex: 0 0 46px;
     display: flex;
     justify-content: flex-end;
@@ -147,7 +128,7 @@ html , body{
     padding: 0 10px;
     font-size: 12px;
 }
-.footer > span{
+.layer-footer > span{
     height: 26px;
     padding: 0 10px;
     line-height: 26px;
@@ -156,23 +137,6 @@ html , body{
     border: 1px solid rgb(201,201,201);
     cursor: pointer;
 }
-.footer > span:hover{
+.layer-footer > span:hover{
     color: #5FB878;
 }
-/*
-.header > i{
-    color: #999;
-    line-height: 50px;
-}
-.header > div > span{
-    font-size: 14px;
-}
-.header > i:hover , .header > div > span:hover{
-    color: #5FB878;
-}
-.main{
-
-}
-.footer{
-    height: 50px;
-}*/

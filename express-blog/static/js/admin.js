@@ -65,14 +65,15 @@ function generatePageContent(data , time){
         oDateInput = createElementByTag("input");
     oDate.className = "date";
     oDateSpan.innerHTML = "时间";
-    oDateInput.className = "date-input";
-    oDateInput.setAttribute("placeholder" , time.toLocaleDateString().replace(/\//g , "-"));
+    oDateInput.id = "date-input";
+    oDateInput.setAttribute("placeholder" , "yyyy-MM-dd");
+    oDateInput.value = new Date().toLocaleDateString().split("/").map(ele => Number(ele) < 10 ? "0" + ele : ele).join("-");
     oDate.appendChild(oDateSpan);
     oDate.appendChild(oDateInput);
     oMain.appendChild(oDate);
     const articles = generateArticles(data);
     oMain.appendChild(articles);
-    oDateInput.addEventListener("click" , switchDate(oDateInput) , false);
+    oDateInput.addEventListener("click" , renderDate , false);
 };
 
 function generateArticles(articles){
@@ -95,12 +96,15 @@ function createElementByTag(tag){
     return document.createElement(tag);
 };
 
-function switchDate(input){
-    return () => {
+function renderDate(ev) {
+    const target = ev.target,
+        elem = `#${target.id}`,
+        offsetDistance = getOffset(target),
+        offset = [offsetDistance.top + target.offsetHeight + 10 , offsetDistance.left];
 
-    };
-};
-
-function generateCanlendar(){
-    
+    layer.open({
+        elem,
+        type: "calendar",
+        offset
+    });
 };

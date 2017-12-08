@@ -95,6 +95,20 @@ function next(obj){
 function prev(obj){
     return obj.previousElementSibling;
 };
+function getOffset(obj) {
+    let top = obj.offsetTop,
+        left = obj.offsetLeft,
+        offsetParent = obj.offsetParent;
+    while(offsetParent !== document.body){
+        top += offsetParent.offsetTop;
+        left += offsetParent.offsetLeft;
+        offsetParent = offsetParent.offsetParent;
+    };
+    return {
+        top,
+        left
+    };
+};
 window.requestAnimationFrame = (() => {
     return window.requestAnimationFrame ||
         window.oRequstAnimationFrame ||
