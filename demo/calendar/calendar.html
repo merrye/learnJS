@@ -33,7 +33,17 @@
     <script src="js/merry.js"></script>
     <script src="js/layer.js"></script>
     <script>
-        const oResult = document.getElementById("result");
+        const oResult = document.getElementById("result"),
+            oResultProxy = new Proxy(oResult , {
+                get(target , key) {
+                    return key === "target" ? target : target[key];
+                },
+                set(target , key , value) {
+                    value !== target[key] && foo();
+                    target[key] = value;
+                    return true;
+                }
+            });
         window.onload = () => {
             oResult.setAttribute("placeholder" , "yyyy-MM-dd");
         };
@@ -42,11 +52,28 @@
                 top = _this.offsetTop + _this.offsetHeight + 10,
                 left = _this.offsetLeft;
             layer.open({
-                elem: "#result",
                 type: "calendar",
+                proxy: oResultProxy,
                 offset: [top , left]
             });
         });
+        // const r = new Proxy(oResult , {
+        //     get(target , key , receiver) {
+        //         console.log(target , key , receiver);
+        //     },
+        //     set(target , key , value , receiver) {
+        //         console.log(target , key , "value: " , value , receiver);
+        //         target[key] = value;
+        //     }
+        // });
+    
+
+        // oResult.addEventListener("change" , () => {
+        //     console.log("input value is changed");
+        // } , false);
+        function foo() {
+            console.log(123);
+        };
     </script>
 </body>
 </html>

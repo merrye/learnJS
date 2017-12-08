@@ -21,7 +21,7 @@
                         case "calendar":
                             const oCalendar = document.getElementsByClassName("calendar");
                             if(oCalendar.length === 0){
-                                const calendar = generateCalendar(attrs.elem);
+                                const calendar = generateCalendar(attrs.proxy);
                                 calendar.run();
                                 css(calendar.oCalendar , {top , left});
                             };
@@ -48,9 +48,8 @@
             };
         }
     });
-    function generateCalendar(elem) {
-        const oElem = document.getElementById(elem.substr(1)),
-            time = oElem.value ? new Date(oElem.value) : new Date();
+    function generateCalendar(proxy) {
+        const time = proxy.value ? new Date(proxy.value) : new Date();
         let [nowYearCount , nowMonthCount , nowDateCount] = time.toLocaleDateString().split("/").map(ele => Number(ele));
         const oCalendar = dom.div({class: "calendar"} , 
                 dom.div({class: "header"} ,
@@ -137,19 +136,19 @@
             } , false);
 
             oClear.addEventListener("click" , () => {
-                oElem.value = "";
+                proxy.value = "";
                 calendar.destroy();
             } , false);
     
             oNowTime.addEventListener("click" , () => {
-                oElem.value = dateBeautify(new Date());
+                proxy.value = dateBeautify(new Date());
                 calendar.destroy();
             } , false);
 
             oConfirm.addEventListener("click" , () => {
                 const oLiLength = oYearItem.length;
                 oLiLength && (nowYearCount = Number.parseInt(oYearItem[Math.floor(oLiLength / 2)].innerHTML));
-                oElem.value = dateBeautify([nowYearCount,nowMonthCount,nowDateCount]);
+                proxy.value = dateBeautify([nowYearCount,nowMonthCount,nowDateCount]);
                 calendar.destroy();
             } , false);
 
@@ -178,7 +177,7 @@
             
             [...oTime].forEach(ele => {
                 ele.addEventListener("click" , () => {
-                    oElem.value = dateBeautify([nowYearCount , nowMonthCount , Number.parseInt(ele.innerHTML)]);
+                    proxy.value = dateBeautify([nowYearCount , nowMonthCount , Number.parseInt(ele.innerHTML)]);
                     calendar.destroy();
                 } , false);
             });
