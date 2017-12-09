@@ -58,4 +58,22 @@ router.get("/:year/:month" , (req, res) => {
     })();
 });
 
+router.post("/:year/:month" , (req , res) => {
+    (async() => {
+        const {year , month} = req.params,
+            date = `${year}/${month}`,
+            articles = await Article.findAll({
+                where: {
+                    href: {
+                        [Op.like]: `/article/${date}%`
+                    }
+                },
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            });
+        res.json(articles);
+    })();
+});
+
 module.exports = router;

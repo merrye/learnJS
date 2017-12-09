@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax</title>
+</head>
+<body>
+    <script src="js/ajax.js"></script>
+    <script>
+        ajax({
+            url: "https://api.github.com/users/merrye",
+            success(data) {
+                // console.log(data);
+            },
+            error(err) {
+                
+            }
+        });
+    </script>
+</body>
+</html>

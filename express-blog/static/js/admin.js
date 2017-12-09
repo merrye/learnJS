@@ -117,7 +117,12 @@ function renderDate(ev) {
         offset: [oResult.offsetTop + oResult.offsetHeight + 10, oResult.offsetLeft]
     });
 };
-
+ajax({
+    url: "/article/2017/12",
+    success(data) {
+        console.log(data);
+    }
+});
 function switchArticles() {
     
 };

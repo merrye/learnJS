@@ -95,6 +95,9 @@ function next(obj){
 function prev(obj){
     return obj.previousElementSibling;
 };
+function ajax({config = {type: get}}){
+
+};
 window.requestAnimationFrame = (() => {
     return window.requestAnimationFrame ||
         window.oRequstAnimationFrame ||

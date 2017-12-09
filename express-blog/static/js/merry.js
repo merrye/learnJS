@@ -109,6 +109,55 @@ function getOffset(obj) {
         left
     };
 };
+function ajax({
+    url,
+    type = "GET",
+    isAsync = true,
+    data,
+    success,
+    error
+}) {
+    const xhr = new XMLHttpRequest();
+
+    xhr.addEventListener("load" , transferCompleted);
+    xhr.addEventListener("progress" , updateProgress);
+    xhr.addEventListener("error" , transferFailed);
+    xhr.addEventListener("abort" , transferCanceled);
+    xhr.addEventListener("readystatechange" , handleStateChange);
+
+    url = url.includes("http") ? url : `${window.location.origin}${url}`;
+    console.log(url);
+    xhr.open(url , type , isAsync);
+    xhr.send(data);
+
+    function transferCompleted(ev) {
+
+    };
+
+    function updateProgress(ev) {
+        // if(ev.lengthComputable) {
+            // ev.loaded 已经下载大小
+            // ev.total  全部大小
+        // };
+    };
+
+    function transferFailed() {
+        error ? error(xhr.statusText) : console.log(xhr.statusText);
+    };
+
+    function transferCanceled() {
+        error ? error(xhr.statusText) : console.log(xhr.statusText);
+    };
+
+    function handleStateChange() {
+        const {readyState , status , responseText , statusText} = xhr;
+        if(readyState === XMLHttpRequest.DONE) {
+            (status >= 200 && status < 300) || status === 300
+                ? success(responseText)
+                : (error ? error(statusText) : console.log(statusText));
+        };
+    };
+};
 window.requestAnimationFrame = (() => {
     return window.requestAnimationFrame ||
         window.oRequstAnimationFrame ||
