@@ -1,3 +1,10 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+li{
+    list-style: none;
+}
 .layer-calendar{
     width: 272px;
     height: 324px;

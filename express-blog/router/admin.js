@@ -14,4 +14,12 @@ router.get("/" , (req , res) => {
     // };
 });
 
+router.get("/upload/article" , (req , res) => {
+    res.render("articleUpload");
+});
+
+router.post("/upload/article" , (req , res) => {
+    console.log(req.body);
+});
+
 module.exports = router;

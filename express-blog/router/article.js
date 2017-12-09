@@ -58,14 +58,13 @@ router.get("/:year/:month" , (req, res) => {
     })();
 });
 
-router.post("/:year/:month" , (req , res) => {
-    (async() => {
-        const {year , month} = req.params,
-            date = `${year}/${month}`,
+router.get("/:year" , (req , res) => {
+    (async () => {
+        const {year} = req.params,
             articles = await Article.findAll({
                 where: {
                     href: {
-                        [Op.like]: `/article/${date}%`
+                        [Op.like]: `/article/${year}%`
                     }
                 },
                 order: [

@@ -116,6 +116,8 @@ body{
 .container .content{
     flex: 1;
     position: relative;
+    overflow: auto;
+    overflow-y: scroll;
 }
 .container .content .main{
     padding: 20px;
@@ -129,16 +131,6 @@ body{
     font-size: 16px;
     color: rgb(150,150,150);
     margin-left: 15px;
-}
-.container .content > footer{
-    width: 100%;
-    height: 45px;
-    line-height: 45px;
-    background-color: #eee;
-    text-indent: 16px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
 }
 .container .content .main .welcome{
     text-indent: 16px;
@@ -236,6 +228,12 @@ body{
     color: rgb(0,0,0);
     border-bottom-color: rgb(0,0,0);
 }
-.container .content > footer > a{
+footer{
+    flex: 0 0 45px;
+    line-height: 45px;
+    text-align: center;
+    background-color: #eee;
+}
+footer > a{
     color: #000;
 }

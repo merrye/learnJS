@@ -9,9 +9,7 @@ const oItem = document.getElementsByClassName("item"),
         const name = "clicked",
             subItem = oSubItem[index];
         toggleClassName(ele , name);
-        css(subItem , {
-            display: hasClassName(ele , name) ? "block" : "none"
-        });
+        css(subItem , {display: hasClassName(ele , name) ? "block" : "none"});
     } , false);
     ele.addEventListener("mouseenter" , function(){
         const top = ele.offsetTop;
@@ -33,24 +31,40 @@ const oItem = document.getElementsByClassName("item"),
     ele.onclick = ev => {
         ev.cancalBubble = true;
         ev.stopPropagation();
+        const time = new Date(),
+            year = time.getFullYear(),
+            month = time.getMonth() + 1;
         oMain.innerHTML = `<div class="loading"></div>`;
         switch (index){
             case 0:
 
                 break;
             case 1:
-                const time = new Date(),
-                    year = time.getFullYear(),
-                    month = time.getMonth() + 1;
-                $.ajax({
-                    url: `/article/${year}/${month}`,
-                    type: "get",
+                ajax({
+                    url:`/article/${year}/${month}`,
                     success(data){
-                        if(data.length){
-                            generatePageContent(data , time);
-                        }else{
-                            
-                        };
+                        generatePageContent(JSON.parse(data) , time , false);
+                    }
+                });
+                /*
+                    $.ajax({
+                        url: 
+                        type: "get",
+                        success(data){
+                            if(data.length){
+                                generatePageContent(data , time);
+                            }else{
+                                
+                            };
+                        }
+                    });
+                */
+                break;
+            case 2:
+                ajax({
+                    url: `/article/${year}`,
+                    success(data) {
+                        generatePageContent(JSON.parse(data) , time , true);
                     }
                 });
                 break;
@@ -58,38 +72,39 @@ const oItem = document.getElementsByClassName("item"),
     };
 });
 
-function generatePageContent(data , time){
+function generatePageContent(data , time , isByYear){
     oMain.innerHTML = "";
     const oDate = createElementByTag("div"),
         oDateSpan = createElementByTag("span"),
-        oDateInput = createElementByTag("input");
+        oDateInput = createElementByTag("input"),
+        oArticles = createElementByTag("div");
     oDate.className = "date";
     oDateSpan.innerHTML = "时间";
     oDateInput.id = "date-input";
+    oDateInput.isByYear = isByYear;
     oDateInput.setAttribute("placeholder" , "yyyy-MM-dd");
     oDateInput.value = new Date().toLocaleDateString().split("/").map(ele => Number(ele) < 10 ? "0" + ele : ele).join("-");
+    oArticles.className = "articles";
     oDate.appendChild(oDateSpan);
     oDate.appendChild(oDateInput);
     oMain.appendChild(oDate);
-    const articles = generateArticles(data);
-    oMain.appendChild(articles);
+    generateArticles(oArticles , data);
+    oMain.appendChild(oArticles);
     oDateInput.addEventListener("click" , renderDate , false);
 };
 
-function generateArticles(articles){
-    const oArticles = createElementByTag("div");
-    oArticles.className = "articles";
+function generateArticles(oArticles , articles){
+    oArticles.innerHTML = "";
     for(let article of articles){
         const oArticle = createElementByTag("div");
         oArticle.className = "article";
-        oArticle.innerHTML = article.createdAt.split("/").filter((ele , index) => index !== 0).map(ele => Number(ele) < 10 ? "0" + ele : ele).join("-");
+        oArticle.innerHTML = article.createdAt.split("/").filter((ele , index) => index !== 0).join("-");
         const oA = createElementByTag("a");
         oA.href = article.href;
         oA.innerHTML = article.title;
         oArticle.appendChild(oA);
         oArticles.appendChild(oArticle);
     };
-    return oArticles;
 };
 
 function createElementByTag(tag){
@@ -104,7 +119,7 @@ function renderDate(ev) {
                 return key === "target" ? target : target[key]
             },
             set(target , key , value) {
-                target[key] !== "" && target[key] !== value && switchArticles();
+                value !== "" && target[key] !== value && (target.isByYear ? switchArticlesByYear(value) : switchArticlesByMonth(value));
                 target[key] = value;
                 return true;
             }
@@ -117,12 +132,21 @@ function renderDate(ev) {
         offset: [oResult.offsetTop + oResult.offsetHeight + 10, oResult.offsetLeft]
     });
 };
-ajax({
-    url: "/article/2017/12",
-    success(data) {
-        console.log(data);
-    }
-});
-function switchArticles() {
-    
+
+function switchArticlesByMonth(value) {
+    ajax({
+        url: `/article/${value.substr(0 , value.lastIndexOf("-")).replace(/-/g , "/")}`,
+        success(data) {
+            generateArticles(document.getElementsByClassName("articles")[0] , JSON.parse(data));
+        }
+    });
+};
+
+function switchArticlesByYear(value) {
+    ajax({
+        url: `/article/${value.substr(0 , value.indexOf("-"))}`,
+        success(data) {
+            generateArticles(document.getElementsByClassName("articles")[0] , JSON.parse(data));
+        }
+    });
 };

@@ -32,23 +32,6 @@
 					};
 				};
 			}
-		}),
-		dom = new Proxy({} , {
-			get(target , property) {
-				return function(attrs = {}, ...children) {
-					const el = document.createElement(property);
-					for (let prop of Object.keys(attrs)) {
-						el.setAttribute(prop , attrs[prop]);
-					};
-					for (let child of children) {
-						if (typeof child === "string" ) {
-							child = document.createTextNode(child);
-						};
-						el.appendChild(child);
-					};
-					return el;
-				};
-			}
 		});
     function generateCalendar(proxy) {
         const time = proxy.value ? new Date(proxy.value) : new Date();
@@ -56,48 +39,48 @@
         const oCalendar = dom.div({class: "layer-calendar"} , 
                 dom.div({class: "layer-header"} ,
                     dom.span({class: "layer-prev layer-changeYear layer-prevYear"} , 
-                        dom.i({}) , dom.i({})
+                        dom.i({class: "layer-i"}) , dom.i({class: "layer-i"})
                     ),
                     dom.span({class: "layer-prev layer-changeMonth layer-prevMonth"} , 
-                        dom.i({})
+                        dom.i({class: "layer-i"})
                     ),
-                    dom.div({} ,
+                    dom.div({class: "layer-show-date"} ,
                         dom.span({class: "layer-year"} , `${nowYearCount}年`) , dom.span({class: "layer-month"} , `${nowMonthCount}月`)
                     ),
                     dom.span({class: "layer-next layer-changeMonth layer-nextMonth"} , 
-                        dom.i({})
+                        dom.i({class: "layer-i"})
                     ),
                     dom.span({class: "layer-next layer-changeYear layer-nextYear"} , 
-                        dom.i({}),dom.i({})
+                        dom.i({class: "layer-i"}),dom.i({class: "layer-i"})
                     )
                 ),
                 dom.div({class: "layer-main"} ,
                     dom.div({class: "layer-content"} , 
                         dom.div({class: "layer-week"} , 
-                            dom.span({} , "日"), dom.span({} , "一"), dom.span({} , "二"), dom.span({} , "三"), 
-                            dom.span({} , "四"), dom.span({} , "五"), dom.span({} , "六"),
+                            dom.span({class: "layer-week-item"} , "日"), dom.span({class: "layer-week-item"} , "一"), dom.span({class: "layer-week-item"} , "二"), dom.span({class: "layer-week-item"} , "三"), 
+                            dom.span({class: "layer-week-item"} , "四"), dom.span({class: "layer-week-item"} , "五"), dom.span({class: "layer-week-item"} , "六"),
                         ),
-                        dom.div({} , 
+                        dom.div({class: "layer-date"} , 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}),
                         ),
-                        dom.div({} , 
+                        dom.div({class: "layer-date"} , 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}),
                         ),
-                        dom.div({} , 
+                        dom.div({class: "layer-date"} , 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}),
                         ),
-                        dom.div({} , 
+                        dom.div({class: "layer-date"} , 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}),
                         ),
-                        dom.div({} , 
+                        dom.div({class: "layer-date"} , 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}),
                         ),
-                        dom.div({} , 
+                        dom.div({class: "layer-date"} , 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), 
                             dom.span({class: "layer-time"}), dom.span({class: "layer-time"}), dom.span({class: "layer-time"}),
                         )
@@ -127,16 +110,6 @@
         calendar.init = function() {
             setCalendar(time);
 
-            oMonth.addEventListener("click" , () => {
-                changeDate({
-                    loopCount: INIT_MONTH_NUMBER,
-                    loopHTMLElements: oMonthItem,
-                    getHtml: i => monthArr[i],
-                    setDate: (ele , index) => nowMonthCount = index + 1,
-                    getClassName: i => i === nowMonthCount - 1 ? "layer-month-item layer-now" : "layer-month-item",
-                });
-            } , false);
-
             oClear.addEventListener("click" , () => {
                 proxy.value = "";
                 calendar.destroy();
@@ -154,19 +127,31 @@
                 calendar.destroy();
             } , false);
 
+            oMonth.addEventListener("click" , () => {
+                document.getElementsByClassName("layer-month-ul").length === 0 && changeDate({
+                    loopCount: INIT_MONTH_NUMBER,
+                    loopHTMLElements: oMonthItem,
+                    getHtml: i => monthArr[i],
+                    setDate: (ele , index) => nowMonthCount = index + 1,
+                    getClassName: i => i === nowMonthCount - 1 ? "layer-month-item layer-now" : "layer-month-item",
+                });
+            } , false);
+
             oYear.addEventListener("click" , () => {
-                oYear.innerHTML = `${nowYearCount - INIT_MONTH_NUMBER}年-${nowYearCount + INIT_MONTH_NUMBER}年`;
-                changeDate({
-                    loopCount: INIT_YEAR_NUMBER,
-                    loopHTMLElements: oYearItem,
-                    getHtml: i => `${nowYearCount - INIT_MONTH_NUMBER + i}年`,
-                    getClassName: i => i === Math.floor(INIT_YEAR_NUMBER / 2) ? "layer-year-item layer-now" : "layer-year-item",
-                    setDate: (ele , index) => nowYearCount = Number.parseInt(ele.innerHTML),
-                });
-                [...oChangeYear].forEach((ele , index) => {
-                    ele.removeEventListener("click" , index ? yearAdd : yearLess , false);
-                    ele.addEventListener("click", index ? setYear(INIT_YEAR_NUMBER) : setYear(-INIT_YEAR_NUMBER) ,false);
-                });
+                if(document.getElementsByClassName("layer-year-ul").length === 0) {
+                    oYear.innerHTML = `${nowYearCount - INIT_MONTH_NUMBER}年-${nowYearCount + INIT_MONTH_NUMBER}年`;
+                    changeDate({
+                        loopCount: INIT_YEAR_NUMBER,
+                        loopHTMLElements: oYearItem,
+                        getHtml: i => `${nowYearCount - INIT_MONTH_NUMBER + i}年`,
+                        getClassName: i => i === Math.floor(INIT_YEAR_NUMBER / 2) ? "layer-year-item layer-now" : "layer-year-item",
+                        setDate: (ele , index) => nowYearCount = Number.parseInt(ele.innerHTML),
+                    });
+                    [...oChangeYear].forEach((ele , index) => {
+                        ele.removeEventListener("click" , index ? yearAdd : yearLess , false);
+                        ele.addEventListener("click", index ? setYear(INIT_YEAR_NUMBER) : setYear(-INIT_YEAR_NUMBER) ,false);
+                    });
+                };
             } , false);
 
             [...oChangeMonth].forEach((ele , index) => {
@@ -179,6 +164,12 @@
             
             [...oTime].forEach(ele => {
                 ele.addEventListener("click" , () => {
+                    const className = ele.className;
+                    if(className.includes("layer-prevMonth")) {
+                        MonthSubtract();
+                    }else if(className.includes("layer-nextMonth")) {
+                        MonthAdd();
+                    };
                     proxy.value = dateBeautify([nowYearCount , nowMonthCount , Number.parseInt(ele.innerHTML)]);
                     calendar.destroy();
                 } , false);
@@ -187,16 +178,12 @@
 
         calendar.run = function() {
             this.init();
-            document.body.addEventListener("click" , function(ev) {
-                ev = ev || window.event;
-                !(ev.target === proxy.target || ev.target === document.getElementsByClassName("layer-calendar")[0])
-                    && calendar.destroy();
-            } , false);
+            document.body.addEventListener("click" , destroyCalendar , false);
         };
 
         calendar.destroy = function() {
             [...document.getElementsByClassName("layer-calendar")].forEach(ele => ele.remove());
-            document
+            document.body.removeEventListener("click" , destroyCalendar , false);
         };
 
         function setCalendar(time){
@@ -281,6 +268,7 @@
             oMonth.style.display = "none";
             [...oChangeMonth].forEach(ele => ele.style.opacity = 0);
             const oUl = document.createElement("ul");
+                oUl.className = loopCount === INIT_YEAR_NUMBER ? "layer-year-ul" : "layer-month-ul";
             for(let i = 0;i < loopCount;i ++){
                 const oLi = document.createElement("li");
                 oLi.innerHTML = getHtml(i);
@@ -315,6 +303,11 @@
         
         function addZero(ele){
             return Number(ele) < 10 ? "0" + ele : ele;
+        };
+
+        function destroyCalendar(ev) {
+            ev = ev || window.event;
+            !(ev.target === proxy.target || ev.target.className.includes("layer")) && calendar.destroy();
         };
 
         return calendar;

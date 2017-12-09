@@ -61,7 +61,7 @@ function removeClass(obj , name){
 /**
 * @param {Element} obj  
 * @param {String} name  
- */
+*/
 function toggleClassName(obj , name){
     (obj.length ? [...obj] : [obj]).forEach((ele) => {
         const cName = ele.className,
@@ -73,7 +73,7 @@ function toggleClassName(obj , name){
 /**
 * @param {Element} obj  
 * @param {String} name  
- */
+*/
 function hasClassName(obj , name){
     return obj.className.split(" ").find(ele => ele === name) ? true : false;
 };
@@ -118,16 +118,14 @@ function ajax({
     error
 }) {
     const xhr = new XMLHttpRequest();
-
+    
     xhr.addEventListener("load" , transferCompleted);
     xhr.addEventListener("progress" , updateProgress);
     xhr.addEventListener("error" , transferFailed);
     xhr.addEventListener("abort" , transferCanceled);
     xhr.addEventListener("readystatechange" , handleStateChange);
 
-    url = url.includes("http") ? url : `${window.location.origin}${url}`;
-    console.log(url);
-    xhr.open(url , type , isAsync);
+    xhr.open(type , url , isAsync);
     xhr.send(data);
 
     function transferCompleted(ev) {
@@ -158,6 +156,24 @@ function ajax({
         };
     };
 };
+const dom = new Proxy({} , {
+    get(target , property) {
+        return function(attrs = {}, ...children) {
+            const el = document.createElement(property);
+            for (let prop of Object.keys(attrs)) {
+                el.setAttribute(prop , attrs[prop]);
+            };
+            for (let child of children) {
+                if (typeof child === "string" ) {
+                    child = document.createTextNode(child);
+                };
+                el.appendChild(child);
+            };
+            return el;
+        };
+    }
+});
+
 window.requestAnimationFrame = (() => {
     return window.requestAnimationFrame ||
         window.oRequstAnimationFrame ||
