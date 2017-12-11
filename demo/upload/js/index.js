@@ -77,32 +77,12 @@ function dropHandler(ev) {
             oImageCtx.restore();
             oMainCtx.drawImage(oImageCanvas, 0, 0);
             oPreviewCtx.drawImage(oImageCanvas, DIFFW, DIFFW, PW, PW, 0, 0, PW, PW);
-            // draw mask
-            drawRect(oMainCtx, 0, 0, cW, DIFFW, MASKCOLOR, null, MASKALPHA);
-            drawRect(oMainCtx, 0, DIFFW, DIFFW, PW, MASKCOLOR, null, MASKALPHA);
-            drawRect(oMainCtx, DIFFW + PW, DIFFW, DIFFW, PW, MASKCOLOR, null, MASKALPHA);
-            drawRect(oMainCtx, 0, cH - DIFFW, cW, DIFFW, MASKCOLOR, null, MASKALPHA);
 
-            drawRect(oMainCtx, DIFFW + PW, DIFFW + PW, DRAGSIZE, DRAGSIZE, null, DRAGCOLOR, null);
-
-            drawPreview(DIFFW, DIFFW);
+            update();
         }, false);
     }, false);
 
     fileReader.readAsDataURL(file);
-};
-
-function drawRect(c, x, y, w, h, f, s, g) {
-    c.save();
-    if(f !== null) {c.fillStyle = f;};
-    if(s !== null) {c.strokeStyle = f;};
-    if(g !== null) {c.globalAlpha = g;};
-    c.beginPath();
-    c.rect(x, y, w, h);
-    c.closePath();
-    f !== null && c.fill();
-    s !== null && c.stroke();
-    c.restore();
 };
 
 oMain.addEventListener("mousemove", function(ev) {
@@ -121,9 +101,32 @@ oMain.addEventListener("mousemove", function(ev) {
     }, false);
 }, false);
 
-
-
 // oMain.addEventListener("mouseup");
+
+function update() {
+    // draw mask
+    drawRect(oMainCtx, 0, 0, cW, DIFFW, MASKCOLOR, null, MASKALPHA);
+    drawRect(oMainCtx, 0, DIFFW, DIFFW, PW, MASKCOLOR, null, MASKALPHA);
+    drawRect(oMainCtx, DIFFW + PW, DIFFW, DIFFW, PW, MASKCOLOR, null, MASKALPHA);
+    drawRect(oMainCtx, 0, cH - DIFFW, cW, DIFFW, MASKCOLOR, null, MASKALPHA);
+    // draw drag rect
+    drawRect(oMainCtx, DIFFW + PW, DIFFW + PW, DRAGSIZE, DRAGSIZE, null, DRAGCOLOR, null);
+    // draw preview canvas
+    drawPreview(DIFFW, DIFFW);
+};
+
+function drawRect(c, x, y, w, h, f, s, g) {
+    c.save();
+    if(f !== null) {c.fillStyle = f;};
+    if(s !== null) {c.strokeStyle = f;};
+    if(g !== null) {c.globalAlpha = g;};
+    c.beginPath();
+    c.rect(x, y, w, h);
+    c.closePath();
+    f !== null && c.fill();
+    s !== null && c.stroke();
+    c.restore();
+};
 
 function drawPreview(x, y) {
     oPreviewCtx.clearRect(0, 0, PW, PW);
