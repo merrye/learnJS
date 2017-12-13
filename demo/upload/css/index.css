@@ -9,6 +9,7 @@ body,html{
     height: 100%;
     background: rgba(0, 0, 0, 0.09);
     overflow: hidden;
+    user-select: none;
 }
 .fileUpload{
     width: 880px;
@@ -88,9 +89,9 @@ body,html{
 .right-menu > div{
     flex: 1;
 }
-.window{
+.win{
     border: 3px dashed silver;
-    margin: 70px 70px 5px 70px;
+    margin: 40px 70px 5px 70px;
 }
 .dec{
     color: rgba(211, 153, 151, 1);
