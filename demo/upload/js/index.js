@@ -12,10 +12,10 @@ const oTip = document.getElementsByClassName("tip")[0],
     cH = oMain.height,
     MASKCOLOR = "#FFF",
     DRAGCOLOR = "#000";
-    console.log();
 
 let inCropper = false, inDragger = false, isMoving = false, isDrag = false,
-    cropLeft = 0, cropTop = 0, dragLeft = 0, dragTop = 0, iW = 0, iH = 0, translate_left = 0, translate_top = 0, scale = 0, startX = 0, startY = 0;
+    cropLeft = 0, cropTop = 0, dragLeft = 0, dragTop = 0, iW = 0, iH = 0,
+    translate_left = 0, translate_top = 0, scale = 0, startX = 0, startY = 0;
 
 oImageCanvas.width = cW;
 oImageCanvas.height = cH;
@@ -25,54 +25,12 @@ oMain.addEventListener("dragenter", dragEnterHandler, false);
 oMain.addEventListener("dragover", dragOverHandler, false);
 
 oMain.addEventListener("drop", dropHandler, false);
-/*
-    let startX = 0, startY = 0;
-    oMain.addEventListener("mousemove", function(ev) {
-        const rect = this.getClientRects()[0],
-            moveX = ev.pageX - rect.left - 8,
-            moveY = ev.pageY - rect.top - 8;
 
-        inCropper = moveX > cropLeft && moveX < dragLeft && moveY < dragTop && moveY > cropTop;
-        this.style.cursor = inCropper ? "move" : "";
-        isDrag && move(moveX - startX , moveY - startY);
-    }, false);
+oMain.addEventListener("mousemove", moveHandler, false);
 
-    oMain.addEventListener("mousedown", function(ev) {
-        const rect = this.getClientRects()[0];
-        startX = ev.pageX - rect.left - 8,
-        startY = ev.pageY - rect.top - 8;
-        isDrag = inCropper ? true : false;
-    }, false);
+oMain.addEventListener("mousedown", downHandler, false);
 
-    oMain.addEventListener("mousemove", moveHandler, false);
-
-    oMain.addEventListener("mousedown", downHandler, false);
-
-    oMain.addEventListener("mouseup", upHandler, false);
-*/
-oMain.onmousemove = function(ev) {
-    const _this = this,
-        rect = _this.getClientRects()[0],
-        x = ev.pageX - rect.left - 8,
-        y = ev.pageY - rect.top - 8;
-    inCropper = x > cropLeft && x < dragLeft && y < dragTop && y > cropTop;
-    this.style.cursor = inCropper ? "move" : "";
-    if(isDrag) {
-        move(x - startX, y - startY);
-        startX = x;
-        startY = y;
-    };
-    _this.onmousedown = function(ev) {
-        startX = ev.pageX - rect.left - 8,
-        startY = ev.pageY - rect.top - 8;
-        isDrag = inCropper ? true : false;
-    };
-    _this.onmouseup = function() {
-        isDrag = false;
-        _this.onmouseup = null;
-        _this.onmousedown = null;
-    };
-};
+oMain.addEventListener("mouseup", upHandler, false);
 
 function dragEnterHandler(ev) {
     ev.preventDefault();
@@ -81,7 +39,7 @@ function dragEnterHandler(ev) {
 function dragOverHandler(ev) {
     ev.preventDefault();
 };
-// dropHandler();
+
 function dropHandler(ev) {
     ev.preventDefault();
     const file = ev.dataTransfer.files[0],
@@ -121,27 +79,17 @@ function dropHandler(ev) {
 };
 
 function moveHandler(ev) {
-    const rect = this.getClientRects()[0],
-    moveX = ev.pageX - rect.left - 8,
-    moveY = ev.pageY - rect.top - 8;
-
-    inCropper = moveX > cropLeft && moveX < dragLeft && moveY < dragTop && moveY > cropTop;
-    this.style.cursor = inCropper ? "move" : "";
-    isDrag && move(moveX - startX , moveY - startY);
-};
-
-function move(x, y) {
-    cropTop += y;
-    cropLeft += x;
-    cropTop = Math.max(translate_top, cropTop);
-    cropTop = Math.min(cropTop, scale * iH - PW + translate_top);
-    cropTop = Number.isInteger(cropTop) ? cropTop : Math.ceil(cropTop);
-    cropLeft = Math.max(translate_left, cropLeft);
-    cropLeft = Math.min(cropLeft, scale * iW - PW + translate_left);
-    cropLeft = Number.isInteger(cropLeft) ? cropLeft : Math.ceil(cropLeft);
-    dragTop = cropTop + PW;
-    dragLeft = cropLeft + PW;
-    update();
+    const _this = this,
+        rect = _this.getClientRects()[0],
+    x = ev.pageX - rect.left - 8,
+    y = ev.pageY - rect.top - 8;
+    inCropper = x > cropLeft && x < dragLeft && y < dragTop && y > cropTop;
+    _this.style.cursor = inCropper ? "move" : "";
+    if(isDrag) {
+        move(x - startX, y - startY);
+        startX = x;
+        startY = y;
+    };
 };
 
 function downHandler(ev) {
@@ -149,13 +97,22 @@ function downHandler(ev) {
     startX = ev.pageX - rect.left - 8;
     startY = ev.pageY - rect.top - 8;
     isDrag = inCropper ? true : false;
-    isDrag && oMain.addEventListener("mouseup", upHandler, false);
 };
 
 function upHandler() {
     isDrag = false;
-    this.removeEventListener("mouseup", upHandler, false);
-    this.removeEventListener("mousedown", downHandler, false);
+};
+
+function move(x, y) {
+    cropTop += y;
+    cropLeft += x;
+    cropTop = Math.min(Math.max(translate_top, cropTop), scale * iH - PW + translate_top);
+    cropTop = Number.isInteger(cropTop) ? cropTop : Math.ceil(cropTop);
+    cropLeft = Math.min(Math.max(translate_left, cropLeft), scale * iW - PW + translate_left);
+    cropLeft = Number.isInteger(cropLeft) ? cropLeft : Math.ceil(cropLeft);
+    dragTop = cropTop + PW;
+    dragLeft = cropLeft + PW;
+    update();
 };
 
 function update() {
