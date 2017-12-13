@@ -11,7 +11,7 @@ let storage = multer.diskStorage({  // 上传路径处理   重命名处理
             callback(null , `${Date.now()}.${name}`);
         }
     }),
-    fileFilter = (req , file , callbacl) => {
+    fileFilter = (req , file , callback) => {
         // 文件上传限制
         // 设置判断后， 没允许 / 设置的会被拒绝
         if(file.mimetype === "image/jpeg"){
