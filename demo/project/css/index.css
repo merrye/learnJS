@@ -48,37 +48,25 @@ p{ font-family:微软雅黑; font-size:12px; line-height:32px;  position:absolut
 #photo .but{ width:100%; height:30px;  position:absolute;bottom:20px; text-align:center;}
 #photo .but  span { width:25px; height:25px;  display:inline-block; background:url("../image/index/按钮.png"); margin:0 5px;}
 #photo .but  span.active{background:url("../image/index/按钮2.png");}
-#con2{ width:100%; height:359px; }
-#con2 .con3{ width:1260px; height:330px;  margin:0px auto 20px}
-#con2 .con3 img.no1{margin:10px auto; margin-left:360px;}
-#con2 .con3 img{transition:all 1s;}
-#con2 .con3 img:hover{ opacity:0.5;}
-#con2 .con3 ul li{ width:238px; height:269px; float:right; list-style:none; margin:6px; display:inline-block; margin-top:-5px;}
-#con4{ width:1260px; height:402px;  margin:0px auto 20px}
-#con4 .con5{ width:1260px; height:30px;}
-#con4 .con5 p{ font-size:18px; color:#000; line-height:30px; padding-left:15px;}
-#con4 .con5 p1{font-size:18px; color:#000; line-height:30px; padding-left:95px;}
-.con6 .con7{ float:left; margin-left:15px;}
-.con6 .con8{ width:748px; height:371px;  float:left;}
-.con6 .con8 ul li{ width:122px; height:91px; border-left:1px solid #999;border-bottom:1px solid #999;  display:inline-block; float:left;}
-.con6 .con9{ width:245px; height:371px; float:left;}
-.con6 .con8 img{ margin:20px auto 0px; margin-left:10px; transition:all 1s;}
-.con6 .con8 ul li:nth-child(24) img{ margin-left:30px;}
-.con6 .con8 ul li img:hover{ transform: scale(1.2);}
-#con10{  width:1260px; height:477px;  margin:0px auto 20px; }
-#con10 ul.no2 li{ width:238px; height:36px; background:#DD2727; float:right; margin:6px; list-style:none; margin-top:0px;}
-#con10 ul.no2 img{ margin-left:65px; margin-top:5px; display:block; float:left;}
-#con10 ul.no2 span{ display:block; float:left;width:72px;height:36px;color:#FFF; font-size:16px; font-family:微软雅黑; font-weight:700; margin-left:5px; margin-top:5px;}
-#con10 ul li{ width:238px; height:220px; background:#FFF; float:left; margin:6px; list-style:none; margin-top:-5px;}
-#con10 ul{ margin-left:10px;}
-#con10 ul li h1{ font-size:22px; text-align:center;width:238px;}
-#con10 ul li p{ text-align:center; font-size:14px; margin-top:-5px;width:238px;}
-#con10 ul li img{ margin-top:25px; margin-left:40px;transition:all 1s;}
-#con10 ul li img:hover{ transform: scale(1.3); }
-#con11{ width:100%; height:90px;}
-#con11 a{ width: 1260px; height: 100%;display: block; margin: 0 auto; overflow: hidden;}
-#con11 a img{ margin-left: -180px;}
-#first{ width:100%; height:200px; background:#000; margin-top:5px; text-align: center;}
-#first p1{ font-family:微软雅黑; font-size:12px; line-height:32px; color:#FFF; display:block; margin-left:80px;}
-#first p2{ font-family:微软雅黑; font-size:12px; line-height:32px; color:#FFF; display:block; margin-left:80px;}
-#first p3{ font-family:微软雅黑; font-size:12px; line-height:32px; color:#FFF; display:block; margin-left:80px;}
+#product_list{
+    width: 1348px;
+    display: flex;
+    margin: 20px auto;
+    flex-wrap: wrap;
+}
+#product_list > div{
+    flex: 0 0 25%;
+    cursor: pointer;
+}
+#product_list > div > a{
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+#product_list > div > a > img{
+    width: 95%;
+    height: 95%;
+    display: block;
+    margin: 0 auto;
+}
