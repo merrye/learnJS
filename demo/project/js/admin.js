@@ -38,9 +38,57 @@ const oItem = document.getElementsByClassName("item"),
         oMain.innerHTML = `<div class="loading"></div>`;
         switch (index){
             case 0:
-
+                oMain.innerHTML = `
+                    <ul class="users-list">
+                        <li>
+                            <span>1</span>
+                            <span>merry</span>
+                        </li>
+                        <li>
+                            <span>2</span>
+                            <span>adsa</span>
+                        </li>
+                        <li>
+                            <span>3</span>
+                            <span>asd</span>
+                        </li>
+                    </ul>
+                `;
                 break;
             case 1:
+                oMain.innerHTML = `
+                    <div class="product-nav">
+                        <span class="dec">商品</span>
+                        <span>单价</span>
+                        <span>库存</span>
+                    </div>
+                    <ul class="product-list">
+                        <li>
+                            <span class="dec">
+                                <img src="../image/products/1.jpg" alt="">
+                                <i>也闹不sad</i>
+                            </span>
+                            <span>117</span>
+                            <span>234</span>
+                        </li>
+                        <li>
+                            <span class="dec">
+                                <img src="../image/products/2.jpg" alt="">
+                                <i>撒大大</i>
+                            </span>
+                            <span>111</span>
+                            <span>333</span>
+                        </li>
+                        <li>
+                            <span class="dec">
+                                <img src="../image/products/3.jpg" alt="">
+                                <i>撒阿萨撒阿萨德撒打发电话是多少个的撒阿萨德撒打发电话是多少个的撒阿萨德撒打发电话是多少个的撒阿萨德撒打发电话是多少个的撒阿萨德撒打发电话是多少个的德撒打发电话是多少个的</i>
+                            </span>
+                            <span>488</span>
+                            <span>1</span>
+                        </li>
+                    </ul>
+                `;
                break;
             case 2:
                 oMain.innerHTML = `
