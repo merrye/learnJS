@@ -116,8 +116,8 @@ body{
 .container .content{
     flex: 1;
     position: relative;
-    overflow: auto;
-    overflow-y: scroll;
+    overflow: hidden;
+    overflow-y: auto;
 }
 .container .content .main{
     padding: 20px;
@@ -175,58 +175,31 @@ body{
         height: 55px;
     }
 }
-.container .content .main .date{
-    padding: 20px 0;
+.container .content .main .product{
+    height: 45px;
+    line-height: 45px;
+    display: flex;
+    margin: 20px 0;
 }
-.container .content .main .articles{
-    position: relative;
+.container .content .main .product span{
+    float: left;
 }
-.articles::after{
-    content: "";
-    position: absolute;
-    top: 0px;
-    left: 0;
-    width: 4px;
-    height: calc(100% + 15px);
-    background: #e6e6e6;
-    z-index: -1;
+.container .content .main .product input{
+    width: 300px;
+    height: 30px;
+    display: block;
+    float: left;
+    margin: 7px;
 }
-.container .content .main .articles .article{
-    cursor: text;
-    font-size: 14px;
-    color: rgba(0,0,0,.6);
-    position: relative;
-    margin: 30px 4px;
-    border-bottom: 1px dashed rgba(0,0,0,.6);
-    text-indent: 40px;
-}
-.article::after{
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -6px;
-    transform: translateY(-50%);
-    width: 8px;
-    height: 8px;
-    border-radius: 100%;
-    overflow: hidden;
-    background-color: #bbb;
-}
-.article > a{
-    color: rgba(0,0,0,.6);
+.container .content .main .product span.confirm{
+    width: 160px;
+    height: 32px;
+    display: block;
+    background: red;
+    line-height: 32px;
+    text-align: center;
+    color: #FFf;
     cursor: pointer;
-    font-size: 16px;
-    margin-left: 5px;
-}
-.article:hover > a{
-    color: rgb(0,0,0);
-}
-.article > a:hover{
-    color: #1296db;
-}
-.article:hover{
-    color: rgb(0,0,0);
-    border-bottom-color: rgb(0,0,0);
 }
 footer{
     flex: 0 0 45px;

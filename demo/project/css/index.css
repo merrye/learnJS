@@ -1,8 +1,22 @@
 body{ background:#F5F5F5;}
 *{ margin:0px; padding:0px;}
 a{ text-decoration: none;}
-#top{ width:100%; height:81px; background:#1962D3;}
-#top img{ margin-left:320px;}
+header{
+    width: 1348px;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 30px;
+}
+header img{
+    height: 48px;
+    float: left;
+}
+header a{
+    color: #000;
+    text-decoration: none;
+}
 p{ font-family:微软雅黑; font-size:12px; line-height:32px;  position:absolute; color:#999;}
 #navigation{ width:100%; height:32px; background:#f2f2f2;}
 #navigation .headline{ width:1230px; height:32px; margin:auto;  }

@@ -3,6 +3,8 @@
         const oNum = document.getElementsByClassName("num")[0],
             oStock = document.getElementsByClassName("stock")[0].getElementsByTagName("span")[0],
             oControl = document.getElementsByClassName("control")[0].getElementsByTagName("i"),
+            oAdd = document.getElementsByClassName("add")[0].getElementsByTagName("span")[0],
+            oPrice = document.getElementsByClassName("price")[0].getElementsByTagName("span")[0],
             maxNumber = Number.parseInt(oStock.innerHTML);
 
         let number = Number.parseInt(oNum.value);
@@ -23,6 +25,19 @@
             }else if(Number.parseInt(value) > maxNumber){
                 this.value = maxNumber;
             };
+        }, false);
+
+        oAdd.addEventListener("click", function() {
+            const product_id = window.location.search.split("=")[1];
+            $.ajax({
+                type: "post",
+                url: "/api/order",
+                data: {
+                    product_id,
+                    all_price: number * Number.parseInt(oPrice.innerHTML),
+                    amount: number,
+                }
+            });
         }, false);
     }, false);
 })();
