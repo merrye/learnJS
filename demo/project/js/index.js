@@ -1,4 +1,8 @@
-var _index=0;
+var _index = 0,
+   $product_list = $("#product_list");
+
+init();
+
 $(".but span").click(function(){
     $(this).addClass("active").siblings("span").removeClass("active");
     _index=$(this).index();
@@ -22,3 +26,21 @@ $(function(){
         $(".con6 .con8 ul li").eq(i).css("border-right","1px solid #999");
     }
 });
+
+function init() {
+    $.ajax({
+        type: "get",
+        url: "http://10.30.90.13:8080/product",
+        success(data) {
+            for(let product of data) {
+                console.log(product);
+                const $product = $("<div></div"),
+                    $a = $(`<a href="pages/product.html?id=${product.productid}"></a>`),
+                    $img = $(`<img src="${product.imagehref}"/>`);
+                $a.append($img);
+                $product.append($a);
+                $product_list.append($product);
+            };
+        }
+    });
+};

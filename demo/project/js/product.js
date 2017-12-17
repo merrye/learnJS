@@ -9,6 +9,8 @@
 
         let number = Number.parseInt(oNum.value);
 
+        init();
+
         [...oControl].forEach((ele, index) => {
             ele.addEventListener("click", function() {
                 number = index ? -- number : ++ number;
@@ -39,5 +41,18 @@
                 }
             });
         }, false);
+
+        function init() {
+            $.ajax({
+                type: "get",
+                url: `http://10.30.90.13:8080/getProduct${window.location.search}`,
+                success(data) {
+                    $(".product").find("img").attr("src", `../${data.imagehref}`);
+                    $(".title").html(data.dec);
+                    oPrice.innerHTML = data.price;
+                    oStock.innerHTML = data.stock;
+                }
+            });
+        };
     }, false);
 })();
