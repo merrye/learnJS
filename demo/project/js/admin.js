@@ -5,6 +5,13 @@ const oItem = document.getElementsByClassName("item"),
     oMeunItem = document.getElementsByClassName("meun-item"),
     oConfirm = document.getElementsByClassName("oConfirm");
 
+$(".username").html(window.localStorage.getItem("username"));
+
+$(".logout").on("click", function() {
+    window.localStorage.clear();
+    window.location.href = window.location.href.split("pages")[0] + "index.html";
+});
+
 [...oItem].forEach((ele , index) => {
     ele.addEventListener("click" , function(){
         const name = "clicked",
@@ -38,7 +45,8 @@ const oItem = document.getElementsByClassName("item"),
         oMain.innerHTML = `<div class="loading"></div>`;
         switch (index){
             case 0:
-                oMain.innerHTML = `
+                getAllUsers();
+                /*oMain.innerHTML = `
                     <ul class="users-list">
                         <li>
                             <span>1</span>
@@ -53,10 +61,11 @@ const oItem = document.getElementsByClassName("item"),
                             <span>asd</span>
                         </li>
                     </ul>
-                `;
+                `;*/
                 break;
             case 1:
-                oMain.innerHTML = `
+                getAllProducts();
+                /*oMain.innerHTML = `
                     <div class="product-nav">
                         <span class="dec">商品</span>
                         <span>单价</span>
@@ -88,21 +97,21 @@ const oItem = document.getElementsByClassName("item"),
                             <span>1</span>
                         </li>
                     </ul>
-                `;
+                `;*/
                break;
             case 2:
                 oMain.innerHTML = `
                     <div class="product">
                         <span>商品描述</span>
-                        <input type="text" name="name" />
+                        <input type="text" name="name" class="product_dec" />
                     </div>
                     <div class="product">
                         <span>商品单价</span>
-                        <input type="text" name="price" />
+                        <input type="text" name="price" class="product_price" />
                     </div>
                     <div class="product">
                         <span>商品库存</span>
-                        <input type="text" name="stock" />
+                        <input type="text" name="stock" class="product_stock" />
                     </div>
                     <div class="product">
                         <span>商品图片</span>
@@ -123,10 +132,10 @@ function createProduct(){
         type: "post",
         url: "/api/product",
         data: {
-            name: "adsa",
-            price: 11,
-            stock: 111,
-            image: "",
+            dec: $(".product_dec").val(),
+            price: $(".product_price").val(),
+            stock: $(".product_stock").val(),
+            imagehref: "",
         },
         success(data) {
 
@@ -137,9 +146,20 @@ function createProduct(){
 function getAllUsers() {
     $.ajax({
         type: "get",
-        url: "/api/users",
+        url: "http://10.30.90.13:8080/users",
         success(data) {
-
+            console.log(data);
+            const oDiv = $(`
+                <div class="user-nav">
+                    <span class="user-id">用户ID</span>
+                    <span class="user-name">用户姓名</span>
+                </div>`),
+                oUl = $("<ul class='users-list'></ul>");
+            for(let user of data) {
+                const li = $(`<li data-id=${user.userid}><span>${user.userid}</span><span>${user.username}</span></li>`)
+                oUl.append(li);
+            };
+            $(".main").html("").append(oDiv).append(oUl);
         }
     });
 };
@@ -147,9 +167,26 @@ function getAllUsers() {
 function getAllProducts() {
     $.ajax({
         type: "get",
-        url: "/api/users",
+        url: "http://10.30.90.13:8080/product",
         success(data) {
-
+            const oDiv = $('<div class="product-nav"><span class="dec">商品</span><span>单价</span><span>库存</span><span>操作</span></div>'),
+                oUl = $('<ul class="product-list"></ul>');
+                
+            for(let product of data) {
+                console.log(data);
+                const oLi = $(`
+                    <li>
+                        <a href="product.html?id=${product.product_id}" class="dec">
+                            <img src="../${product.image_href}" alt="">
+                            <i>${product.dec}</i>
+                        </a>
+                        <span>${product.price}</span>
+                        <span>${product.stock}</span>
+                        <span class="operate"><i class="update">编辑</i><i class="del">删除</i></span>
+                    </li>`);
+                oUl.append(oLi);
+            };
+            $(".main").html("").append(oDiv).append(oUl);
         }
     });
 };

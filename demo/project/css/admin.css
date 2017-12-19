@@ -26,12 +26,13 @@ body{
     user-select: none;
 }
 .header > div{
-    flex: 0 0 220px;
+    flex: 0 0 240px;
     cursor: text;
 }
-.header .logo{
+.header .logo a{
     font: normal 26px / 60px "Microsoft yahei";
     padding-left: 30px;
+    color: rgba(255,255,255,.7);
 }
 .header .userInfo{
     padding-right: 30px;
@@ -210,9 +211,30 @@ body{
 }
 .container .content .main .users-list li{
     line-height: 45px;
+    display: flex;
+    cursor: pointer;
 }
-.container .content .main .users-list li span{
-    margin: 0 10px;
+.container .content .main .users-list li span:nth-child(1){
+    flex: 0 0 70px;
+    text-align: center;
+}
+.container .content .main .users-list li:hover{
+    background-color: rgba(0, 0, 0, .2);
+}
+.user-nav{
+    width: 400px;
+    border: 1px solid silver;
+    height: 42px;
+    margin-bottom: 20px;
+    line-height: 42px;
+    display: flex;
+}
+.user-nav .user-id{
+    flex: 0 0 70px;
+    text-align: center;
+}
+.user-nav .user-name{
+    flex: 1;
 }
 .product-nav{
     height: 45px;
@@ -255,6 +277,17 @@ body{
     text-align: left;
     line-height: 25px;
     margin: 0 10px;
+}
+.product-list li .operate{
+    display: flex;
+}
+.product-list li .operate i{
+    flex: 1;
+    font-style: normal;
+    cursor: pointer;
+}
+.product-list li .operate i:hover{
+    color: red;
 }
 footer{
     flex: 0 0 45px;

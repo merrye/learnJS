@@ -1,5 +1,6 @@
 var _index = 0,
-   $product_list = $("#product_list");
+   $product_list = $("#product_list"),
+   {setItem, getItem} = window.localStorage;
 
 init();
 
@@ -28,19 +29,38 @@ $(function(){
 });
 
 function init() {
+    var username = window.localStorage.getItem("username");
+    if(username){
+        $(".login").remove();
+        $(".reg").remove();
+        const nameSpan = $(`<a href="pages/order.html" class="username">${username}</a>`),
+            logoutA = $(`<a class="logout">退出登录</a>`);
+        if(username === "admin") {
+            const admin = $(`<a class="admin" href="pages/admin.html">管理中心</a>`);
+            $(".headline").append(logoutA).append(admin).append(nameSpan);
+        }else{
+            $(".headline").append(logoutA).append(nameSpan);
+        };
+    };
     $.ajax({
         type: "get",
         url: "http://10.30.90.13:8080/product",
         success(data) {
             for(let product of data) {
-                console.log(product);
                 const $product = $("<div></div"),
-                    $a = $(`<a href="pages/product.html?id=${product.productid}"></a>`),
-                    $img = $(`<img src="${product.imagehref}"/>`);
+                    $a = $(`<a href="pages/product.html?id=${product.product_id}"></a>`),
+                    $img = $(`<img src="${product.image_href}"/>`);
                 $a.append($img);
                 $product.append($a);
                 $product_list.append($product);
             };
         }
     });
+    const oLogout = document.getElementsByClassName("logout")[0];
+    if(oLogout) {
+        oLogout.addEventListener("click", function() {
+            window.localStorage.clear();
+            window.location.reload();
+        }, false);
+    };
 };
