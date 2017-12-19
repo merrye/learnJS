@@ -148,7 +148,6 @@ function getAllUsers() {
         type: "get",
         url: "http://10.30.90.13:8080/users",
         success(data) {
-            console.log(data);
             const oDiv = $(`
                 <div class="user-nav">
                     <span class="user-id">用户ID</span>
@@ -173,7 +172,6 @@ function getAllProducts() {
                 oUl = $('<ul class="product-list"></ul>');
                 
             for(let product of data) {
-                console.log(data);
                 const oLi = $(`
                     <li>
                         <a href="product.html?id=${product.product_id}" class="dec">
@@ -182,11 +180,25 @@ function getAllProducts() {
                         </a>
                         <span>${product.price}</span>
                         <span>${product.stock}</span>
-                        <span class="operate"><i class="update">编辑</i><i class="del">删除</i></span>
+                        <span class="operate"><i class="update">编辑</i><i class="del" data-id=${product.product_id}>删除</i></span>
                     </li>`);
                 oUl.append(oLi);
             };
             $(".main").html("").append(oDiv).append(oUl);
+            [...document.getElementsByClassName("del")].forEach((ele) => {
+                ele.addEventListener("click", function() {
+                    $.ajax({
+                        type: "get",
+                        url: "http://10.30.90.13:8080/product",
+                        data: {
+                            product_id: ele.dataset.id
+                        },
+                        success(data) {
+                            ele.parentElement.parentElement.remove();
+                        }
+                    });
+                }, false);
+            });
         }
     });
 };
