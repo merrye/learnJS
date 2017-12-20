@@ -2,8 +2,7 @@ const oItem = document.getElementsByClassName("item"),
     oMain = document.getElementsByClassName("main")[0],
     oSubItem = document.getElementsByClassName("sub-item"),
     oSlider = document.getElementsByClassName("slider")[0],
-    oMeunItem = document.getElementsByClassName("meun-item"),
-    oConfirm = document.getElementsByClassName("oConfirm");
+    oMeunItem = document.getElementsByClassName("meun-item");
 
 $(".username").html(window.localStorage.getItem("username"));
 
@@ -121,6 +120,7 @@ $(".logout").on("click", function() {
                         <span class="confirm">确定</span>
                     </div>
                 `;
+                const oConfirm = document.getElementsByClassName("confirm");
                 oConfirm[0] && oConfirm[0].addEventListener("click", createProduct, false);
                 break;
         };
@@ -130,7 +130,7 @@ $(".logout").on("click", function() {
 function createProduct(){
     $.ajax({
         type: "post",
-        url: "/api/product",
+        url: "http://10.30.90.13:8080/product",
         data: {
             dec: $(".product_dec").val(),
             price: $(".product_price").val(),
@@ -138,7 +138,9 @@ function createProduct(){
             imagehref: "",
         },
         success(data) {
-
+            if(data) {
+                alert("添加成功");
+            };
         }
     });
 };
@@ -170,7 +172,7 @@ function getAllProducts() {
         success(data) {
             const oDiv = $('<div class="product-nav"><span class="dec">商品</span><span>单价</span><span>库存</span><span>操作</span></div>'),
                 oUl = $('<ul class="product-list"></ul>');
-                
+                console.log(data);
             for(let product of data) {
                 const oLi = $(`
                     <li>
@@ -188,12 +190,13 @@ function getAllProducts() {
             [...document.getElementsByClassName("del")].forEach((ele) => {
                 ele.addEventListener("click", function() {
                     $.ajax({
-                        type: "get",
-                        url: "http://10.30.90.13:8080/product",
+                        type: "post",
+                        url: "http://10.30.90.13:8080/deleteProduct",
                         data: {
                             product_id: ele.dataset.id
                         },
                         success(data) {
+                            console.log(data)
                             ele.parentElement.parentElement.remove();
                         }
                     });
