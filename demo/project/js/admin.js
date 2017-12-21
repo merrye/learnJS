@@ -99,29 +99,9 @@ $(".logout").on("click", function() {
                 `;*/
                break;
             case 2:
-                oMain.innerHTML = `
-                    <div class="product">
-                        <span>商品描述</span>
-                        <input type="text" name="name" class="product_dec" />
-                    </div>
-                    <div class="product">
-                        <span>商品单价</span>
-                        <input type="text" name="price" class="product_price" />
-                    </div>
-                    <div class="product">
-                        <span>商品库存</span>
-                        <input type="text" name="stock" class="product_stock" />
-                    </div>
-                    <div class="product">
-                        <span>商品图片</span>
-                        <input type="file" name="file" />
-                    </div>
-                    <div class="product">
-                        <span class="confirm">确定</span>
-                    </div>
-                `;
-                const oConfirm = document.getElementsByClassName("confirm");
-                oConfirm[0] && oConfirm[0].addEventListener("click", createProduct, false);
+                getProductHtmlContent();
+                // const oConfirm = document.getElementsByClassName("confirm");
+                // oConfirm[0] && oConfirm[0].addEventListener("click", createProduct, false);
                 break;
         };
     };
@@ -172,7 +152,6 @@ function getAllProducts() {
         success(data) {
             const oDiv = $('<div class="product-nav"><span class="dec">商品</span><span>单价</span><span>库存</span><span>操作</span></div>'),
                 oUl = $('<ul class="product-list"></ul>');
-                console.log(data);
             for(let product of data) {
                 const oLi = $(`
                     <li>
@@ -182,12 +161,12 @@ function getAllProducts() {
                         </a>
                         <span>${product.price}</span>
                         <span>${product.stock}</span>
-                        <span class="operate"><i class="update">编辑</i><i class="del" data-id=${product.product_id}>删除</i></span>
+                        <span class="operate"><i class="update" data-id=${product.product_id}>编辑</i><i class="del" data-id=${product.product_id}>删除</i></span>
                     </li>`);
                 oUl.append(oLi);
             };
             $(".main").html("").append(oDiv).append(oUl);
-            [...document.getElementsByClassName("del")].forEach((ele) => {
+            [...document.getElementsByClassName("del")].forEach(ele => {
                 ele.addEventListener("click", function() {
                     $.ajax({
                         type: "post",
@@ -202,6 +181,91 @@ function getAllProducts() {
                     });
                 }, false);
             });
+            [...document.getElementsByClassName("update")].forEach(ele => {
+                ele.addEventListener("click", function() {
+                    getProductHtmlContent(true, ele.dataset.id);
+                }, false);
+            });
         }
     });
+};
+
+function getProductHtmlContent(isUpdate, product_id) {
+    if(isUpdate) {
+        $.ajax({
+            type: "get",
+            url: `http://10.30.90.13:8080/getProduct?id=${product_id}`,
+            success(data) {
+                oMain.innerHTML = `
+                    <form action="http://10.30.90.13:8080/updateProduct" method="post" enctype="multipart/form-data">
+                        <div class="product">
+                            <span>商品描述</span>
+                            <input type="text" name="name" class="product_dec" value=${data.dec} />
+                        </div>
+                        <div class="product">
+                            <span>商品单价</span>
+                            <input type="text" name="price" class="product_price" value=${data.price} />
+                        </div>
+                        <div class="product">
+                            <span>商品库存</span>
+                            <input type="text" name="stock" class="product_stock" value=${data.stock} />
+                        </div>
+                        <div class="product image">
+                            <span>商品图片</span>
+                            <img src="../${data.image_href}" />
+                            <input type="file" name="imageHref" class="product_image" />
+                        </div>
+                        <div class="product">
+                            <input type="submit" />
+                        </div>
+                    <form>
+                `;
+                // const oConfirm = document.getElementsByClassName("confir  eProduct(data), false);
+            }
+        });
+    }
+    else{
+        oMain.innerHTML = `
+            <form action="http://10.30.90.13:8080/product" method="post" enctype="multipart/form-data">
+                <div class="product">
+                    <span>商品描述</span>
+                    <input type="text" name="name" class="product_dec" />
+                </div>
+                <div class="product">
+                    <span>商品单价</span>
+                    <input type="text" name="price" class="product_price" />
+                </div>
+                <div class="product">
+                    <span>商品库存</span>
+                    <input type="text" name="stock" class="product_stock" />
+                </div>
+                <div class="product">
+                    <span>商品图片</span>
+                    <input type="file" name="file" />
+                </div>
+                <div class="product">
+                    <input type="submit" />
+                </div>
+            </form>
+        `
+    };
+};
+
+function updateProduct(product) {
+    return () => {
+        $.ajax({
+            type: "post",
+            url: "http://10.30.90.13:8080/updateProduct",
+            data: {
+                dec: $(".product_dec").val(),
+                product_id: product.product_id,
+                price: $(".product_price").val(),
+                stock: $(".product_stock").val(),
+                image_href: product.image_href
+            },
+            success(data) {
+                getAllProducts();
+            }
+        });
+    };
 };

@@ -185,6 +185,9 @@ body{
     display: flex;
     margin: 20px 0;
 }
+.container .content .main .product.image{
+    height: 300px;
+}
 .container .content .main .product span{
     float: left;
 }
@@ -195,7 +198,12 @@ body{
     float: left;
     margin: 7px;
 }
-.container .content .main .product span.confirm{
+.container .content .main .product.image img{
+    margin: 7px;
+    width: 300px;
+    height: 300px;
+}
+.container .content .main .product input[type="submit"]{
     width: 160px;
     height: 32px;
     display: block;
@@ -204,6 +212,8 @@ body{
     text-align: center;
     color: #FFf;
     cursor: pointer;
+    border: none;
+    outline: none;
 }
 .container .content .main .users-list{
     border: 1px solid silver;
@@ -288,13 +298,4 @@ body{
 }
 .product-list li .operate i:hover{
     color: red;
-}
-footer{
-    flex: 0 0 45px;
-    line-height: 45px;
-    text-align: center;
-    background-color: #eee;
-}
-footer > a{
-    color: #000;
 }
