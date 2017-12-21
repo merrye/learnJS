@@ -115,12 +115,11 @@ function createProduct(){
             dec: $(".product_dec").val(),
             price: $(".product_price").val(),
             stock: $(".product_stock").val(),
-            imagehref: "",
+            image_href: document.getElementsByClassName("product_image")[0].files[0].name
         },
         success(data) {
-            if(data) {
-                alert("添加成功");
-            };
+            
+            alert("添加成功");
         }
     });
 };
@@ -175,7 +174,6 @@ function getAllProducts() {
                             product_id: ele.dataset.id
                         },
                         success(data) {
-                            console.log(data)
                             ele.parentElement.parentElement.remove();
                         }
                     });
@@ -213,7 +211,7 @@ function getProductHtmlContent(isUpdate, product_id) {
                         <div class="product image">
                             <span>商品图片</span>
                             <img src="../${data.image_href}" />
-                            <input type="file" name="imageHref" class="product_image" />
+                            <input type="file" name="image_href" class="product_image" />
                         </div>
                         <div class="product">
                             <input type="submit" />
@@ -226,7 +224,6 @@ function getProductHtmlContent(isUpdate, product_id) {
     }
     else{
         oMain.innerHTML = `
-            <form action="http://10.30.90.13:8080/product" method="post" enctype="multipart/form-data">
                 <div class="product">
                     <span>商品描述</span>
                     <input type="text" name="name" class="product_dec" />
@@ -241,13 +238,57 @@ function getProductHtmlContent(isUpdate, product_id) {
                 </div>
                 <div class="product">
                     <span>商品图片</span>
-                    <input type="file" name="file" />
+                    <form action="http://10.30.90.13:8080/upload" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" class="product_image" />
+                        <input type="submit" />
+                    </form>
+                </div>
+                <div class="product">
+                    <span class="submit">提交</span>
+                </div>
+        `;
+        const oSubmit = document.getElementsByClassName("submit"),
+            oUploadFile = document.getElementsByClassName("uploadFile");
+        oUploadFile.length && oUploadFile[0].addEventListener("click", function() {
+            $.ajax({
+                type: "post",
+                url: "http://10.30.90.13:8080/upload",
+                dataType: "text",
+                data: {
+                    file: document.getElementsByClassName("product_image")[0].files[0]
+                },
+                success(data) {
+                    console.log(data);
+                },
+                error(err) {
+                    console.log(err);
+                }
+            });
+        }, false);
+        oSubmit.length && oSubmit[0].addEventListener("click", createProduct, false);
+        /*oMain.innerHTML = `
+            // <form action="http://10.30.90.13:8080/product" method="post" enctype="multipart/form-data">
+                <div class="product">
+                    <span>商品描述</span>
+                    <input type="text" name="name" class="product_dec" />
+                </div>
+                <div class="product">
+                    <span>商品单价</span>
+                    <input type="text" name="price" class="product_price" />
+                </div>
+                <div class="product">
+                    <span>商品库存</span>
+                    <input type="text" name="stock" class="product_stock" />
+                </div>
+                <div class="product">
+                    <span>商品图片</span>
+                    <input type="file" name="image_href" />
                 </div>
                 <div class="product">
                     <input type="submit" />
                 </div>
             </form>
-        `
+        `*/
     };
 };
 
