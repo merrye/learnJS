@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .wrap{
+            width: 960px;
+            margin: 0 auto;
+        }
+        .wrap > div{
+            margin: 10px 0;
+        }
+        .title{
+            height: 50px;
+            line-height: 50px;
+            display: flex;
+        }
+        .title > span{
+            height: 40px;
+            flex: 0 0 5em;
+            line-height: 40px;
+            font-size: 1.1em;
+            align-self: center;
+            border-radius: 5px 0 0 5px;
+            border: 1px solid silver;
+            border-right: none;
+            text-indent: 1em;
+        }
+        .article_title{
+            flex: 1;
+            height: 40px;
+            align-self: center;
+            outline: none;
+            border-radius: 0 5px 5px 0;
+            border: 1px solid silver;
+            text-indent: 1em;
+        }
+        #description{
+            width: 100%;
+            height: 2em;
+            resize: none;
+            border: none;
+            outline: none;
+            text-indent: 1em;
+            transition: .5s;
+            border: 1px solid silver;
+            border-radius: 5px;
+            line-height: 1.5em;
+            font-size: 1.25em;
+        }
+        .menu{
+            display: flex;
+        }
+        .menu div{
+            flex: 0 0 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrap">
+        <div class="title">
+            <span>标题：</span>
+            <input type="text" class="article_title" placeholder="无标题博客..." name="title" />
+        </div>
+        <div class="summary">
+            <textarea name="description" id="description" cols="30" rows="10" placeholder="无摘要..."></textarea>
+        </div>
+        <div class="menu">
+            <div class="classification">
+                分类：
+                <span class="classification-option">分类1</span>
+                <span class="classification-option">分类2</span>
+                <span class="classification-option">分类3</span>
+            </div>
+            <div class="tags">
+                标签：
+                <span class="tag-option">标签1</span>
+                <span class="tag-option">标签2</span>
+                <span class="tag-option">标签3</span>
+            </div>
+        </div>
+        <div class="content">
+            <div id="editor">
+            </div>
+        </div>
+    </div>
+    <button id="btn1">btn1</button>
+    <button id="btn2">btn2</button>
+    <div class="text"></div>
+    <script src="https://unpkg.com/wangeditor@3.0.15/release/wangEditor.min.js"></script>
+    <script>
+        const oBtn1 = document.getElementById("btn1"),
+            oBtn2 = document.getElementById("btn2"),
+            oText = document.getElementsByClassName("text")[0],
+            description = document.getElementById("description");
+
+        description.addEventListener("focus", function() {
+            this.style.height = "150px";
+        }, false);
+
+        description.addEventListener("blur", function() {
+            this.style.height = "2em";
+        }, false);
+
+        const E = window.wangEditor,
+            editor = new E("#editor");
+        editor.customConfig.uploadImgShowBase64 = true;
+        editor.create();
+
+        oBtn1.addEventListener("click", function() {
+            oText.innerHTML = editor.txt.html();
+            console.log(editor.txt.html());
+        }, false);
+
+        oBtn2.addEventListener("click", function() {
+            oText.innerHTML = editor.txt.text();
+            console.log(editor.txt.text());
+        }, false);
+    </script>
+</body>
+</html>

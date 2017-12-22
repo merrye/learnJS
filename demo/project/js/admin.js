@@ -115,11 +115,10 @@ function createProduct(){
             dec: $(".product_dec").val(),
             price: $(".product_price").val(),
             stock: $(".product_stock").val(),
-            image_href: document.getElementsByClassName("product_image")[0].files[0].name
+            image_href: "image/products/" + document.getElementsByClassName("product_image")[0].files[0].name
         },
         success(data) {
-            
-            alert("添加成功");
+            // alert("添加成功");
         }
     });
 };
@@ -224,6 +223,7 @@ function getProductHtmlContent(isUpdate, product_id) {
     }
     else{
         oMain.innerHTML = `
+            <form action="http://10.30.90.13:8080/upload" method="post" enctype="multipart/form-data">
                 <div class="product">
                     <span>商品描述</span>
                     <input type="text" name="name" class="product_dec" />
@@ -238,14 +238,12 @@ function getProductHtmlContent(isUpdate, product_id) {
                 </div>
                 <div class="product">
                     <span>商品图片</span>
-                    <form action="http://10.30.90.13:8080/upload" method="post" enctype="multipart/form-data">
                         <input type="file" name="file" class="product_image" />
-                        <input type="submit" />
-                    </form>
                 </div>
                 <div class="product">
-                    <span class="submit">提交</span>
+                    <input type="submit" class="submit" onclick="createProduct()" />
                 </div>
+            </form>
         `;
         const oSubmit = document.getElementsByClassName("submit"),
             oUploadFile = document.getElementsByClassName("uploadFile");
