@@ -45,63 +45,12 @@ $(".logout").on("click", function() {
         switch (index){
             case 0:
                 getAllUsers();
-                /*oMain.innerHTML = `
-                    <ul class="users-list">
-                        <li>
-                            <span>1</span>
-                            <span>merry</span>
-                        </li>
-                        <li>
-                            <span>2</span>
-                            <span>adsa</span>
-                        </li>
-                        <li>
-                            <span>3</span>
-                            <span>asd</span>
-                        </li>
-                    </ul>
-                `;*/
                 break;
             case 1:
                 getAllProducts();
-                /*oMain.innerHTML = `
-                    <div class="product-nav">
-                        <span class="dec">商品</span>
-                        <span>单价</span>
-                        <span>库存</span>
-                    </div>
-                    <ul class="product-list">
-                        <li>
-                            <span class="dec">
-                                <img src="../image/products/1.jpg" alt="">
-                                <i>也闹不sad</i>
-                            </span>
-                            <span>117</span>
-                            <span>234</span>
-                        </li>
-                        <li>
-                            <span class="dec">
-                                <img src="../image/products/2.jpg" alt="">
-                                <i>撒大大</i>
-                            </span>
-                            <span>111</span>
-                            <span>333</span>
-                        </li>
-                        <li>
-                            <span class="dec">
-                                <img src="../image/products/3.jpg" alt="">
-                                <i>撒阿萨撒阿萨德撒打发电话是多少个的撒阿萨德撒打发电话是多少个的撒阿萨德撒打发电话是多少个的撒阿萨德撒打发电话是多少个的撒阿萨德撒打发电话是多少个的德撒打发电话是多少个的</i>
-                            </span>
-                            <span>488</span>
-                            <span>1</span>
-                        </li>
-                    </ul>
-                `;*/
                break;
             case 2:
                 getProductHtmlContent();
-                // const oConfirm = document.getElementsByClassName("confirm");
-                // oConfirm[0] && oConfirm[0].addEventListener("click", createProduct, false);
                 break;
         };
     };
@@ -118,7 +67,24 @@ function createProduct(){
             image_href: "image/products/" + document.getElementsByClassName("product_image")[0].files[0].name
         },
         success(data) {
-            // alert("添加成功");
+            console.log("添加成功");
+        }
+    });
+};
+
+function updateProduct(product) {
+    $.ajax({
+        type: "post",
+        url: "http://10.30.90.13:8080/updateProduct",
+        data: {
+            dec: $(".product_dec").val(),
+            product_id: product.product_id,
+            price: $(".product_price").val(),
+            stock: $(".product_stock").val(),
+            image_href: "image/products/" + document.getElementsByClassName("product_image")[0].files[0].name
+        },
+        success(data) {
+            getAllProducts();
         }
     });
 };
@@ -194,7 +160,7 @@ function getProductHtmlContent(isUpdate, product_id) {
             url: `http://10.30.90.13:8080/getProduct?id=${product_id}`,
             success(data) {
                 oMain.innerHTML = `
-                    <form action="http://10.30.90.13:8080/updateProduct" method="post" enctype="multipart/form-data">
+                    <form action="http://10.30.90.13:8080/upload" method="post" enctype="multipart/form-data">
                         <div class="product">
                             <span>商品描述</span>
                             <input type="text" name="name" class="product_dec" value=${data.dec} />
@@ -213,11 +179,10 @@ function getProductHtmlContent(isUpdate, product_id) {
                             <input type="file" name="image_href" class="product_image" />
                         </div>
                         <div class="product">
-                            <input type="submit" />
+                            <input type="submit" class="submit" onclick="updateProduct()" />
                         </div>
                     <form>
                 `;
-                // const oConfirm = document.getElementsByClassName("confir  eProduct(data), false);
             }
         });
     }
@@ -264,47 +229,5 @@ function getProductHtmlContent(isUpdate, product_id) {
             });
         }, false);
         oSubmit.length && oSubmit[0].addEventListener("click", createProduct, false);
-        /*oMain.innerHTML = `
-            // <form action="http://10.30.90.13:8080/product" method="post" enctype="multipart/form-data">
-                <div class="product">
-                    <span>商品描述</span>
-                    <input type="text" name="name" class="product_dec" />
-                </div>
-                <div class="product">
-                    <span>商品单价</span>
-                    <input type="text" name="price" class="product_price" />
-                </div>
-                <div class="product">
-                    <span>商品库存</span>
-                    <input type="text" name="stock" class="product_stock" />
-                </div>
-                <div class="product">
-                    <span>商品图片</span>
-                    <input type="file" name="image_href" />
-                </div>
-                <div class="product">
-                    <input type="submit" />
-                </div>
-            </form>
-        `*/
-    };
-};
-
-function updateProduct(product) {
-    return () => {
-        $.ajax({
-            type: "post",
-            url: "http://10.30.90.13:8080/updateProduct",
-            data: {
-                dec: $(".product_dec").val(),
-                product_id: product.product_id,
-                price: $(".product_price").val(),
-                stock: $(".product_stock").val(),
-                image_href: product.image_href
-            },
-            success(data) {
-                getAllProducts();
-            }
-        });
     };
 };
