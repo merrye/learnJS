@@ -57,14 +57,43 @@
         }
         .menu{
             display: flex;
+            height: 50px;
+            line-height: 50px;
         }
-        .menu div{
-            flex: 0 0 200px;
+        .menu .menu-item{
+            flex: 1;
+            display: flex;
+            border: 1px solid silver;
+            border-radius: 5px;
+        }
+        .menu .classification{
+            margin-right: 5px;
+        }
+        .menu .tags{
+            margin-left: 5px;
+        }
+        .menu .menu-item .row-left{
+            flex: 0 0 4em;
+            text-indent: 1em;
+        }
+        .menu .menu-item .row-right{
+            flex: 1;
+        }
+        .menu .menu-item .row-right > input{
+            width: 90%;
+            height: 40px;
+            line-height: 40px;
+            border: none;
+            outline: none;
+        }
+        h3{
+            font: normal 2em / 2em "Microsoft yahei";
         }
     </style>
 </head>
 <body>
     <div class="wrap">
+        <h3>撰写文章</h3>
         <div class="title">
             <span>标题：</span>
             <input type="text" class="article_title" placeholder="无标题博客..." name="title" />
@@ -73,17 +102,17 @@
             <textarea name="description" id="description" cols="30" rows="10" placeholder="无摘要..."></textarea>
         </div>
         <div class="menu">
-            <div class="classification">
-                分类：
-                <span class="classification-option">分类1</span>
-                <span class="classification-option">分类2</span>
-                <span class="classification-option">分类3</span>
+            <div class="classification menu-item">
+                <div class="row-left">分类：</div>
+                <div class="row-right">
+                    <input type="text" placeholder="请输入关键词，使用分号隔开" />
+                </div>
             </div>
-            <div class="tags">
-                标签：
-                <span class="tag-option">标签1</span>
-                <span class="tag-option">标签2</span>
-                <span class="tag-option">标签3</span>
+            <div class="tags menu-item">
+                <div class="row-left">标签：</div>
+                <div class="row-right">
+                    <input type="text" placeholder="请输入关键词，使用分号隔开" />
+                </div>
             </div>
         </div>
         <div class="content">

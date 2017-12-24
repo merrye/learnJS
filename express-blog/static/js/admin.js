@@ -1,8 +1,11 @@
-const oItem = document.getElementsByClassName("item"),
+const E = window.wangEditor,
+    oItem = document.getElementsByClassName("item"),
     oMain = document.getElementsByClassName("main")[0],
     oSubItem = document.getElementsByClassName("sub-item"),
     oSlider = document.getElementsByClassName("slider")[0],
     oMeunItem = document.getElementsByClassName("meun-item");
+
+let editor;
 
 [...oItem].forEach((ele , index) => {
     ele.addEventListener("click" , function(){
@@ -37,7 +40,7 @@ const oItem = document.getElementsByClassName("item"),
         oMain.innerHTML = `<div class="loading"></div>`;
         switch (index){
             case 0:
-
+                generateWriteArticleContent();
                 break;
             case 1:
                 ajax({
@@ -46,19 +49,6 @@ const oItem = document.getElementsByClassName("item"),
                         generatePageContent(JSON.parse(data) , time , false);
                     }
                 });
-                /*
-                    $.ajax({
-                        url: 
-                        type: "get",
-                        success(data){
-                            if(data.length){
-                                generatePageContent(data , time);
-                            }else{
-                                
-                            };
-                        }
-                    });
-                */
                 break;
             case 2:
                 ajax({
@@ -91,6 +81,82 @@ function generatePageContent(data , time , isByYear){
     generateArticles(oArticles , data);
     oMain.appendChild(oArticles);
     oDateInput.addEventListener("click" , renderDate , false);
+};
+
+function generateWriteArticleContent() {
+    const pageContent = dom.div({class: "wrap"}, 
+            dom.h3({}, "撰写文章"),
+            dom.div({class: "title"}, 
+                dom.span({}, "标题："),
+                dom.input({type: "text", class: "cn_article_title article_title", placeholder: "无标题博客……", name: "title"})
+            ),
+            dom.div({class: "title"}, 
+                dom.span({}, "英文标题："),
+                dom.input({type: "text", class: "eng_article_title article_title", placeholder: "请输入英文标题……", name: "english_title"})
+            ),
+            dom.div({class: "summary"},
+                dom.textarea({name: "description", id: "description", cols: "30", rows: "10", placeholder: "无摘要……"})
+            ),
+            dom.div({class: "menu"},
+                dom.div({class: "menu-item classification"}, 
+                    dom.div({class: "row-left"}, "分类："),
+                    dom.div({class: "row-right"}, 
+                        dom.input({class: "classifications", type: "text", name: "classification", placeholder: "请输入关键词，使用分号隔开"})
+                    )
+                ),
+                dom.div({class: "menu-item tag"}, 
+                    dom.div({class: "row-left"}, "标签："),
+                    dom.div({class: "row-right"}, 
+                        dom.input({class: "tags", type: "text", name: "tags", placeholder: "请输入关键词，使用分号隔开"})
+                    )
+                )
+            ),
+            dom.div({class: "aritcle-content"},
+                dom.div({id: "editor"})
+            ),
+            dom.div({class: "footer"},
+                dom.span({class: "submit"}, "发布")
+            )
+        );
+    oMain.innerHTML = "";
+    oMain.appendChild(pageContent);
+
+    const oDescription = document.getElementById("description");
+
+    editor = new E("#editor");
+
+    oDescription.addEventListener("focus", function() {
+        this.style.height = "150px";
+    }, false);
+
+    oDescription.addEventListener("blur", function() {
+        this.style.height = "2em";
+    }, false);
+
+    editor.customConfig.uploadImgShowBase64 = true;
+    editor.create();
+
+    document.getElementsByClassName("submit")[0].addEventListener("click", createArticle, false);
+};
+
+function createArticle() {
+    const content = editor.txt.html(),
+        tags = document.getElementsByClassName("tags")[0].value,
+        description = document.getElementById("description").value,
+        title = document.getElementsByClassName("cn_article_title")[0].value,
+        eng_title = document.getElementsByClassName("eng_article_title")[0].value,
+        classifications = document.getElementsByClassName("classifications")[0].value;
+
+    ajax({
+        type: "post",
+        url: "/article",
+        data: {
+            tags, title, content, eng_title, description, classifications
+        },
+        success(data) {
+            console.log(data);
+        }
+    });
 };
 
 function generateArticles(oArticles , articles){

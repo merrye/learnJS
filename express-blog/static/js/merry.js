@@ -125,7 +125,19 @@ function ajax({
     xhr.addEventListener("abort" , transferCanceled);
     xhr.addEventListener("readystatechange" , handleStateChange);
 
+    if(data) {
+        let arr = [];
+        for(let key in data) {
+            arr.push(`${key}=${data[key]}`);
+        };
+        data = arr.join("&");
+        if(type.toLocaleLowerCase === "get") {
+            url += '?' + data
+        };
+    };
+
     xhr.open(type , url , isAsync);
+    xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 
     function transferCompleted(ev) {

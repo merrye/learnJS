@@ -116,8 +116,8 @@ body{
 .container .content{
     flex: 1;
     position: relative;
-    overflow: auto;
-    overflow-y: scroll;
+    overflow: hidden;
+    overflow-y: auto;
 }
 .container .content .main{
     padding: 20px;
@@ -228,6 +228,102 @@ body{
     color: rgb(0,0,0);
     border-bottom-color: rgb(0,0,0);
 }
+/** 
+    文章编辑部分
+*/
+.wrap{
+    width: 960px;
+    margin: 0 auto;
+}
+.wrap > h3{
+    font: normal 2em / 2em "Microsoft yahei";
+}
+.wrap > div{
+    margin: 10px 0;
+}
+.title{
+    height: 50px;
+    line-height: 50px;
+    display: flex;
+}
+.title > span{
+    height: 40px;
+    flex: 0 0 6em;
+    line-height: 40px;
+    font-size: 1em;
+    align-self: center;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid silver;
+    border-right: none;
+    text-indent: 1em;
+}
+.article_title{
+    flex: 1;
+    height: 40px;
+    align-self: center;
+    outline: none;
+    border-radius: 0 5px 5px 0;
+    border: 1px solid silver;
+    text-indent: 1em;
+    font-family: "Microsoft yahei";
+}
+#description{
+    width: 100%;
+    height: 2em;
+    resize: none;
+    outline: none;
+    text-indent: 1em;
+    transition: .2s;
+    border: 1px solid silver;
+    border-radius: 5px;
+    line-height: 1.5em;
+    font-size: 1em;
+    font-family: "Microsoft yahei";
+}
+.menu{
+    display: flex;
+    height: 50px;
+    line-height: 50px;
+}
+.menu .menu-item{
+    flex: 1;
+    display: flex;
+    border: 1px solid silver;
+    border-radius: 5px;
+}
+.menu .classification{
+    margin-right: 5px;
+}
+.menu .tag{
+    margin-left: 5px;
+}
+.menu .menu-item .row-left{
+    flex: 0 0 4em;
+    text-indent: 1em;
+}
+.menu .menu-item .row-right{
+    flex: 1;
+}
+.menu .menu-item .row-right > input{
+    width: 90%;
+    height: 40px;
+    line-height: 40px;
+    border: none;
+    outline: none;
+}
+.wrap .footer .submit{
+    float: right;
+    color: #FFF;
+    margin: 0 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: .3em 1.5em;
+    background-color: silver;
+}
+.wrap .footer .submit:hover{
+    background-color: rgb(180, 180, 180);
+}
+
 footer{
     flex: 0 0 45px;
     line-height: 45px;

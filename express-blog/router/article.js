@@ -1,7 +1,6 @@
 const express = require("express"),
     Op = require("sequelize").Op,
-    model = require("../module/model"),
-    {Article , Tag , Image} = model,
+    {Article , Tag , Image, Classification} = require("../module/model"),
     router = express.Router();
 
 router.get("/:year/:month/:day/:name.html" , (req , res) => {
@@ -73,6 +72,12 @@ router.get("/:year" , (req , res) => {
             });
         res.json(articles);
     })();
+});
+
+router.post("/", (req, res) => {
+    const {tags, title, eng_title, content, description, classifications} = req.body;
+
+    // res.json(req.body);
 });
 
 module.exports = router;
