@@ -1,8 +1,8 @@
 const express = require("express"),
     model = require("../module/model"),
     {Tag , User , Image , Article} = model,
-    getSortArticlesList = require("../module/tools").getSortArticlesList,
     {aseEncrypt, aesDecrypt} = require("../module/encrypt"),
+    {getUploadImageData, getSortArticlesList} = require("../module/utils"),
     router = express.Router();
 
 router.get("/" , (req , res) => {
@@ -121,6 +121,13 @@ router.post("/reg" , (req , res) => {
 router.get("/logout" , (req , res) => {
     res.clearCookie("login");
     res.redirect("/");
+});
+
+router.post("/upload-image", (req, res) => {
+    (async () => {
+        const data = await getUploadImageData(req);
+        res.json(data);
+    })();
 });
 
 router.use("/admin" , require("./admin"));
