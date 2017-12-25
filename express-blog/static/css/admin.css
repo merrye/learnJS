@@ -99,9 +99,13 @@ body{
     text-indent: 24px;
     font: normal 14px / 50px "Microsoft yahei";
     color: rgba(255,255,255,.7);
+    transition: .2s;
 }
 .container .slideMenu .item .sub-item > li:hover{
     color: #FFF;
+}
+.container .slideMenu .item .sub-item > li.clicked{
+    padding: 0 25px;
 }
 .container .slideMenu .slider{
     width: 8px;

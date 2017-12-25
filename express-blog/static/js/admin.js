@@ -34,6 +34,8 @@ let editor;
     ele.onclick = ev => {
         ev.cancalBubble = true;
         ev.stopPropagation();
+        removeClass(oMeunItem, "clicked");
+        addClassName(ele, "clicked");
         const time = new Date(),
             year = time.getFullYear(),
             month = time.getMonth() + 1;
@@ -133,7 +135,7 @@ function generateWriteArticleContent() {
         this.style.height = "2em";
     }, false);
 
-    editor.customConfig.uploadImgShowBase64 = true;
+    editor.customConfig.uploadImgServer = "/upload-image";
     editor.create();
 
     document.getElementsByClassName("submit")[0].addEventListener("click", createArticle, false);

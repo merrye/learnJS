@@ -64,9 +64,14 @@ function removeClass(obj , name){
 */
 function toggleClassName(obj , name){
     (obj.length ? [...obj] : [obj]).forEach((ele) => {
-        const cName = ele.className,
-            cNameArr = cName.split(" ");
-        cNameArr.find(val => val === name) ? removeClass(obj , name) : addClassName(obj , name);
+        const cName = ele.className;
+        if(cName) {
+            const cNameArr = cName.split(" ");
+            cNameArr.find(val => val === name) ? removeClass(obj , name) : addClassName(obj , name);
+        }else{
+            addClassName(obj , name)
+        };
+            
     });
     return obj;
 };
