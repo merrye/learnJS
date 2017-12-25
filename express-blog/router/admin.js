@@ -1,6 +1,5 @@
 const fs = require("fs"),
     express = require("express"),
-    upload = require("../module/multer"),
     {Article, Tag, Image} = require("../module/model"),
     router = express.Router();
 
@@ -19,12 +18,6 @@ router.get("/", (req, res) => {
 
 router.get("/upload/article", (req, res) => {
     res.render("articleUpload");
-});
-
-router.post("/upload/article", upload.single("file"), (req, res) => {
-    const {title, description, classification, content, tag} = req.body,
-        filename = req.file.filename;
-    
 });
 
 module.exports = router;
