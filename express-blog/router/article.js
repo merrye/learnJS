@@ -1,5 +1,6 @@
 const express = require("express"),
     Op = require("sequelize").Op,
+    {createModelArray} = require("../module/utils"),
     {Article , Tag , Image, Classification} = require("../module/model"),
     router = express.Router();
 
@@ -75,9 +76,26 @@ router.get("/:year" , (req , res) => {
 });
 
 router.post("/", (req, res) => {
-    const {tags, title, eng_title, content, description, classifications} = req.body;
+    (async () => {
+        const date = new Date().toLocaleDateString().replace(/-/g, "/"),
+            {tags, title, eng_title, content, description, classifications} = req.body,
+            article = await Article.create({
+                title,
+                content,
+                description,
+                href: `/article/${date}/eng_title.html`
+            }),
+            article_id = article.null,
+            [tagArr, classificationArr] = await Promise.all([
+                createModelArray(tags, Tag, {article_id}),
+                createModelArray(classifications, Classification, {article_id})
+            ]);
+        [tagData, classificationData] = await Promise.all([tagArr, classificationArr]);
 
-    // res.json(req.body);
+        res.json({
+            result: "ok"
+        });
+    })();
 });
 
 module.exports = router;
