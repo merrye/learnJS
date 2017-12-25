@@ -1,5 +1,5 @@
 const express = require("express"),
-    getDateSortArticlesList = require("../module/tools").getDateSortArticlesList,
+    getDateSortArticlesList = require("../module/utils").getDateSortArticlesList,
     router = express.Router();
 
 router.get("/" , (req , res) => {
