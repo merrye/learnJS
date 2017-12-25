@@ -10,9 +10,7 @@ let sequelize = new Sequelize(config.database, config.username, config.password,
             idle: 10000
         }
     });
-
-const ID_TYPE = Sequelize.STRING(50);
-
+    
 function defineModel(name,attributes){
     let attrs = {};
     for(let key in attributes){
@@ -48,7 +46,7 @@ function defineModel(name,attributes){
         timestamps: false,
         hooks: {
             beforeValidate: function(obj){
-                let now = Date.now().toLocaleDateString();
+                let now = new Date().toLocaleDateString().replace(/-/g, "/");
                 if(obj.isNewRecord){
                     obj.createdAt = now;
                     obj.updatedAt = now;
