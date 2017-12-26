@@ -222,6 +222,11 @@ body{
     font-size: 16px;
     margin-left: 5px;
 }
+.article a.update-article{
+    float: right;
+    padding: 0 15px;
+    text-indent: 0;
+}
 .article:hover > a{
     color: rgb(0,0,0);
 }

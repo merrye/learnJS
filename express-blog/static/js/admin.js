@@ -167,12 +167,25 @@ function generateArticles(oArticles , articles){
         const oArticle = createElementByTag("div");
         oArticle.className = "article";
         oArticle.innerHTML = article.createdAt.split("/").filter((ele , index) => index !== 0).join("-");
-        const oA = createElementByTag("a");
+        const oA = createElementByTag("a"),
+            oUpdateBtn = createElementByTag("span");
         oA.href = article.href;
         oA.innerHTML = article.title;
+        // oUpdateBtn.href = `/update/article?id=${article.id}`;
+        oUpdateBtn.className = "update-article";
+        oUpdateBtn.innerHTML = "编辑";
         oArticle.appendChild(oA);
+        oArticle.appendChild(oUpdateBtn);
         oArticles.appendChild(oArticle);
+
+        oUpdateBtn.addEventListener("click", updateArticle, false);
     };
+};
+
+function updateArticle() {
+    ajax({
+        url: "/update/article?id="
+    });
 };
 
 function createElementByTag(tag){

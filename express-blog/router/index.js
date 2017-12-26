@@ -1,6 +1,6 @@
 const express = require("express"),
     model = require("../module/model"),
-    {Tag , User , Image , Article} = model,
+    {Tag , User , Image , Article, Classification} = model,
     {aseEncrypt, aesDecrypt} = require("../module/encrypt"),
     {getUploadImageData, getSortArticlesList} = require("../module/utils"),
     router = express.Router();
@@ -127,6 +127,34 @@ router.post("/upload-image", (req, res) => {
     (async () => {
         const data = await getUploadImageData(req);
         res.json(data);
+    })();
+});
+
+router.get("/update/article",(req, res) => {
+    (async () => {
+        const {id} = req.query,
+            [article, tags, classification] = await Promise.all([
+                Article.findOne({
+                    where: {
+                        id
+                    }
+                }),
+                Tag.findAll({
+                    where: {
+                        article_id: id
+                    }
+                }),
+                Classification.findAll({
+                    where: {
+                        article_id: id
+                    }
+                })
+            ]);
+        res.json({
+            article,
+            tags,
+            classification
+        });
     })();
 });
 
