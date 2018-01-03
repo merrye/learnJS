@@ -1,0 +1,25 @@
+.classification{
+    padding: 2em 0;
+}
+.title{
+    text-align: center;
+}
+.classification_list li{
+    height: 2.5em;
+    line-height: 2.5em;
+    list-style: circle;
+    font-family: 'Monda', "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+.classification_list li a{
+    padding: 1px 0;
+    border-bottom: 1px solid rgb(50 ,50 ,50);
+}
+.classification_list li a span{
+    letter-spacing: 1px;
+}
+.classification_list li a span::before{
+    content: "(";
+}
+.classification_list li a span::after{
+    content: ")";
+}
