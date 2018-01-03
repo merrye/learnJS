@@ -5,20 +5,22 @@ const express = require("express"),
 
 router.get("/" , (req , res) => {
     (async () => {
-        const pArr = [],
-            tagArr = [],
+        const pArr = [], tagArr = [],
             tagSet = new Set(),
             tags = await Tag.findAll({
-                attributes: ["content"],
+                attributes: ["content", "href"],
                 order: [
                     ['content']
                 ],
             });
+        let hrefSet = new Set();
         tags.forEach(ele => {
             tagSet.add(ele.content);
+            hrefSet.add(ele.href);
         });
-        [...tagSet].forEach(ele => {
-            tagArr.push({content: ele});
+        hrefSet = [...hrefSet];
+        [...tagSet].forEach((ele, index) => {
+            tagArr.push({content: ele, href: hrefSet[index]});
             pArr.push((async ele => await Tag.count({where: {content: ele}}))(ele));
         });
         const countArr = await Promise.all(pArr);
@@ -33,12 +35,13 @@ router.get("/" , (req , res) => {
 router.get("/:tag" , (req , res) => {
     ((async () => {
         const pArr = [],
-            tag = req.params.tag,
+            href = req.params.tag,
             tags = await Tag.findAll({
                 where: {
-                    content: tag
+                    href
                 }
             });
+        const tag = tags[0].content;
         [...tags].forEach(ele => {
             pArr.push((async ele => await Article.findById(ele.article_id))(ele));
         });

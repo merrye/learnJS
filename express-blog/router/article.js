@@ -31,7 +31,8 @@ router.get("/:year/:month/:day/:name.html" , (req , res) => {
                     },
                     order: [
                         ['id', 'DESC']
-                    ]
+                    ],
+                    attributes: ["title", "href"]
                 }),
                 Article.findOne({
                     where: {
@@ -41,7 +42,8 @@ router.get("/:year/:month/:day/:name.html" , (req , res) => {
                     },
                     order: [
                         ['id', 'ASC']
-                    ]
+                    ],
+                    attributes: ["title", "href"]
                 })
             ]);
         article.tags = tags;

@@ -178,4 +178,6 @@ router.use("/archives" , require("./archives"));
 
 router.use("/tag" , require("./tag"));
 
+router.use("/classification" , require("./classification"));
+
 module.exports = router;
