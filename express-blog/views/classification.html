@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block css %}
+<link rel="stylesheet" href="/css/classification.css">
+{% endblock %}
+{% block main %}
+    <div class="classification">
+        <h3 class="title">目前共计{{classificationArr.length}}个分类</h3>
+        <ul class="classification_list">
+            {% for c in classificationArr %}
+            <li>
+                <a href="/classification/{{ c.href }}">
+                    {{ c.content }}&nbsp;<span>{{ c.count }}</span>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

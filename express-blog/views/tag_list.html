@@ -13,7 +13,7 @@
             {% else %}
                 {% set cssStyle = 'style="font-size: 30px; color: #111;"' %}
             {% endif%}
-            <a class="tag" {{ cssStyle | safe }} href="/tag/{{tag.content}}">{{ tag.content }}</a>
+            <a class="tag" {{ cssStyle | safe }} href="/tag/{{tag.href}}">{{ tag.content }}</a>
         {% endfor %}
     </div>
 {% endblock %}
