@@ -14,7 +14,19 @@ router.get("/" , (req , res) => {
 router.get("/home" , (req , res) => {
     (async() => {
         const currentIndex = 1,
-        {article_list , count} = await getSortArticlesList(currentIndex);
+            {article_list , count} = await getSortArticlesList(currentIndex),
+            tagArr = [], pArr = [];
+        [...article_list].forEach(element => {
+            pArr.push((async element => await Tag.findAll({
+                where: {
+                    article_id: element.id
+                }
+            }))(element));
+        });
+        const tags = await Promise.all(pArr);
+        [...tags].forEach((element, index) => {
+            article_list[index].tags = element;
+        });
         res.render("home" , {
             article_list,
             currentIndex,

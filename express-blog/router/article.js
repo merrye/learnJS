@@ -12,23 +12,38 @@ router.get("/:year/:month/:day/:name.html" , (req , res) => {
                     href: `/article/${year}/${month}/${day}/${name}.html`
                 }
             }),
-            [tags , images , prevArticle , nextArticle] = await Promise.all([Tag.findAll({
-                where: {
-                    article_id: article.id
-                }
-            }), Image.findAll({
-                where: {
-                    article_id: article.id
-                }
-            }), Article.findOne({
-                where: {
-                    id: article.id - 1
-                }
-            }), Article.findOne({
-                where: {
-                    id: article.id + 1
-                }
-            })]);
+            [tags , images , prevArticle , nextArticle] = await Promise.all([
+                Tag.findAll({
+                    where: {
+                        article_id: article.id
+                    }
+                }),
+                Image.findAll({
+                    where: {
+                        article_id: article.id
+                    }
+                }),
+                Article.findOne({
+                    where: {
+                        id: {
+                            [Op.lt]: article.id
+                        }
+                    },
+                    order: [
+                        ['id', 'DESC']
+                    ]
+                }),
+                Article.findOne({
+                    where: {
+                        id: {
+                            [Op.gt]: article.id
+                        }
+                    },
+                    order: [
+                        ['id', 'ASC']
+                    ]
+                })
+            ]);
         article.tags = tags;
         article.images = images;
         res.render("article" , {

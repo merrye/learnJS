@@ -70,7 +70,8 @@ async function getUploadImageData(req) {
             };
             objForEach(files, (name, file) => {
                 const tempFilePath = file.path,
-                    fileName = file.name,
+                    date = new Date(),
+                    fileName = date.getTime(),
                     fullFileName = path.join(storePath, fileName),
                     readStream = fs.createReadStream(tempFilePath),
                     writeStream = fs.createWriteStream(fullFileName);
@@ -78,7 +79,7 @@ async function getUploadImageData(req) {
                 readStream.on("end", function() {
                     fs.unlinkSync(tempFilePath);
                 });
-                imgLinks.push(`/images/upload/articles-image/${fileName}`);
+                imgLinks.push(`/images/upload/articles-image/${date.toLocaleDateString}/${fileName}`);
             });
             resolve({
                 errno: 0,
