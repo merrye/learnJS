@@ -37,13 +37,11 @@ oImg.onload = function() {
 })();
 
 // home page nav list
-const {localStorage} = window,
-    oNavList = document.getElementsByClassName("nav-list")[0],
+const oNavList = document.getElementsByClassName("nav-list")[0],
     oNavListLi = oNavList.getElementsByTagName("li"),
     oNavClickedLine = document.getElementsByClassName("nav-clicked-line")[0];
 let lastLeft = -Number.parseInt(css(oNavListLi , "width")),
-    index = localStorage.getItem("nowNavLiIndex"),
-    initNavLiIndex = index === null ? 0 : Number.parseInt(index),
+    initNavLiIndex = getIndex(),
     initObj = oNavListLi[initNavLiIndex],
     initLeft = initObj.offsetLeft;
 
@@ -67,8 +65,6 @@ css(oNavClickedLine , {
 // ele click callback function
 function clickedFoo(index){
     return function(){
-        initNavLiIndex = Number.parseInt(localStorage.getItem("nowNavLiIndex"));
-        localStorage.setItem("nowNavLiIndex" , index);
         Foo(this , oNavClickedLine , true);
         removeClass(silblings(addClassName(this , "clicked")) , "clicked");
     };
@@ -89,4 +85,26 @@ function Foo(_this ,target , isLastEle){
             width,
         } , 200);
     });
+};
+
+function getIndex() {
+    let index = 0;
+    switch (window.location.pathname){
+        case "/home":
+            index = 0;
+            break;
+        case "/archives":
+            index = 1;
+            break;
+        case "/tag":
+            index = 2;
+            break;
+        case "/classification":
+            index = 3;
+            break;
+        case "/about":
+            index = 4;
+            break;
+    };
+    return index;
 };

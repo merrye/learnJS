@@ -1,7 +1,7 @@
-.articles-list{
+.article-list{
     position: relative;
 }
-.articles-list::after{
+.article-list::after{
     content: "";
     position: absolute;
     top: 0px;
@@ -11,13 +11,13 @@
     background: #e6e6e6;
     z-index: -1;
 }
-.tag{
+.title{
     position: relative;
     font-size: 14px;
     color: rgba(0,0,0,.6);
     margin: 0px 0px 60px 25px;
 }
-.tag::after{
+.title::after{
     content: "";
     position: absolute;
     top: 50%;
@@ -29,11 +29,11 @@
     overflow: hidden;
     background-color: #bbb;
 }
-.tag .tag-con{
+.title > span{
     color: #555;
     font: bold 24px "Microsoft yahei";
 }
-.year_title{
+.year{
     position: relative;
     margin: 15px 15px 60px 25px;
     font: bold 26px / 30px "Microsoft yahei";
