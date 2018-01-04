@@ -1,6 +1,5 @@
 const express = require("express"),
-    model = require("../module/model"),
-    {Tag , User , Image , Article, Classification} = model,
+    {Tag , User , Image , Article, Classification} = require("../module/model"),
     {aseEncrypt, aesDecrypt} = require("../module/encrypt"),
     {getUploadImageData, getSortArticlesList} = require("../module/utils"),
     router = express.Router();
