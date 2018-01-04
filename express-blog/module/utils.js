@@ -56,6 +56,44 @@ async function getDateSortArticlesList(currentIndex){
     return {articles_list , count};
 };
 
+async function getArticlesBySearch(search, model) {
+    const pArr = [],
+        articles_list = new Map(),
+        models = await model.findAll({where: {href: search}});
+    const con = models[0].content;
+    [...models].forEach(ele => pArr.push((async ele => await Article.findById(ele.article_id))(ele)));
+    const articles = await Promise.all(pArr),
+        count = articles.length;
+    articles.sort((x, y) => new Date(y.createdAt) - new Date(x.createdAt)).forEach(element => {
+        const year = element.createdAt.split("/")[0];
+        articles_list.has(year) ? articles_list.get(year).push(element) : articles_list.set(year, [element]);
+    });
+    return {
+        con,
+        count,
+        articles_list: [...articles_list]
+    };
+};
+
+async function getSearchList(model) {
+    const set = new Set(),
+        pArr = [], list = [],
+        tags = await model.findAll({order: [['content']]});
+    let hrefSet = new Set();
+    tags.forEach(ele => {
+        set.add(ele.content);
+        hrefSet.add(ele.href);
+    });
+    hrefSet = [...hrefSet];
+    [...set].forEach((ele, index) => {
+        list.push({content: ele, href: hrefSet[index]});
+        pArr.push((async ele => await model.count({where: {content: ele}}))(ele));
+    });
+    const countArr = await Promise.all(pArr);
+    countArr.forEach((ele,index) => list[index].count = ele);
+    return list;
+};
+
 async function getUploadImageData(req) {
     const imgLinks = [],
         form = new formidable.IncomingForm();
@@ -100,8 +138,10 @@ async function createModelArray(obj, model, options) {
 };
 
 module.exports = {
+    getSearchList,
     createModelArray,
     getUploadImageData,
     getSortArticlesList,
-    getDateSortArticlesList
+    getArticlesBySearch,
+    getDateSortArticlesList,
 };
