@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block css %}
+    <link rel="stylesheet" href="/css/article_list.css">
+{% endblock %}
+{% block main %}
+    <div class="article-list">
+        <h3 class="title"><span>{{ con }}</span> 分类：共计{{ count }}篇文章</h3>
+        {% for article_list in articles_list %}
+            <h3 class="year">{{ article_list[0] }}</h3>
+            {% for article in article_list[1] %}
+                <div class="article">
+                    {{article.createdAt.substr(5).replace("/","-")}}
+                    <a href="{{article.href}}">{{article.title}}</a>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}
