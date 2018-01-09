@@ -142,7 +142,7 @@ function generateWriteArticleContent() {
 };
 
 function createArticle() {
-    const content = editor.txt.html(),
+    const content = editor.txt.html().replace(/\&/g, "$"),
         tags = document.getElementsByClassName("tags")[0].value,
         description = document.getElementById("description").value,
         title = document.getElementsByClassName("cn_article_title")[0].value,
@@ -153,7 +153,7 @@ function createArticle() {
         type: "post",
         url: "/article",
         data: {
-            tags, title, content, eng_title, description, classifications
+            title, eng_title, description, classifications, tags, content
         },
         success(data) {
             console.log(data);

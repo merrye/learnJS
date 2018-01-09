@@ -128,10 +128,11 @@ async function getUploadImageData(req) {
 };
 
 async function createModelArray(obj, model, options) {
-    const arr = [];
-    obj.split(";").forEach(element => {
+    const arr = [],
+        reg = /，|；|,|;/g;
+    obj.split(reg).forEach(element => {
         if(element !== "") {
-            arr.push((async element => await model.create(Object.assign({}, {content: element}, options)))(element));
+            arr.push((async element => await model.create(Object.assign({}, {content: element.trim()}, options)))(element));
         };
     });
     return arr;

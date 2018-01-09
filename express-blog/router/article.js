@@ -94,7 +94,7 @@ router.get("/:year" , (req , res) => {
 
 router.post("/", (req, res) => {
     (async () => {
-        const date = new Date().toLocaleDateString().replace(/-/g, "/"),
+        const date = new Date().toLocaleDateString(),
             {tags, title, eng_title, content, description, classifications} = req.body,
             article = await Article.create({
                 title,
@@ -107,6 +107,7 @@ router.post("/", (req, res) => {
                 createModelArray(tags, Tag, {article_id}),
                 createModelArray(classifications, Classification, {article_id})
             ]);
+        
         [tagData, classificationData] = await Promise.all([tagArr, classificationArr]);
 
         res.json({
