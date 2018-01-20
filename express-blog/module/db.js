@@ -46,7 +46,7 @@ function defineModel(name,attributes){
         timestamps: false,
         hooks: {
             beforeValidate: function(obj){
-                let now = new Date().toLocaleDateString().replace(/-/g, "/");
+                let now = new Date().toLocaleDateString().split("-").map((ele, index) => index !== 0 && Number(ele) < 10 ? "0" + ele : ele).join("/");
                 if(obj.isNewRecord){
                     obj.createdAt = now;
                     obj.updatedAt = now;

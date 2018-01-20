@@ -142,7 +142,7 @@ function generateWriteArticleContent() {
 };
 
 function createArticle() {
-    const content = editor.txt.html().replace(/\&/g, "$"),
+    const content = editor.txt.html().replace(/\&/g, "-$-"),
         tags = document.getElementsByClassName("tags")[0].value,
         description = document.getElementById("description").value,
         title = document.getElementsByClassName("cn_article_title")[0].value,
@@ -207,8 +207,8 @@ function renderDate(ev) {
         });
 
     layer.open({
-        proxy,
         elem,
+        proxy,
         type: "calendar",
         offset: [oResult.offsetTop + oResult.offsetHeight + 10, oResult.offsetLeft]
     });

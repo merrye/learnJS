@@ -1,7 +1,14 @@
 const fs = require("fs"),
     path = require("path"),
+    crypto = require("crypto"),
+    fetch = require("node-fetch"),
     formidable = require("formidable"),
-    {Tag , Image , Article} = require("../module/model");
+    {Tag , Image , Article} = require("../module/model"),
+    appid = "2015063000000001",
+    key = "12345678",
+    from = "zh",
+    to = "en",
+    getTranslateUrl = "http://api.fanyi.baidu.com/api/trans/vip/translate?";
 
 function objForEach(obj, fn) {
     let result;
@@ -127,14 +134,41 @@ async function getUploadImageData(req) {
     });
 };
 
-async function createModelArray(obj, model, options) {
+async function createModelArray(str, model, options) {
     const arr = [],
-        reg = /，|；|,|;/g;
-    obj.split(reg).forEach(element => {
-        if(element !== "") {
-            arr.push((async element => await model.create(Object.assign({}, {content: element.trim()}, options)))(element));
-        };
+        spaceReg = /\s+/g,
+        contentReg = /^\w+$/g,
+        splitReg = /，|；|,|;/g;
+    str.split(splitReg).forEach(element => {
+        (async () => {
+            const content = element.trim();
+            if(content) {
+                const tag = await Tag.findOne({where: {content}});
+                let href = "";
+                if(!tag) {
+                    if(contentReg.test(content)) {
+                        href = content;
+                    }else{
+                        const salt = (new Date).getTime(),
+                            query = content,
+                            str = appid + query + salt + key,
+                            sign = crypto.createHash("md5").update(str).digest("hex"),
+                            {trans_result} = await fetch(`${getTranslateUrl}q=${encodeURI(query)}&appid=${appid}&salt=${salt}&from=${from}&to=${to}&sign=${sign}`).then(res => res.json());
+                        href = trans_result[0].dst;
+                    };
+                    href = href.replace(spaceReg, "-").toLowerCase();
+                }else{
+                    href = tag.href;
+                };
+                arr.push((async element => await model.create(Object.assign({}, {href, content}, options)))(element));
+            };
+        })();
     });
+    // obj.split(reg).forEach(element => {
+    //     if(element !== "") {
+    //         arr.push((async element => await model.create(Object.assign({}, {content: element.trim()}, options)))(element));
+    //     };
+    // });
     return arr;
 };
 

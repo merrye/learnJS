@@ -328,6 +328,7 @@ body{
     border-radius: 5px;
     padding: .3em 1.5em;
     background-color: silver;
+    user-select: none;
 }
 .wrap .footer .submit:hover{
     background-color: rgb(180, 180, 180);
