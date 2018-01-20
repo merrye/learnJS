@@ -1,6 +1,6 @@
 const fs = require("fs"),
     express = require("express"),
-    {Article, Tag, Image} = require("../module/model"),
+    {Article, Tag} = require("../module/model"),
     router = express.Router();
 
 router.get("/", (req, res) => {

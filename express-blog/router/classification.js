@@ -1,5 +1,5 @@
 const express = require("express"),
-    {Tag , User , Image , Article, Classification} = require("../module/model"),
+    {Tag , User , Article, Classification} = require("../module/model"),
     {getSearchList, getArticlesBySearch} = require("../module/utils"),
     router = express.Router();
 

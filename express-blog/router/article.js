@@ -38,7 +38,8 @@ router.get("/:year/:month/:day/:name.html", (req , res) => {
                 })
             ]);
         article.tags = tags;
-        res.render("article" , {
+
+        res.render("article", {
             article,
             prevArticle,
             nextArticle,
