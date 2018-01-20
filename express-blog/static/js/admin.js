@@ -86,40 +86,7 @@ function generatePageContent(data , time , isByYear){
 };
 
 function generateWriteArticleContent() {
-    const pageContent = dom.div({class: "wrap"}, 
-            dom.h3({}, "撰写文章"),
-            dom.div({class: "title"}, 
-                dom.span({}, "标题："),
-                dom.input({type: "text", class: "cn_article_title article_title", placeholder: "无标题博客……", name: "title"})
-            ),
-            dom.div({class: "title"}, 
-                dom.span({}, "英文标题："),
-                dom.input({type: "text", class: "eng_article_title article_title", placeholder: "请输入英文标题……", name: "english_title"})
-            ),
-            dom.div({class: "summary"},
-                dom.textarea({name: "description", id: "description", cols: "30", rows: "10", placeholder: "无摘要……"})
-            ),
-            dom.div({class: "menu"},
-                dom.div({class: "menu-item classification"}, 
-                    dom.div({class: "row-left"}, "分类："),
-                    dom.div({class: "row-right"}, 
-                        dom.input({class: "classifications", type: "text", name: "classification", placeholder: "请输入关键词，使用分号隔开"})
-                    )
-                ),
-                dom.div({class: "menu-item tag"}, 
-                    dom.div({class: "row-left"}, "标签："),
-                    dom.div({class: "row-right"}, 
-                        dom.input({class: "tags", type: "text", name: "tags", placeholder: "请输入关键词，使用分号隔开"})
-                    )
-                )
-            ),
-            dom.div({class: "aritcle-content"},
-                dom.div({id: "editor"})
-            ),
-            dom.div({class: "footer"},
-                dom.span({class: "submit"}, "发布")
-            )
-        );
+    const pageContent = getArticlePageContent({title: "文章编辑"});
     oMain.innerHTML = "";
     oMain.appendChild(pageContent);
 
@@ -142,23 +109,7 @@ function generateWriteArticleContent() {
 };
 
 function createArticle() {
-    const content = editor.txt.html().replace(/\&/g, "-$-"),
-        tags = document.getElementsByClassName("tags")[0].value,
-        description = document.getElementById("description").value,
-        title = document.getElementsByClassName("cn_article_title")[0].value,
-        eng_title = document.getElementsByClassName("eng_article_title")[0].value,
-        classifications = document.getElementsByClassName("classifications")[0].value;
-
-    ajax({
-        type: "post",
-        url: "/article",
-        data: {
-            title, eng_title, description, classifications, tags, content
-        },
-        success(data) {
-            console.log(data);
-        }
-    });
+    editArticle("文章已成功发布。", `/article`);
 };
 
 function generateArticles(oArticles , articles){
@@ -171,21 +122,103 @@ function generateArticles(oArticles , articles){
             oUpdateBtn = createElementByTag("span");
         oA.href = article.href;
         oA.innerHTML = article.title;
-        // oUpdateBtn.href = `/update/article?id=${article.id}`;
         oUpdateBtn.className = "update-article";
         oUpdateBtn.innerHTML = "编辑";
         oArticle.appendChild(oA);
         oArticle.appendChild(oUpdateBtn);
         oArticles.appendChild(oArticle);
-
-        oUpdateBtn.addEventListener("click", updateArticle, false);
+        oUpdateBtn.addEventListener("click", updateArticlePage(article.id), false);
     };
 };
 
-function updateArticle() {
-    ajax({
-        url: "/update/article?id="
-    });
+function updateArticlePage(articleID) {
+    return () => {
+        const pageContent = getArticlePageContent({title: "文章编辑"});
+        oMain.innerHTML = "";
+        oMain.appendChild(pageContent);
+
+        const oTag = document.getElementsByClassName("tags")[0],
+            oDescription = document.getElementById("description"),
+            oTitle = document.getElementsByClassName("cn_article_title")[0],
+            oEng_title = document.getElementsByClassName("eng_article_title")[0],
+            oClassifications = document.getElementsByClassName("classifications")[0];
+
+        editor = new E("#editor");
+
+        oDescription.addEventListener("focus", function() {
+            this.style.height = "150px";
+        }, false);
+
+        oDescription.addEventListener("blur", function() {
+            this.style.height = "2em";
+        }, false);
+
+        editor.customConfig.uploadImgServer = "/upload-image";
+        editor.create();
+        ajax({
+            url: `/article/update/id/${articleID}`,
+            success(data) {
+                const {tags, article, classifications} = JSON.parse(data);
+                oTitle.value = article.title;
+                oDescription.value = article.description;
+                oEng_title.value = article.eng_title;
+                editor.txt.html(article.content.replace(/-\$-/g, "&"));
+                tags.forEach(ele => {
+                    oTag.value += `${ele.content};`
+                });
+                classifications.forEach(ele => {
+                    oClassifications.value += `${ele.content};`
+                });
+            }
+        });
+        document.getElementsByClassName("submit")[0].addEventListener("click", updateArticle(articleID), false);
+    };
+};
+
+function updateArticle(articleID) {
+    return () => {
+        editArticle("文章修改成功。", `/article/${articleID}`);
+    };
+};
+
+function editArticle(msg, url) {
+    const content = editor.txt.html().replace(/\&/g, "-$-"),
+        oTag = document.getElementsByClassName("tags")[0],
+        oDescription = document.getElementById("description"),
+        oTitle = document.getElementsByClassName("cn_article_title")[0],
+        oEng_title = document.getElementsByClassName("eng_article_title")[0],
+        oClassifications = document.getElementsByClassName("classifications")[0],
+        tags = oTag.value,
+        description = oDescription.value,
+        title = oTitle.value,
+        eng_title = oEng_title.value,
+        classifications = oClassifications.value;
+
+    if(title === "") {
+        alert("标题不能为空。");
+    }else if(content === "") {
+        alert("内容不能为空。");
+    }else{
+        ajax({
+            type: "post",
+            url,
+            data: {
+                title, eng_title, description, classifications, tags, content
+            },
+            success(data) {
+                data = JSON.parse(data);
+                if(data.result === "ok") {
+                    alert(msg);
+                    oTag.value = "";
+                    oTitle.value = "";
+                    oEng_title.value = "";
+                    oDescription.value = "";
+                    oClassifications.value = "";
+                    editor.txt.html("");
+                };
+            }
+        });
+    };
 };
 
 function createElementByTag(tag){
@@ -230,4 +263,42 @@ function switchArticlesByYear(value) {
             generateArticles(document.getElementsByClassName("articles")[0] , JSON.parse(data));
         }
     });
+};
+
+function getArticlePageContent(config) {
+    const pageContent = dom.div({class: "wrap"}, 
+        dom.h3({}, config.title),
+        dom.div({class: "title"}, 
+            dom.span({}, "标题："),
+            dom.input({type: "text", class: "cn_article_title article_title", placeholder: "无标题博客……", name: "title"})
+        ),
+        dom.div({class: "title"}, 
+            dom.span({}, "英文标题："),
+            dom.input({type: "text", class: "eng_article_title article_title", placeholder: "请输入英文标题……", name: "english_title"})
+        ),
+        dom.div({class: "summary"},
+            dom.textarea({name: "description", id: "description", cols: "30", rows: "10", placeholder: "无摘要……"})
+        ),
+        dom.div({class: "menu"},
+            dom.div({class: "menu-item classification"}, 
+                dom.div({class: "row-left"}, "分类："),
+                dom.div({class: "row-right"}, 
+                    dom.input({class: "classifications", type: "text", name: "classification", placeholder: "请输入关键词，使用分号隔开"})
+                )
+            ),
+            dom.div({class: "menu-item tag"}, 
+                dom.div({class: "row-left"}, "标签："),
+                dom.div({class: "row-right"}, 
+                    dom.input({class: "tags", type: "text", name: "tags", placeholder: "请输入关键词，使用分号隔开"})
+                )
+            )
+        ),
+        dom.div({class: "aritcle-content"},
+            dom.div({id: "editor"})
+        ),
+        dom.div({class: "footer"},
+            dom.span({class: "submit"}, "发布")
+        )
+    );
+    return pageContent;
 };

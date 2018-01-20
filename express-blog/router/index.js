@@ -141,34 +141,6 @@ router.post("/upload-image", (req, res) => {
     })();
 });
 
-router.get("/update/article",(req, res) => {
-    (async () => {
-        const {id} = req.query,
-            [article, tags, classification] = await Promise.all([
-                Article.findOne({
-                    where: {
-                        id
-                    }
-                }),
-                Tag.findAll({
-                    where: {
-                        article_id: id
-                    }
-                }),
-                Classification.findAll({
-                    where: {
-                        article_id: id
-                    }
-                })
-            ]);
-        res.json({
-            article,
-            tags,
-            classification
-        });
-    })();
-});
-
 router.use("/admin" , require("./admin"));
 
 router.use("/article" , require("./article"));

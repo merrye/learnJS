@@ -164,11 +164,6 @@ async function createModelArray(str, model, options) {
             };
         })();
     });
-    // obj.split(reg).forEach(element => {
-    //     if(element !== "") {
-    //         arr.push((async element => await model.create(Object.assign({}, {content: element.trim()}, options)))(element));
-    //     };
-    // });
     return arr;
 };
 

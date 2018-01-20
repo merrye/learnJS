@@ -48,21 +48,31 @@ router.get("/:year/:month/:day/:name.html", (req , res) => {
     })();
 });
 
-router.get("/:year/:month", (req, res) => {
-    (async() => {
-        const {year , month} = req.params,
-            date = `${year}/${month}`,
-            articles = await Article.findAll({
-                where: {
-                    href: {
-                        [Op.like]: `/article/${date}%`
+router.get("/update/id/:id",(req, res) => {
+    (async () => {
+        const {id} = req.params,
+            [article, tags, classifications] = await Promise.all([
+                Article.findOne({
+                    where: {
+                        id
                     }
-                },
-                order: [
-                    ['createdAt', 'DESC']
-                ]
-            });
-        res.json(articles);
+                }),
+                Tag.findAll({
+                    where: {
+                        article_id: id
+                    }
+                }),
+                Classification.findAll({
+                    where: {
+                        article_id: id
+                    }
+                })
+            ]);
+        res.json({
+            tags,
+            article,
+            classifications
+        });
     })();
 });
 
@@ -83,6 +93,24 @@ router.get("/:year", (req , res) => {
     })();
 });
 
+router.get("/:year/:month", (req, res) => {
+    (async() => {
+        const {year , month} = req.params,
+            date = `${year}/${month}`,
+            articles = await Article.findAll({
+                where: {
+                    href: {
+                        [Op.like]: `/article/${date}%`
+                    }
+                },
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            });
+        res.json(articles);
+    })();
+});
+
 router.post("/", (req, res) => {
     (async () => {
         const reg = /^\w+$/g,
@@ -91,6 +119,7 @@ router.post("/", (req, res) => {
             article = await Article.create({
                 title,
                 content,
+                eng_title,
                 description,
                 href: `/article/${date}/${eng_title}.html`
             }),
@@ -99,6 +128,23 @@ router.post("/", (req, res) => {
                 createModelArray(tags, Tag, {article_id}),
                 createModelArray(classifications, Classification, {article_id})
             ]);
+        res.json({
+            result: "ok"
+        });
+    })();
+});
+
+router.post("/:id" ,(req, res) => {
+    (async () => {
+        const article_id = req.params.id,
+            {tags, title, eng_title, content, description, classifications} = req.body,
+            article = await Article.findById(article_id),
+            newArticle = await article.update({title, eng_title, content, description}),
+            [tagArr, classificationArr] = await Promise.all([
+                createModelArray(tags, Tag, {article_id}),
+                createModelArray(classifications, Classification, {article_id})
+            ]);
+            console.log(tagArr, classificationArr);
         res.json({
             result: "ok"
         });
