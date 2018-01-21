@@ -10,7 +10,7 @@
 				return (attrs = {} , ...children) => {
 					if(property === "open"){
                         const styleSheets = document.styleSheets;
-                        if([...styleSheets].findIndex(ele => ele && ele.href.includes("layer")) === -1){
+                        if([...styleSheets].findIndex(ele => ele.href && ele.href.includes("layer")) === -1){
                             const oHead = document.getElementsByTagName("head")[0],
                                 oLink = document.createElement("link");
                             oLink.setAttribute("rel" , "stylesheet");
@@ -309,7 +309,6 @@
             ev = ev || window.event;
             !(ev.target === proxy.target || ev.target.className.includes("layer")) && calendar.destroy();
         };
-
         return calendar;
     };
     function getOffset(offset) {

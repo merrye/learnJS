@@ -5,6 +5,7 @@
     display: flex;
     flex-direction: column;
     position: absolute;
+    font-size: .8em;
 }
 .header{
     display: flex;
@@ -64,61 +65,83 @@
     display: block;
     float: left;
     text-align: center;
-    cursor: pointer;
-}
-.main .content .week > span{
     cursor: default;
 }
-.main .content > div > span.prevMonth , .main .content > div > span.nextMonth{
-    color: rgb(210,210,210);
+.main .content > ul{
+    overflow: hidden;
 }
-.main .content > div > span.nowTime{
-    color: #FFF;
-    background-color: rgb(0,150,136);
-}
-.main .content > div > span.time:hover{
-    background-color: rgb(234,234,234);
-}
-.main > div > span.prevMonth:hover , .main .content > div > span.nextMonth:hover{
-    color: #000;
-}
-.main .content > div > span.nowTime:hover{
-    color: #FFF;
-    background-color: rgb(0,150,136);
-}
-.main > ul{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #FFF;
-    padding: 10px;
-    box-sizing: border-box;
-}
-.main > ul > li{
+.main .content > ul > li{
     float: left;
     cursor: pointer;
     text-align: center;
 }
-.main > ul > li.month-item{
+.main .content > ul > li.time{
+    width: 26px;
+    height: 20px;
+    padding: 5px;
+    display: block;
+    line-height: 20px;
+}
+.main .content > ul > li.prevMonth , .main .content > ul > li.nextMonth{
+    color: rgb(210,210,210);
+}
+.main .content > ul > li.nowTime{
+    color: #FFF;
+    background-color: rgb(0,150,136);
+}
+.main .content > ul > li.month-item{
     width: 25%;
     height: 36px;
     line-height: 36px;
     margin: 17px 0;
 }
-.main > ul > li.year-item{
+.main .content > ul > li.year-item{
     width: 33.3%;
-    height: 42px;
-    line-height: 42px;
+    height: 36px;
+    margin: 3px 0;
+    line-height: 36px;
 }
-.main > ul > li:hover{
+.main .content > ul > li:hover, .main .content > ul > li.time:hover{
     background-color: rgb(234,234,234);
 }
-.main > ul > li.month-item.now , .main > ul > li.year-item.now{
+.main .content > ul > li.prevMonth:hover, .main .content > ul > li.nextMonth:hover{
+    color: #000;
+}
+.main .content > ul > li.nowTime:hover, .main .content > ul > li.month-item.now, .main .content > ul > li.year-item.now{
     color: #FFF;
     background-color: rgb(0,150,136);
 }
+/* 
+    .main > ul{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #FFF;
+        padding: 10px;
+        box-sizing: border-box;
+    } 
+    .main > ul > li.month-item{
+        width: 25%;
+        height: 36px;
+        line-height: 36px;
+        margin: 17px 0;
+    } 
+    .main > ul > li.year-item{
+        width: 33.3%;
+        height: 36px;
+        margin: 3px 0;
+        line-height: 36px;
+    }
+    .main > ul > li:hover{
+        background-color: rgb(234,234,234);
+    }
+    .main > ul > li.month-item.now , .main > ul > li.year-item.now{
+        color: #FFF;
+        background-color: rgb(0,150,136);
+    }
+*/
 .footer{
     flex: 0 0 46px;
     display: flex;
@@ -139,20 +162,3 @@
 .footer > span:hover{
     color: #5FB878;
 }
-/*
-.header > i{
-    color: #999;
-    line-height: 50px;
-}
-.header > div > span{
-    font-size: 14px;
-}
-.header > i:hover , .header > div > span:hover{
-    color: #5FB878;
-}
-.main{
-
-}
-.footer{
-    height: 50px;
-}*/
