@@ -4,50 +4,33 @@
         INIT_WEEK_NUMBER = 7,
         INIT_MONTH_NUMBER = 12,
         INIT_YEAR_NUMBER = 15,
-        MONTH_NUMBER_ARR = [31,28,31,30,31,30,31,31,30,31,30,31],
-        monthArr = ["一月","二月","三月","四月","五月","六月","七月","八月","九月","十月","十一月","十二月"],
+        MONTH_NUMBER = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+        MONTH_NAME = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
         layer = new Proxy({} , {
-        get(target , property){
-            const oHead = document.getElementsByTagName("head")[0],
-                oLink = document.createElement("link");
-            oLink.setAttribute("rel" , "stylesheet");
-            oLink.setAttribute("href" , `${jsPath.substr(0 , jsPath.lastIndexOf("/") + 1)}css/layer.css`);
-            oHead.appendChild(oLink);
-            return (attrs = {} , ...children) => {
-                if(property === "open"){
-                    const {type , offset = ["c"]} = attrs,
-                        [top , left] = getOffset(offset);
-                    switch (type) {
-                        case "calendar":
-                            const oCalendar = document.getElementsByClassName("calendar");
-                            if(oCalendar.length === 0){
-                                const calendar = generateCalendar(attrs.proxy);
-                                calendar.run();
-                                css(calendar.oCalendar , {top , left});
-                            };
-                            break;
+            get(target , property){
+                const oHead = document.getElementsByTagName("head")[0],
+                    oLink = document.createElement("link");
+                oLink.setAttribute("rel" , "stylesheet");
+                oLink.setAttribute("href" , `${jsPath.substr(0 , jsPath.lastIndexOf("/") + 1)}css/layer.css`);
+                oHead.appendChild(oLink);
+                return (attrs = {} , ...children) => {
+                    if(property === "open"){
+                        const {type , offset = ["c"]} = attrs,
+                            [top , left] = getOffset(offset);
+                        switch (type) {
+                            case "calendar":
+                                const oCalendar = document.getElementsByClassName("calendar");
+                                if(oCalendar.length === 0){
+                                    const calendar = generateCalendar(attrs.proxy);
+                                    calendar.run();
+                                    css(calendar.oCalendar , {top , left});
+                                };
+                                break;
+                        };
                     };
                 };
-            };
-        }
-    }),
-    dom = new Proxy({} , {
-        get(target , property) {
-            return function(attrs = {}, ...children) {
-                const el = document.createElement(property);
-                for (let prop of Object.keys(attrs)) {
-                    el.setAttribute(prop , attrs[prop]);
-                };
-                for (let child of children) {
-                    if (typeof child === "string" ) {
-                        child = document.createTextNode(child);
-                    };
-                    el.appendChild(child);
-                };
-                return el;
-            };
-        }
-    });
+            }
+        });
     function generateCalendar(proxy) {
         const time = proxy.value ? new Date(proxy.value) : new Date();
         let [nowYearCount , nowMonthCount , nowDateCount] = time.toLocaleDateString().split("/").map(ele => Number(ele));
@@ -129,7 +112,7 @@
                 changeDate({
                     loopCount: INIT_MONTH_NUMBER,
                     loopHTMLElements: oMonthItem,
-                    getHtml: i => monthArr[i],
+                    getHtml: i => MONTH_NAME[i],
                     setDate: (ele , index) => nowMonthCount = index + 1,
                     getClassName: i => i === nowMonthCount - 1 ? "month-item now" : "month-item",
                 });
@@ -198,9 +181,9 @@
         function setCalendar(time){
             const [year , month , date] = time.toLocaleDateString().split("/").map(ele => Number(ele)),
                 day_of_week = new Date(`${year}/${month}/1`).getDay(),    // 获取本月1号为周几
-                prevMonthAllDays = MONTH_NUMBER_ARR[month - 2 !== -1 ? month - 2 : INIT_MONTH_NUMBER - 1],
+                prevMonthAllDays = MONTH_NUMBER[month - 2 !== -1 ? month - 2 : INIT_MONTH_NUMBER - 1],
                 isLeapYear = year % 4 === 0 && year % 100 !== 0 || year % 400 === 0,   // 判断是否为闰年
-                nowMonthDays = (isLeapYear && month === 2) ? 29 : MONTH_NUMBER_ARR[month - 1];
+                nowMonthDays = (isLeapYear && month === 2) ? 29 : MONTH_NUMBER[month - 1];
             let rowCount = 0,
                 columnCount = -1,
                 className = "time",

@@ -39,7 +39,7 @@
                     return key === "target" ? target : target[key];
                 },
                 set(target , key , value) {
-                    value !== target[key] && foo();
+                    // value !== target[key] && foo();
                     target[key] = value;
                     return true;
                 }
@@ -71,9 +71,9 @@
         // oResult.addEventListener("change" , () => {
         //     console.log("input value is changed");
         // } , false);
-        function foo() {
-            console.log(123);
-        };
+        // function foo() {
+        //     console.log(123);
+        // };
     </script>
 </body>
 </html>

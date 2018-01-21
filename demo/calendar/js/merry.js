@@ -61,19 +61,24 @@ function removeClass(obj , name){
 /**
 * @param {Element} obj  
 * @param {String} name  
- */
+*/
 function toggleClassName(obj , name){
     (obj.length ? [...obj] : [obj]).forEach((ele) => {
-        const cName = ele.className,
-            cNameArr = cName.split(" ");
-        cNameArr.find(val => val === name) ? removeClass(obj , name) : addClassName(obj , name);
+        const cName = ele.className;
+        if(cName) {
+            const cNameArr = cName.split(" ");
+            cNameArr.find(val => val === name) ? removeClass(obj , name) : addClassName(obj , name);
+        }else{
+            addClassName(obj , name)
+        };
+            
     });
     return obj;
 };
 /**
 * @param {Element} obj  
 * @param {String} name  
- */
+*/
 function hasClassName(obj , name){
     return obj.className.split(" ").find(ele => ele === name) ? true : false;
 };
@@ -95,9 +100,97 @@ function next(obj){
 function prev(obj){
     return obj.previousElementSibling;
 };
-function ajax({config = {type: get}}){
-
+function getOffset(obj) {
+    let top = obj.offsetTop,
+        left = obj.offsetLeft,
+        offsetParent = obj.offsetParent;
+    while(offsetParent !== document.body){
+        top += offsetParent.offsetTop;
+        left += offsetParent.offsetLeft;
+        offsetParent = offsetParent.offsetParent;
+    };
+    return {
+        top,
+        left
+    };
 };
+function ajax({
+    url,
+    type = "GET",
+    isAsync = true,
+    data,
+    success,
+    error
+}) {
+    const xhr = new XMLHttpRequest();
+    
+    xhr.addEventListener("load" , transferCompleted);
+    xhr.addEventListener("progress" , updateProgress);
+    xhr.addEventListener("error" , transferFailed);
+    xhr.addEventListener("abort" , transferCanceled);
+    xhr.addEventListener("readystatechange" , handleStateChange);
+
+    if(data) {
+        let arr = [];
+        for(let key in data) {
+            arr.push(`${key}=${data[key]}`);
+        };
+        data = arr.join("&");
+        if(type.toLocaleLowerCase === "get") {
+            url += '?' + data
+        };
+    };
+
+    xhr.open(type , url , isAsync);
+    xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+    xhr.send(data);
+
+    function transferCompleted(ev) {
+
+    };
+
+    function updateProgress(ev) {
+        // if(ev.lengthComputable) {
+            // ev.loaded 已经下载大小
+            // ev.total  全部大小
+        // };
+    };
+
+    function transferFailed() {
+        error ? error(xhr.statusText) : console.log(xhr.statusText);
+    };
+
+    function transferCanceled() {
+        error ? error(xhr.statusText) : console.log(xhr.statusText);
+    };
+
+    function handleStateChange() {
+        const {readyState , status , responseText , statusText} = xhr;
+        if(readyState === XMLHttpRequest.DONE) {
+            (status >= 200 && status < 300) || status === 300
+                ? success(responseText)
+                : (error ? error(statusText) : console.log(statusText));
+        };
+    };
+};
+const dom = new Proxy({} , {
+    get(target , property) {
+        return function(attrs = {}, ...children) {
+            const el = document.createElement(property);
+            for (let prop of Object.keys(attrs)) {
+                el.setAttribute(prop , attrs[prop]);
+            };
+            for (let child of children) {
+                if (typeof child === "string" ) {
+                    child = document.createTextNode(child);
+                };
+                el.appendChild(child);
+            };
+            return el;
+        };
+    }
+});
+
 window.requestAnimationFrame = (() => {
     return window.requestAnimationFrame ||
         window.oRequstAnimationFrame ||
