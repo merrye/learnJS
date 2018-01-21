@@ -241,7 +241,7 @@ body{
     text-indent: 0;
     cursor: pointer;
     position: absolute;
-    left: 20%;
+    left: 20em;
 }
 .article .update-article:hover{
     color: #1296db;
