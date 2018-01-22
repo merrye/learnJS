@@ -6,6 +6,7 @@
     flex-direction: column;
     position: absolute;
     font-size: .8em;
+    user-select: none;
 }
 .header{
     display: flex;
