@@ -75,40 +75,40 @@
     float: left;
     cursor: pointer;
     text-align: center;
+    display: block;
 }
-.main .content > ul > li.time{
+.main .content > ul > li.item.day-item{
     width: 26px;
     height: 20px;
     padding: 5px;
-    display: block;
     line-height: 20px;
 }
-.main .content > ul > li.prevMonth , .main .content > ul > li.nextMonth{
-    color: rgb(210,210,210);
-}
-.main .content > ul > li.nowTime{
-    color: #FFF;
-    background-color: rgb(0,150,136);
-}
-.main .content > ul > li.month-item{
+.main .content > ul > li.item.month-item{
     width: 25%;
     height: 36px;
     line-height: 36px;
     margin: 17px 0;
 }
-.main .content > ul > li.year-item{
+.main .content > ul > li.item.year-item{
     width: 33.3%;
     height: 36px;
     margin: 3px 0;
     line-height: 36px;
 }
-.main .content > ul > li:hover, .main .content > ul > li.time:hover{
+.main .content > ul > li.prevMonth , .main .content > ul > li.nextMonth{
+    color: rgb(210,210,210);
+}
+.main .content > ul > li.now{
+    color: #FFF;
+    background-color: rgb(0,150,136);
+}
+.main .content > ul > li:hover{
     background-color: rgb(234,234,234);
 }
 .main .content > ul > li.prevMonth:hover, .main .content > ul > li.nextMonth:hover{
     color: #000;
 }
-.main .content > ul > li.nowTime:hover, .main .content > ul > li.month-item.now, .main .content > ul > li.year-item.now{
+.main .content > ul > li.now{
     color: #FFF;
     background-color: rgb(0,150,136);
 }

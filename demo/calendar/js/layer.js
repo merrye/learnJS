@@ -1,8 +1,9 @@
 ;((window) => {
     "use strict";
     const INIT_WEEK_NUMBER = 7,
-        INIT_MONTH_NUMBER = 12,
+        INIT_ALL_NUMBER = 42,
         INIT_YEAR_NUMBER = 15,
+        INIT_MONTH_NUMBER = 12,
         MONTH_NUMBER = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
         MONTH_NAME = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
         layer = new Proxy({} , {
@@ -29,12 +30,12 @@
                                 [top , left] = getOffset(offset),
                                 oCalendar = document.getElementsByClassName("calendar"),
                                 [INIT_TOP, INIT_LEFT] = getInitOffset(top, left, attrs.animate);
-                            if(oCalendar.length === 0){
+                            // if(oCalendar.length === 0){
                                 const calendar = generateCalendar(proxy, type);
                                 calendar.run();
                                 css(calendar.main, {transform: `translate(${INIT_LEFT}px, ${INIT_TOP}px)`,opacity: 0,transition: ".2s"});
                                 setTimeout(() => css(calendar.main, {transform: `translate(${left}px, ${top}px)`, opacity: 1}), 20);
-                            };
+                            // };
                         };
                     // }, false);
                 }
@@ -46,145 +47,86 @@
             time = proxy.value ? new Date(proxy.value) : new Date(),
             oCalendar = dom.div({class: "calendar"}, 
                 dom.div({class: "header"},
-                    dom.span({class: "prev changeYear prevYear"}, 
-                        dom.i({}), dom.i({})
-                    ),
-                    dom.span({class: "prev changeMonth prevMonth"}, 
-                        dom.i({})
-                    ),
-                    dom.div({} ,
-                        dom.span({class: "year"}), dom.span({class: "month"})
-                    ),
-                    dom.span({class: "next changeMonth nextMonth"}, 
-                        dom.i({})
-                    ),
-                    dom.span({class: "next changeYear nextYear"}, 
-                        dom.i({}), dom.i({})
-                    )
+                    dom.span({class: "prev changeYear prevYear"}, dom.i(), dom.i() ),
+                    dom.span({class: "prev changeMonth prevMonth"}, dom.i()),
+                    dom.div({} ,dom.span({class: "year"}), dom.span({class: "month"})),
+                    dom.span({class: "next changeMonth nextMonth"}, dom.i()),
+                    dom.span({class: "next changeYear nextYear"}, dom.i(), dom.i())
                 ),
-                dom.div({class: "main"},
-                    dom.div({class: "content"})
-                ),
+                dom.div({class: "main"}, dom.div({class: "content"})),
                 dom.div({class: "footer"},
                     dom.span({class: "clear"} , "清除"),
                     dom.span({class: "nowTime"} , "现在"),
                     dom.span({class: "confirm"} , "确定")
                 )
             );
-        let oChild = null, oTime = null, oMain = null, oYear = null, oMonth = null, oClear = null, oNowTime = null,
+        let oChild = null, oDayItem = null, oMain = null, oYear = null, oMonth = null, oClear = null, oNowTime = null,
             oConfirm = null, oYearItem = null, oMonthItem = null, oChangeYear = null, oChangeMonth = null, childrens = null,
             [nowYearCount, nowMonthCount, nowDateCount] = time.toLocaleDateString().split("/").map(ele => Number(ele));
             
         childrens = getAllChilds(oCalendar);
         switch (type) {
             case "day":
-                let oWeek = dom.div({class: "week"}, 
-                    dom.span({}, "日"), dom.span({}, "一"), dom.span({}, "二"), dom.span({}, "三"), 
-                    dom.span({}, "四"), dom.span({}, "五"), dom.span({}, "六")
-                );
-                oChild = setCalendarPageContent();
-                [...childrens].forEach(ele => {
-                    const cName = ele.className;
-                    if(cName === "content") {
-                        ele.appendChild(oWeek);
-                        ele.appendChild(oChild);
-                    }else if(cName === "year") {
-                        ele.innerHTML = `${nowYearCount}年`;
-                    }else if(cName === "month") {
-                        ele.innerHTML = `${nowMonthCount}月`;
-                    };
-                });
+                oChild = setDatePage(INIT_ALL_NUMBER);
+                setDayChilds();
                 break;
             case "month":
-                oChild = setMonthOrYearPage({
-                    ISMONTHTYPE: true,
-                    loopCount: INIT_MONTH_NUMBER,
-                    className: "month-item",
-                    yearHtml: `${nowYearCount}年`,
-                });
-                // for(let i = 0; i < INIT_MONTH_NUMBER; i ++) {
-                //     const oLi = dom.li({class: "month-item" + (i === nowMonthCount - 1 ? " now" : "")}, MONTH_NAME[i]);
-                //     oChild.appendChild(oLi);
-                // };
-                // [...childrens].forEach(ele => {
-                //     const cName = ele.className;
-                //     if(cName.includes("changeMonth")) {
-                //         css(ele, "opacity", 0);
-                //     }else if(cName === "content") {
-                //         ele.appendChild(oChild);
-                //     }else if(cName === "year") {
-                //         ele.innerHTML = `${nowYearCount}年`;
-                //     };
-                // });
+                oChild = setDatePage(INIT_MONTH_NUMBER);
+                setMonthOrYearChilds();
                 break;
             case "year":
-                oChild = setMonthOrYearPage({
-                    ISMONTHTYPE: false,
-                    loopCount: INIT_YEAR_NUMBER,
-                    className: "year-item",
-                    yearHtml: `${nowYearCount - minusYear}年 - ${nowYearCount + minusYear}年`,
-                });
-                // for(let i = 0; i < INIT_YEAR_NUMBER; i ++) {
-                //     const count = minusYear - i,
-                //         oLi = dom.li({class: "year-item" + (count === 0 ? " now" : "")}, `${nowYearCount - count}年`);
-                //     oChild.appendChild(oLi);
-                // };
-                // [...childrens].forEach(ele => {
-                //     const cName = ele.className;
-                //     if(cName.includes("changeMonth")) {
-                //         css(ele, "opacity", 0);
-                //     }else if(cName === "content") {
-                //         ele.appendChild(oChild);
-                //     }else if(cName === "year") {
-                //         ele.innerHTML = `${nowYearCount - minusYear}年 - ${nowYearCount + minusYear}年`;
-                //     };
-                // });
+                oChild = setDatePage(INIT_YEAR_NUMBER);
+                setMonthOrYearChilds();
                 break;
         };
-        function setMonthOrYearPage({loopCount, className, yearHtml, ISMONTHTYPE}) {
-            const oUl = dom.ul();
-            for(let i = 0;i < INIT_YEAR_NUMBER;i ++) {
-                let oLi = null,
-                    cName = "";
-                if(ISMONTHTYPE) {
-                    const count = minusYear - i;
-                    cName = className + (count === 0 ? " now" : "");
-                    oLi = dom.li({class: cName}, `${nowYearCount - count}年`);
-                }else {
-                    cName = className + (i === nowMonthCount - 1 ? " now" : "")
-                    oLi = dom.li({class: cName}, MONTH_NAME[i]);
-                };
-                oUl.appendChild(oLi);
-            };
-            [...childrens].forEach(ele => {
-                const cName = ele.className;
-                if(cName === "year") {
-                    ele.innerHTML = yearHtml;
-                }else if(cName === "content") {
-                    ele.appendChild(oUl);
-                }else if(cName.includes("changeMonth")) {
-                    css(ele, "opacity", 0);
-                };
-            });
-            return oUl;
-        };
+
         calendar.main = oCalendar;
         document.body.appendChild(oCalendar);
 
-        oTime = document.getElementsByClassName("time");
         oMain = document.getElementsByClassName("main")[0];
         oYear = document.getElementsByClassName("year")[0];
         oMonth = document.getElementsByClassName("month")[0];
         oClear = document.getElementsByClassName("clear")[0];
         oNowTime = document.getElementsByClassName("nowTime")[0];
         oConfirm = document.getElementsByClassName("confirm")[0];
+        oDayItem = document.getElementsByClassName("day-item");
         oYearItem = document.getElementsByClassName("year-item");
         oMonthItem = document.getElementsByClassName("month-item");
         oChangeYear = document.getElementsByClassName("changeYear");
         oChangeMonth = document.getElementsByClassName("changeMonth");
 
         calendar.init = function() {
-            
+            switch (type) {
+                case "day":
+                    setDayCalendarPageContent();
+                    [...oChangeMonth].forEach((ele , index) => {
+                        ele.addEventListener("click" , index ? monthAdd : monthLess , false);
+                    });
+                    break;
+                case "month":
+                    setMonthCalendarPageContent();
+                    break;
+                case "year":
+                    setYearCalendarPageContent();
+                    break;
+            };
+
+            oClear.addEventListener("click", () => {
+                proxy.value = "";
+                calendar.destroy();
+            } , false);
+    
+            oNowTime.addEventListener("click", () => {
+                proxy.value = dateBeautify(new Date());
+                calendar.destroy();
+            } , false);
+
+            oConfirm.addEventListener("click", () => {
+                // const oLiLength = oYearItem.length;
+                // oLiLength && (nowYearCount = Number.parseInt(oYearItem[Math.floor(oLiLength / 2)].innerHTML));
+                // proxy.value = dateBeautify([nowYearCount, nowMonthCount, nowDateCount]);
+                // calendar.destroy();
+            } , false);
         };
 /*
         calendar.init = function() {
@@ -198,16 +140,6 @@
                     setDate: (ele , index) => nowMonthCount = index + 1,
                     getClassName: i => i === nowMonthCount - 1 ? "month-item now" : "month-item",
                 });
-            } , false);
-
-            oClear.addEventListener("click" , () => {
-                proxy.value = "";
-                calendar.destroy();
-            } , false);
-    
-            oNowTime.addEventListener("click" , () => {
-                proxy.value = dateBeautify(new Date());
-                calendar.destroy();
             } , false);
 
             oConfirm.addEventListener("click" , () => {
@@ -247,7 +179,7 @@
                 } , false);
             });
         };
-*/
+
         function setCalendar(time){
             const [year, month, date] = time.toLocaleDateString().split("/").map(ele => Number(ele)),
                 day_of_week = new Date(`${year}/${month}/1`).getDay(),    // 获取本月1号为周几
@@ -258,7 +190,7 @@
                 columnCount = -1,
                 className = "time",
                 count = prevMonthAllDays - day_of_week;
-            for(let i = 0;i < 42;i ++){
+            for(let i = 0;i < INIT_ALL_NUMBER;i ++){
                 count ++;
                 columnCount ++;
                 if((count === prevMonthAllDays + 1 && rowCount === 0) || (count === nowMonthDays + 1 && rowCount !== 0)){
@@ -355,6 +287,7 @@
                 ele.removeEventListener("click", index ? setYear(INIT_YEAR_NUMBER) : setYear(-INIT_YEAR_NUMBER) ,false)
             });
         };
+*/
         calendar.run = function() {
             this.init();
             document.body.addEventListener("click" , function(ev) {
@@ -366,9 +299,44 @@
             // [...document.getElementsByClassName("calendar")].forEach(ele => ele.remove());
             document.body.removeEventListener("click" , destroyCalendar , false);
         };
-        function setCalendarPageContent() {
-            const oUl = dom.ul(),
-                day_of_week = new Date(`${nowYearCount}/${nowMonthCount}/1`).getDay(),
+        function monthAdd(){
+            monthChange(true);
+            setDayCalendarPageContent();
+        };
+        function monthLess(){
+            monthChange(false);
+            setDayCalendarPageContent();
+        };
+        function monthChange(isAdd) {
+            nowMonthCount = nowMonthCount + (isAdd ? 1: - 1); 
+            if(nowMonthCount === INIT_MONTH_NUMBER + 1){
+                nowYearCount ++;
+                nowMonthCount = 1;
+            }else if(nowMonthCount === 0){
+                nowYearCount --;
+                nowMonthCount = INIT_MONTH_NUMBER;
+            };
+            oYear.innerHTML = `${nowYearCount}年`;
+            oMonth.innerHTML = `${nowMonthCount}年`;
+        };
+        function setDatePage(loopCount) {
+            const oUl = dom.ul();
+            let className = "item";
+            if(type === "day") {
+                className += " day-item";
+            }else if(type === "month") {
+                className += " month-item";
+            }else {
+                className += " year-item";
+            };
+            for(let i = 0; i < loopCount;i ++) {
+                const oLi = dom.li({class: className});
+                oUl.appendChild(oLi);
+            };
+            return oUl;
+        };
+        function setDayCalendarPageContent() {
+            const day_of_week = new Date(`${nowYearCount}/${nowMonthCount}/1`).getDay(),
                 prevMonthAllDays = MONTH_NUMBER[nowMonthCount - 2 !== -1 ? nowMonthCount - 2 : INIT_MONTH_NUMBER - 1],
                 isLeapYear = nowYearCount % 4 === 0 && nowYearCount % 100 !== 0 || nowYearCount % 400 === 0,   // 判断是否为闰年
                 nowMonthDays = (isLeapYear && nowMonthCount === 2) ? 29 : MONTH_NUMBER[nowMonthCount - 1];
@@ -377,7 +345,7 @@
                 columnCount = -1,
                 count = prevMonthAllDays - day_of_week;
 
-            for(let i = 0;i < 42; i ++) {
+            for(let i = 0;i < INIT_ALL_NUMBER; i ++) {
                 count ++;
                 columnCount ++;
                 if((count === prevMonthAllDays + 1 && rowCount === 0) || (count === nowMonthDays + 1 && rowCount !== 0)){
@@ -385,37 +353,96 @@
                 };
                 const sum = rowCount * INIT_MONTH_NUMBER + columnCount;
                 if(sum < day_of_week){
-                    className = "time prevMonth";
+                    className = "item day-item prevMonth";
                 }else if(sum >= nowMonthDays + day_of_week){
-                    className = "time nextMonth";
+                    className = "item day-item nextMonth";
                 }else if(sum === day_of_week + nowDateCount - 1){
-                    className = "time nowTime"; 
+                    className = "item day-item now"; 
                 }else{
-                    className = "time"; 
+                    className = "item day-item"; 
                 };
                 if(columnCount === INIT_MONTH_NUMBER){
                     rowCount ++;
                     columnCount = 0;
                 };
-                const oLi = dom.li({class: className}, `${count}`);
-                oUl.appendChild(oLi);
+                oDayItem[i].innerHTML = count;
+                oDayItem[i].className = className;
             };
-            return oUl;
+        };
+        function setMonthCalendarPageContent() {
+            const loopCount = INIT_MONTH_NUMBER;
+            for(let i = 0;i < loopCount;i ++) {
+                let className = i === nowMonthCount - 1 ? " now" : "";
+                oMonthItem[i].innerHTML = MONTH_NAME[i];
+                oMonthItem[i].className += className;
+            };
+        };
+        function setYearCalendarPageContent() {
+            for(let i = 0;i < INIT_YEAR_NUMBER;i ++) {
+                const count = minusYear - i;
+                let className = count === 0 ? " now" : "";
+                oYearItem[i].innerHTML = `${nowYearCount - count}年`;
+                oYearItem[i].className += className;
+            };
+        };
+        function setDayChilds() {
+            const oWeek = dom.div({class: "week"}, 
+                dom.span({}, "日"), dom.span({}, "一"), dom.span({}, "二"), dom.span({}, "三"), 
+                dom.span({}, "四"), dom.span({}, "五"), dom.span({}, "六")
+            );
+            [...childrens].forEach(ele => {
+                const cName = ele.className;
+                if(cName === "content") {
+                    ele.appendChild(oWeek);
+                    ele.appendChild(oChild);
+                }else if(cName === "year") {
+                    ele.innerHTML = `${nowYearCount}年`;
+                }else if(cName === "month") {
+                    ele.innerHTML = `${nowMonthCount}月`;
+                };
+            });
+        };
+        function setMonthOrYearChilds() {
+            [...childrens].forEach(ele => {
+                const cName = ele.className;
+                if(cName === "year") {
+                    ele.innerHTML = type === "month" ? `${nowYearCount}年` : `${nowYearCount - minusYear}年 - ${nowYearCount + minusYear}年`;
+                }else if(cName === "content") {
+                    ele.appendChild(oChild);
+                }else if(cName.includes("changeMonth")) {
+                    css(ele, "opacity", 0);
+                };
+            });
         };
         function destroyCalendar(ev) {
             ev = ev || window.event;
             !(ev.target === proxy.target || ev.target.className.includes("layer")) && calendar.destroy();
         };
         function dateBeautify(date) {
-            return Array.isArray(date)
-                ? date.map(addZero).join("-")
-                : date.toLocaleDateString().split("/").map(addZero).join("-");
+            if (Array.isArray(date)) {
+                return date.map(addZero).join("-");
+            };
+            date = date.toLocaleDateString().split("/");
+            switch (type) {
+                case "day":
+                    date = date.map(addZero).join("-");
+                    break;
+                case "month":
+                    date = date.map(addZero).join("-");
+                    date = date.slice(0, date.lastIndexOf("-"));
+                    break;
+                case "year":
+                    date = date[0];
+                    break;
+            };
+            return date;
         };
         function addZero(ele){
-            return Number(ele) < 10 ? `0${ele}` : ele;
+            return (Number(ele) < 10 ? "0" : "") + ele;
         };
         return calendar;
     };
+
     function getProxy(elem) {
         const proxy = new Proxy(elem , {
             get(target, key) {
