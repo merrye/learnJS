@@ -7,8 +7,8 @@
         MONTH_NUMBER = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
         MONTH_NAME = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
         layer = new Proxy({} , {
-            get(target , property){
-                return (attrs , ...children) => {
+            get(target, property){
+                return (attrs, ...children) => {
                     const oElem = document.getElementById(attrs.elem.slice(1)), // 获取目标元素
                         proxy = getProxy(oElem);    // 获得oElem的proxy
                     attrs = Object.assign({}, {type: "day", offset: [10, oElem.offsetLeft], animate: "t"}, attrs); // attrs中的默认属性及参数值
@@ -19,7 +19,7 @@
                                 遍历一遍，假如已经添加； 目标样式就不再添加
                             */
                             const styleSheets = document.styleSheets;
-                            if([...styleSheets].findIndex(ele => ele.href && ele.href.includes("layer")) === -1){
+                            if([...styleSheets].findIndex(ele => ele.href && ele.href.includes("layer")) === -1) {
                                 const oHead = document.getElementsByTagName("head")[0],
                                     oLink = document.createElement("link");
                                 oLink.setAttribute("rel", "stylesheet");
@@ -30,10 +30,10 @@
                                 [top , left] = getOffset(offset),
                                 oCalendar = document.getElementsByClassName("calendar"),
                                 [INIT_TOP, INIT_LEFT] = getInitOffset(top, left, attrs.animate);
-                            // if(oCalendar.length === 0){
+                            // if(oCalendar.length === 0) {
                                 const calendar = generateCalendar(proxy, type);
                                 calendar.run();
-                                css(calendar.main, {transform: `translate(${INIT_LEFT}px, ${INIT_TOP}px)`,opacity: 0,transition: ".2s"});
+                                css(calendar.main, {transform: `translate(${INIT_LEFT}px, ${INIT_TOP}px)`, opacity: 0, transition: ".2s"});
                                 setTimeout(() => css(calendar.main, {transform: `translate(${left}px, ${top}px)`, opacity: 1}), 20);
                             // };
                         };
@@ -99,9 +99,7 @@
             switch (type) {
                 case "day":
                     setDayCalendarPageContent();
-                    [...oChangeMonth].forEach((ele , index) => {
-                        ele.addEventListener("click" , index ? monthAdd : monthLess , false);
-                    });
+                    [...oChangeMonth].forEach((ele , index) => ele.addEventListener("click", index ? monthAdd : monthLess, false));
                     break;
                 case "month":
                     setMonthCalendarPageContent();
@@ -114,19 +112,19 @@
             oClear.addEventListener("click", () => {
                 proxy.value = "";
                 calendar.destroy();
-            } , false);
+            }, false);
     
             oNowTime.addEventListener("click", () => {
                 proxy.value = dateBeautify(new Date());
                 calendar.destroy();
-            } , false);
+            }, false);
 
             oConfirm.addEventListener("click", () => {
                 // const oLiLength = oYearItem.length;
                 // oLiLength && (nowYearCount = Number.parseInt(oYearItem[Math.floor(oLiLength / 2)].innerHTML));
                 // proxy.value = dateBeautify([nowYearCount, nowMonthCount, nowDateCount]);
                 // calendar.destroy();
-            } , false);
+            }, false);
         };
 /*
         calendar.init = function() {
@@ -290,29 +288,27 @@
 */
         calendar.run = function() {
             this.init();
-            document.body.addEventListener("click" , function(ev) {
-                (ev || window.event).target === this && calendar.destroy();
-            } , false);
+            document.body.addEventListener("click", ev => (ev || window.event).target === this && calendar.destroy(), false);
         };
 
         calendar.destroy = function() {
             // [...document.getElementsByClassName("calendar")].forEach(ele => ele.remove());
-            document.body.removeEventListener("click" , destroyCalendar , false);
+            document.body.removeEventListener("click", destroyCalendar, false);
         };
-        function monthAdd(){
+        function monthAdd() {
             monthChange(true);
             setDayCalendarPageContent();
         };
-        function monthLess(){
+        function monthLess() {
             monthChange(false);
             setDayCalendarPageContent();
         };
         function monthChange(isAdd) {
             nowMonthCount = nowMonthCount + (isAdd ? 1: - 1); 
-            if(nowMonthCount === INIT_MONTH_NUMBER + 1){
+            if(nowMonthCount === INIT_MONTH_NUMBER + 1) {
                 nowYearCount ++;
                 nowMonthCount = 1;
-            }else if(nowMonthCount === 0){
+            }else if(nowMonthCount === 0) {
                 nowYearCount --;
                 nowMonthCount = INIT_MONTH_NUMBER;
             };
@@ -329,7 +325,7 @@
             }else {
                 className += " year-item";
             };
-            for(let i = 0; i < loopCount;i ++) {
+            for(let i = 0; i < loopCount; i ++) {
                 const oLi = dom.li({class: className});
                 oUl.appendChild(oLi);
             };
@@ -341,27 +337,25 @@
                 isLeapYear = nowYearCount % 4 === 0 && nowYearCount % 100 !== 0 || nowYearCount % 400 === 0,   // 判断是否为闰年
                 nowMonthDays = (isLeapYear && nowMonthCount === 2) ? 29 : MONTH_NUMBER[nowMonthCount - 1];
             let rowCount = 0,
-                className = "",
                 columnCount = -1,
                 count = prevMonthAllDays - day_of_week;
 
-            for(let i = 0;i < INIT_ALL_NUMBER; i ++) {
+            for(let i = 0; i < INIT_ALL_NUMBER; i ++) {
+                let className = "item day-item";
                 count ++;
                 columnCount ++;
-                if((count === prevMonthAllDays + 1 && rowCount === 0) || (count === nowMonthDays + 1 && rowCount !== 0)){
+                if((count === prevMonthAllDays + 1 && rowCount === 0) || (count === nowMonthDays + 1 && rowCount !== 0)) {
                     count = 1;
                 };
                 const sum = rowCount * INIT_MONTH_NUMBER + columnCount;
-                if(sum < day_of_week){
-                    className = "item day-item prevMonth";
-                }else if(sum >= nowMonthDays + day_of_week){
-                    className = "item day-item nextMonth";
-                }else if(sum === day_of_week + nowDateCount - 1){
-                    className = "item day-item now"; 
-                }else{
-                    className = "item day-item"; 
+                if(sum < day_of_week) {
+                    className += " prevMonth";
+                }else if(sum >= nowMonthDays + day_of_week) {
+                    className += " nextMonth";
+                }else if(sum === day_of_week + nowDateCount - 1) {
+                    className += " now"; 
                 };
-                if(columnCount === INIT_MONTH_NUMBER){
+                if(columnCount === INIT_MONTH_NUMBER) {
                     rowCount ++;
                     columnCount = 0;
                 };
@@ -370,19 +364,18 @@
             };
         };
         function setMonthCalendarPageContent() {
-            const loopCount = INIT_MONTH_NUMBER;
-            for(let i = 0;i < loopCount;i ++) {
+            for(let i = 0; i < INIT_MONTH_NUMBER; i ++) {
                 let className = i === nowMonthCount - 1 ? " now" : "";
-                oMonthItem[i].innerHTML = MONTH_NAME[i];
                 oMonthItem[i].className += className;
+                oMonthItem[i].innerHTML = MONTH_NAME[i];
             };
         };
         function setYearCalendarPageContent() {
-            for(let i = 0;i < INIT_YEAR_NUMBER;i ++) {
+            for(let i = 0; i < INIT_YEAR_NUMBER; i ++) {
                 const count = minusYear - i;
                 let className = count === 0 ? " now" : "";
-                oYearItem[i].innerHTML = `${nowYearCount - count}年`;
                 oYearItem[i].className += className;
+                oYearItem[i].innerHTML = `${nowYearCount - count}年`;
             };
         };
         function setDayChilds() {
@@ -428,8 +421,7 @@
                     date = date.map(addZero).join("-");
                     break;
                 case "month":
-                    date = date.map(addZero).join("-");
-                    date = date.slice(0, date.lastIndexOf("-"));
+                    date = date.map(addZero).join("-").slice(0, date.lastIndexOf("-"));
                     break;
                 case "year":
                     date = date[0];
@@ -437,14 +429,14 @@
             };
             return date;
         };
-        function addZero(ele){
+        function addZero(ele) {
             return (Number(ele) < 10 ? "0" : "") + ele;
         };
         return calendar;
     };
 
     function getProxy(elem) {
-        const proxy = new Proxy(elem , {
+        const proxy = new Proxy(elem, {
             get(target, key) {
                 return key === "target" ? target : target[key];
             },
@@ -458,16 +450,16 @@
     function getOffset(offset) {
         const W = window.innerWidth,
             H = window.innerHeight;
-        let top , left = 0;
-        if(offset === "c"){
+        let top, left = 0;
+        if(offset === "c") {
             top = W / 2;
             left = H / 2;
-        }else if(Array.isArray(offset)){
-            [top , left] = offset;
+        }else if(Array.isArray(offset)) {
+            [top, left] = offset;
         };
-        return [top , left];
+        return [top, left];
     };
-    function getInitOffset(top, left, animate){
+    function getInitOffset(top, left, animate) {
         switch(animate) {
             case "t":
                 top += 20;
@@ -486,7 +478,7 @@
     };
     function getYearPage(loopCount) {
         const oUl = document.createElement("ul");
-        for(let i = 0;i < loopCount;i ++){
+        for(let i = 0; i < loopCount; i ++){
             const oLi = document.createElement("li");
             oLi.innerHTML = getHtml(i);
             oLi.className = getClassName(i);
@@ -501,7 +493,7 @@
         function getChilds(obj) {
             const children = obj.children,
                 parentLength = children.length;
-            for(let i = 0; i < parentLength;i ++) {
+            for(let i = 0; i < parentLength; i ++) {
                 const nowChild = children[i];
                 childArr.push(nowChild);
                 if(nowChild.children.length) {
