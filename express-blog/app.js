@@ -6,29 +6,20 @@ const express = require("express"),
     app = express(),
     rootdir = process.cwd();
 
-app.set("views" , `${rootdir}\\views`);
+app.set("views", `${rootdir}\\views`);
 
-const njk = expressNunjucks(app , {
-    watch: true,
-    noCache: true
-});
+const njk = expressNunjucks(app, {watch: true, noCache: true});
 
 app.use(express.static(`${rootdir}\\static`));
 
 app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(cookieParser("Merry"));
 
-app.use(session({
-    secret: "Merry"
-}));
+app.use(session({secret: "Merry"}));
 
-app.use("/" , require(`${rootdir}/router/index`));
+app.use("/", require(`${rootdir}/router/index`));
 
-app.listen(3000 , () => {
-    console.log("app start at port 3000...");
-});
+app.listen(3000, () => console.log("app start at port 3000..."));

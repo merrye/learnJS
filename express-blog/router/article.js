@@ -1,112 +1,49 @@
 const express = require("express"),
     Op = require("sequelize").Op,
     {createModelArray} = require("../module/utils"),
-    {Article ,Tag ,Classification} = require("../module/model"),
+    {Tag, Article, Classification} = require("../module/model"),
     router = express.Router();
 
 router.get("/:year/:month/:day/:name.html", (req , res) => {
     (async() => {
-        const {year , month , day , name} = req.params,
-            article = await Article.findOne({
-                where: {
-                    href: `/article/${year}/${month}/${day}/${name}.html`
-                }
-            }),
-            [tags , prevArticle , nextArticle] = await Promise.all([
+        const {day, name, month, year} = req.params,
+            article = await Article.findOne({where: {href: `/article/${year}/${month}/${day}/${name}.html`}}),
+            [tags, prevArticle, nextArticle] = await Promise.all([
                 Tag.findAll({where: {article_id: article.id}}),
-                Article.findOne({
-                    where: {
-                        id: {
-                            [Op.lt]: article.id
-                        }
-                    },
-                    order: [
-                        ['id', 'DESC']
-                    ],
-                    attributes: ["title", "href"]
-                }),
-                Article.findOne({
-                    where: {
-                        id: {
-                            [Op.gt]: article.id
-                        }
-                    },
-                    order: [
-                        ['id', 'ASC']
-                    ],
-                    attributes: ["title", "href"]
-                })
+                Article.findOne({order: [['id', 'DESC']], attributes: ["title", "href"], where: {id: {[Op.lt]: article.id}}}),
+                Article.findOne({order: [['id', 'ASC']], attributes: ["title", "href"], where: {id: {[Op.gt]: article.id}}})
             ]);
         article.tags = tags;
 
-        res.render("article", {
-            article,
-            prevArticle,
-            nextArticle,
-            title: `${article.title} | Merry's Blog`,
-        });
+        res.render("article", {article, prevArticle, nextArticle, title: `${article.title} | Merry's Blog`});
     })();
 });
 
-router.get("/update/id/:id",(req, res) => {
+router.get("/update/id/:id", (req, res) => {
     (async () => {
         const {id} = req.params,
             [article, tags, classifications] = await Promise.all([
-                Article.findOne({
-                    where: {
-                        id
-                    }
-                }),
-                Tag.findAll({
-                    where: {
-                        article_id: id
-                    }
-                }),
-                Classification.findAll({
-                    where: {
-                        article_id: id
-                    }
-                })
+                Article.findOne({where: {id}}),
+                Tag.findAll({where: {article_id: id}}),
+                Classification.findAll({where: {article_id: id}})
             ]);
-        res.json({
-            tags,
-            article,
-            classifications
-        });
+        res.json({tags, article, classifications});
     })();
 });
 
-router.get("/:year", (req , res) => {
+router.get("/:year", (req, res) => {
     (async () => {
         const {year} = req.params,
-            articles = await Article.findAll({
-                where: {
-                    href: {
-                        [Op.like]: `/article/${year}%`
-                    }
-                },
-                order: [
-                    ['createdAt', 'DESC']
-                ]
-            });
+            articles = await Article.findAll({order: [['createdAt', 'DESC']], where: {href: {[Op.like]: `/article/${year}%`}}});
         res.json(articles);
     })();
 });
 
 router.get("/:year/:month", (req, res) => {
     (async() => {
-        const {year , month} = req.params,
+        const {year, month} = req.params,
             date = `${year}/${month}`,
-            articles = await Article.findAll({
-                where: {
-                    href: {
-                        [Op.like]: `/article/${date}%`
-                    }
-                },
-                order: [
-                    ['createdAt', 'DESC']
-                ]
-            });
+            articles = await Article.findAll({order: [['createdAt', 'DESC']], where: {href: {[Op.like]: `/article/${date}%`}}});
         res.json(articles);
     })();
 });
@@ -116,25 +53,17 @@ router.post("/", (req, res) => {
         const reg = /^\w+$/g,
             date = new Date().toLocaleDateString().replace(/-/g, "/"),
             {tags, title, eng_title, content, description, classifications} = req.body,
-            article = await Article.create({
-                title,
-                content,
-                eng_title,
-                description,
-                href: `/article/${date}/${eng_title}.html`
-            }),
+            article = await Article.create({title, content, eng_title, description, href: `/article/${date}/${eng_title}.html`}),
             article_id = article.null,
             [tagArr, classificationArr] = await Promise.all([
                 createModelArray(tags, Tag, {article_id}),
                 createModelArray(classifications, Classification, {article_id})
             ]);
-        res.json({
-            result: "ok"
-        });
+        res.json({result: "ok"});
     })();
 });
 
-router.post("/:id" ,(req, res) => {
+router.post("/:id", (req, res) => {
     (async () => {
         const article_id = req.params.id,
             {tags, title, eng_title, content, description, classifications} = req.body,
@@ -144,10 +73,7 @@ router.post("/:id" ,(req, res) => {
                 createModelArray(tags, Tag, {article_id}),
                 createModelArray(classifications, Classification, {article_id})
             ]);
-            console.log(tagArr, classificationArr);
-        res.json({
-            result: "ok"
-        });
+        res.json({result: "ok"});
     })();
 });
 
