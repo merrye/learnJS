@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50719
 File Encoding         : 65001
 
-Date: 2018-01-20 21:40:10
+Date: 2018-01-31 19:09:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -30,7 +30,7 @@ CREATE TABLE `articles` (
   `updatedAt` varchar(255) NOT NULL,
   `version` bigint(20) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of articles
@@ -159,7 +159,7 @@ CREATE TABLE `classifications` (
   PRIMARY KEY (`id`),
   KEY `article_id` (`article_id`),
   CONSTRAINT `classifications_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of classifications
@@ -186,7 +186,7 @@ CREATE TABLE `tags` (
   PRIMARY KEY (`id`),
   KEY `artilcle_id` (`article_id`),
   CONSTRAINT `tags_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tags
@@ -253,6 +253,7 @@ INSERT INTO `tags` VALUES ('64', '124', '散文', 'prose', '2018/1/2', '2018/1/2
 INSERT INTO `tags` VALUES ('65', '124', '总结', 'summary', '2018/1/2', '2018/1/2', '0');
 INSERT INTO `tags` VALUES ('66', '123', '总结', 'summary', '2018/1/1', '2018/1/1', '0');
 INSERT INTO `tags` VALUES ('67', '122', 'Node', 'node', '2018/1/1', '2018/1/1', '0');
+INSERT INTO `tags` VALUES ('68', '125', 'test', 'test', '2018/01/21', '2018/01/21', '0');
 
 -- ----------------------------
 -- Table structure for users
