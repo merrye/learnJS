@@ -11,14 +11,14 @@
         oCanvas.height = h;
         oHome.style.width = `${w}px`;
 
-        (function drawFont(){
+        (function drawFont() {
             ctx.save();
-            const color = ctx.createLinearGradient(0 , 0 , 0 , oCanvas.height);
-            color.addColorStop(0 , "rgba(150 , 150 , 150 , .5)");
-            color.addColorStop(1 , "rgba(150 , 150 , 150 , 1)");
+            const color = ctx.createLinearGradient(0, 0, 0, oCanvas.height);
+            color.addColorStop(0, "rgba(150, 150, 150, .5)");
+            color.addColorStop(1, "rgba(150, 150, 150, 1)");
             ctx.fillStyle = color;
             ctx.font = "bold 40px 华文行楷";
-            ctx.fillText(`叶培昌的博客` , 60 , 55);
+            ctx.fillText(`叶培昌的博客`, 60, 55);
             ctx.restore();
         })();
     })();
@@ -34,14 +34,14 @@
             -15deg  -15deg  left-bottom
         */
 
-        oContent.onmouseenter = function(){
-            let t = parseInt(css(oContent,"top")),
-                l = parseInt(css(oContent,"left")),
-                w = parseInt(css(oContent,"width")),
-                h = parseInt(css(oContent,"height"));
+        oContent.onmouseenter = function() {
+            let t = parseInt(css(oContent, "top")),
+                l = parseInt(css(oContent, "left")),
+                w = parseInt(css(oContent, "width")),
+                h = parseInt(css(oContent, "height"));
 
-            this.style.boxShadow = "rgba(0,0,0,.5) 0px 0px 100px";
-            document.onmousemove = (e) => {
+            this.style.boxShadow = "rgba(0, 0, 0, .5) 0px 0px 100px";
+            document.onmousemove = e => {
                 e = e || widnow.event;
                 let x = e.clientX - l + w / 2,
                     y = e.clientY - t,
@@ -50,9 +50,9 @@
                 
                 this.style.transform = `rotateX(${Y / 20}deg) rotateY(${X / 20}deg)`;
             };
-            this.onmouseleave = function(){
+            this.onmouseleave = function() {
                 document.onmousemove = null;
-                this.style.boxShadow = "rgba(0,0,0,.5) 0px 0px 0px";
+                this.style.boxShadow = "rgba(0, 0, 0, .5) 0px 0px 0px";
                 this.style.transform = "rotateX(0deg) rotateY(0deg)";
             };
         };

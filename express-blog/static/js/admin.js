@@ -55,16 +55,14 @@ let editor;
             case 2:
                 ajax({
                     url: `/article/${year}`,
-                    success(data) {
-                        generatePageContent(JSON.parse(data) , time , true);
-                    }
+                    success(data) {generatePageContent(JSON.parse(data), time, true)}
                 });
                 break;
         };
     };
 });
 
-function generatePageContent(data , time , isByYear){
+function generatePageContent(data, time, isByYear){
     oMain.innerHTML = "";
     const oDate = createElementByTag("div"),
         oDateSpan = createElementByTag("span"),

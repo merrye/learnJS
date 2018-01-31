@@ -1,34 +1,34 @@
 // bgCanvas
 (() => {
     const PI = Math.PI;
-    let winW , winH;
+    let winW, winH;
     const data = {
-        bigerCircle : {
+        bigerCircle: {
             r: 10,
             iNum: 12,
             data: []
         },
-        bigCircle : {
+        bigCircle: {
             r: 7.5,
             iNum: 12,
             data: []
         },
-        middleCircle : {
+        middleCircle: {
             r: 6,
             iNum: 6,
             data: []
         },
-        smallCircle : {
+        smallCircle: {
             r: 5,
             iNum: 6,
             data: []
         },
-        smallerCircle : {
+        smallerCircle: {
             r: 4,
             iNum: 12,
             data: []
         },
-        smallestCircle : {
+        smallestCircle: {
             r: 2,
             iNum: 18,
             data: []
@@ -39,20 +39,18 @@
 
     init();
 
-    window.onresize = () => {
-        setRange(oCanvas);
-    };
+    window.onresize = () => setRange(oCanvas);
 
-    (function draw(){
+    (function draw() {
         ctx.clearRect(0,0,winW,winH);
-        for(let v of Object.values(data)){
+        for(let v of Object.values(data)) {
             move(v);
         };
         window.requestAnimationFrame(draw);
     })();
 
-    function produceCircle(d){
-        for(let i = 0;i < d.iNum;i ++){
+    function produceCircle(d) {
+        for(let i = 0;i < d.iNum;i ++) {
             d.data[i] = {
                 r: d.r,
                 x : Math.random() * winW,
@@ -64,14 +62,14 @@
         };
     };
 
-    function move(d){
-        for(let i = 0;i < d.iNum;i ++){
+    function move(d) {
+        for(let i = 0;i < d.iNum;i ++) {
             d.data[i].x += d.data[i].xSpeed;
             d.data[i].y += d.data[i].ySpeed;
-            if(d.data[i].x <= 0 || d.data[i].x >= winW){
+            if(d.data[i].x <= 0 || d.data[i].x >= winW) {
                 d.data[i].xSpeed = -d.data[i].xSpeed;
             };
-            if(d.data[i].y <= 0 || d.data[i].y >= winH){
+            if(d.data[i].y <= 0 || d.data[i].y >= winH) {
                 d.data[i].ySpeed = -d.data[i].ySpeed;
             };
             drawCircle(d.data[i]);
@@ -79,52 +77,52 @@
         };
     };
 
-    function init(){
+    function init() {
         setRange(oCanvas);
-        for(let v of Object.values(data)){
+        for(let v of Object.values(data)) {
             produceCircle(v);
         };
     };
 
-    function check(d){
-        for(let v of Object.values(data)){
-            checkDis(d , v.data);
+    function check(d) {
+        for(let v of Object.values(data)) {
+            checkDis(d, v.data);
         };
     };
 
-    function checkDis(d , v){
+    function checkDis(d, v) {
         let l = v.length;
-        for(let i = 0;i< l;i ++){
-            let x = Math.pow(Math.abs(d.x - v[i].x) , 2),
-                y = Math.pow(Math.abs(d.y - v[i].y) , 2),
+        for(let i = 0;i< l;i ++) {
+            let x = Math.pow(Math.abs(d.x - v[i].x), 2),
+                y = Math.pow(Math.abs(d.y - v[i].y), 2),
                 dis = Math.sqrt(x + y);
-            if(dis < 50){
-                drawLine(d , v[i] , 'rgb(238 ,238 ,238)');
-            }else if(dis < 100){
-                drawLine(d , v[i] , 'rgb(242 ,242 ,242)');
-            }else if(dis < 150){
-                drawLine(d , v[i] , 'rgb(246 ,246 ,246)');
+            if(dis < 50) {
+                drawLine(d, v[i], 'rgb(238, 238, 238)');
+            }else if(dis < 100) {
+                drawLine(d, v[i], 'rgb(242, 242, 242)');
+            }else if(dis < 150) {
+                drawLine(d, v[i], 'rgb(246, 246, 246)');
             };
         };
     };
 
-    function drawLine(d , s , c){
+    function drawLine(d, s, c) {
         ctx.save();
         ctx.globalCompositeOperation = "destination-over";
         ctx.strokeStyle = c;
         ctx.beginPath();
-        ctx.moveTo(s.x , s.y);
-        ctx.lineTo(d.x , d.y);
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(d.x, d.y);
         ctx.closePath();
         ctx.stroke();
         ctx.restore();
     };
 
-    function drawCircle(d){
+    function drawCircle(d) {
         ctx.save();
-        ctx.fillStyle = "rgb(212 ,212 ,212)";
+        ctx.fillStyle = "rgb(212, 212, 212)";
         ctx.beginPath();
-        ctx.arc(d.x , d.y , d.r , 0 , PI * 2, false);
+        ctx.arc(d.x, d.y, d.r, 0, PI * 2, false);
         ctx.closePath();
         ctx.fill();
         ctx.restore();

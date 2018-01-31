@@ -2,34 +2,34 @@
  * @author: Merry Ye
  * @version: 0.0.1
 */
-const dataArr = ["opacity","font-weight", "perspective", "animation-iteration-count", "column-count"];
+const dataArr = ["opacity", "font-weight", "perspective", "animation-iteration-count", "column-count"];
 /**
  * @param {Element} obj  
  * @param {String | Map | Array} attr  
  * @param {String | Number | Function} value
  */
-function css(obj , attr , value){
+function css(obj, attr, value) {
     obj = obj.length ? [...obj] : [obj];
-    if(typeof attr === "string"){
-        if(typeof value !== "undefined"){
-            obj.forEach((ele , index) => css(ele , {[attr]: typeof value === "function" ? value(index , css(ele , attr)) : value}));
+    if(typeof attr === "string") {
+        if(typeof value !== "undefined") {
+            obj.forEach((ele, index) => css(ele, {[attr]: typeof value === "function" ? value(index, css(ele, attr)) : value}));
             return obj;
         }else{
             return obj[0].currentStyle ? obj[0].currentStyle[attr] : getComputedStyle(obj[0])[attr];
         };
-    }else if(typeof attr === "object"){
-        if(attr instanceof Array){
+    }else if(typeof attr === "object") {
+        if(attr instanceof Array) {
             const cssObject = {};
             attr.forEach((ele) => cssObject[ele] = css(obj , ele));
             return cssObject;
         }else{
-            for(let [k,v] of Object.entries(attr)){ 
-                obj.forEach((ele , index) => {
+            for(let [k,v] of Object.entries(attr)) { 
+                obj.forEach((ele, index) => {
                     typeof v === "function"
-                        ? css(ele , {[k] : v(index , css(ele , k))})
+                        ? css(ele, {[k] : v(index, css(ele, k))})
                         : ele.style[k] = typeof v === "number"
-                            ?(dataArr.find(val => k === val) ? v : `${v}px`)
-                            :( /^\d+$/.test(v) ? `${v}px` : v);
+                            ? (dataArr.find(val => k === val) ? v : `${v}px`)
+                            : ( /^\d+$/.test(v) ? `${v}px` : v);
                 });
             };
             return obj;
@@ -40,8 +40,8 @@ function css(obj , attr , value){
  * @param {Element} obj  
  * @param {String} name  
  */
-function addClassName(obj , name){
-    (obj.length ? [...obj] : [obj]).forEach((val) => {
+function addClassName(obj, name) {
+    (obj.length ? [...obj] : [obj]).forEach(val => {
         let oName = val.className;
         new Set(name.split(" ")).forEach(ele => oName += oName.split(" ").find(val => val == ele) ? "" : ` ${ele}`);
         val.className = oName.trim();
@@ -52,8 +52,8 @@ function addClassName(obj , name){
 * @param {Element} obj  
 * @param {String} name  
 */
-function removeClass(obj , name){
-    (obj.length ? [...obj] : [obj]).forEach((val) => {
+function removeClass(obj, name) {
+    (obj.length ? [...obj] : [obj]).forEach(val => {
         val.className = val.className ? val.className.split(" ").filter(val => ![...new Set(name.split(" "))].find((ele) => ele === val)).join(" ") : "";
     });
     return obj;
@@ -62,16 +62,15 @@ function removeClass(obj , name){
 * @param {Element} obj  
 * @param {String} name  
 */
-function toggleClassName(obj , name){
-    (obj.length ? [...obj] : [obj]).forEach((ele) => {
+function toggleClassName(obj, name) {
+    (obj.length ? [...obj] : [obj]).forEach(ele => {
         const cName = ele.className;
         if(cName) {
             const cNameArr = cName.split(" ");
             cNameArr.find(val => val === name) ? removeClass(obj , name) : addClassName(obj , name);
-        }else{
+        }else {
             addClassName(obj , name)
         };
-            
     });
     return obj;
 };
@@ -79,40 +78,37 @@ function toggleClassName(obj , name){
 * @param {Element} obj  
 * @param {String} name  
 */
-function hasClassName(obj , name){
+function hasClassName(obj, name) {
     return obj.className.split(" ").find(ele => ele === name) ? true : false;
 };
 /**
 * @param {Element} obj
 */
-function silblings(obj){
+function silblings(obj) {
     return [...obj.parentNode.children].filter(ele => ele != obj);
 };
 /**
 * @param {Element} obj
 */
-function next(obj){
+function next(obj) {
     return obj.nextElementSibling;
 }
 /**
 * @param {Element} obj
 */
-function prev(obj){
+function prev(obj) {
     return obj.previousElementSibling;
 };
 function getOffset(obj) {
     let top = obj.offsetTop,
         left = obj.offsetLeft,
         offsetParent = obj.offsetParent;
-    while(offsetParent !== document.body){
+    while(offsetParent !== document.body) {
         top += offsetParent.offsetTop;
         left += offsetParent.offsetLeft;
         offsetParent = offsetParent.offsetParent;
     };
-    return {
-        top,
-        left
-    };
+    return {top, left};
 };
 function ajax({
     url,
@@ -124,11 +120,11 @@ function ajax({
 }) {
     const xhr = new XMLHttpRequest();
     
-    xhr.addEventListener("load" , transferCompleted);
-    xhr.addEventListener("progress" , updateProgress);
-    xhr.addEventListener("error" , transferFailed);
-    xhr.addEventListener("abort" , transferCanceled);
-    xhr.addEventListener("readystatechange" , handleStateChange);
+    xhr.addEventListener("load", transferCompleted, false);
+    xhr.addEventListener("progress", updateProgress, false);
+    xhr.addEventListener("error", transferFailed, false);
+    xhr.addEventListener("abort", transferCanceled, false);
+    xhr.addEventListener("readystatechange", handleStateChange, false);
 
     if(data) {
         let arr = [];
@@ -141,7 +137,7 @@ function ajax({
         };
     };
 
-    xhr.open(type , url , isAsync);
+    xhr.open(type, url, isAsync);
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 
@@ -165,7 +161,7 @@ function ajax({
     };
 
     function handleStateChange() {
-        const {readyState , status , responseText , statusText} = xhr;
+        const {readyState, status, responseText, statusText} = xhr;
         if(readyState === XMLHttpRequest.DONE) {
             (status >= 200 && status < 300) || status === 300
                 ? success(responseText)
@@ -174,11 +170,11 @@ function ajax({
     };
 };
 const dom = new Proxy({} , {
-    get(target , property) {
+    get(target1, property) {
         return function(attrs = {}, ...children) {
             const el = document.createElement(property);
             for (let prop of Object.keys(attrs)) {
-                el.setAttribute(prop , attrs[prop]);
+                el.setAttribute(prop, attrs[prop]);
             };
             for (let child of children) {
                 if (typeof child === "string" ) {
@@ -196,7 +192,7 @@ window.requestAnimationFrame = (() => {
         window.oRequstAnimationFrame ||
         window.msRequestAnimationFrame ||
         window.webkitRequestAnimationFrame ||
-        function(callback){
-            window.setTimeout(callback , 1000 / 60);
+        function(callback) {
+            window.setTimeout(callback, 1000 / 60);
         };
 })();

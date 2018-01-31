@@ -1,8 +1,8 @@
 // draw avator function 
 const oImg = new Image(),
     oIntroAvatorCanvas = document.getElementById("intro-avator-canvas"),
-    oCanvasWidth = Number.parseInt(css(oIntroAvatorCanvas , 'width')),
-    oCanvasHeight = Number.parseInt(css(oIntroAvatorCanvas , 'height')),
+    oCanvasWidth = Number.parseInt(css(oIntroAvatorCanvas, 'width')),
+    oCanvasHeight = Number.parseInt(css(oIntroAvatorCanvas, 'height')),
     ctx = oIntroAvatorCanvas.getContext("2d");
 
 oImg.src = "/images/home/avator.png";
@@ -25,12 +25,12 @@ oImg.onload = function() {
     ctx.save();
     ctx.fillStyle = "rgb(30 ,30 ,30)";
     ctx.beginPath();
-    ctx.moveTo(cX , 0);
-    ctx.lineTo(a , d);
-    ctx.lineTo(a , c);
-    ctx.lineTo(cX , oCanvasHeight);
-    ctx.lineTo(b , c);
-    ctx.lineTo(b , d);
+    ctx.moveTo(cX, 0);
+    ctx.lineTo(a, d);
+    ctx.lineTo(a, c);
+    ctx.lineTo(cX, oCanvasHeight);
+    ctx.lineTo(b, c);
+    ctx.lineTo(b, d);
     ctx.closePath();
     ctx.fill();
     ctx.restore();
@@ -40,56 +40,46 @@ oImg.onload = function() {
 const oNavList = document.getElementsByClassName("nav-list")[0],
     oNavListLi = oNavList.getElementsByTagName("li"),
     oNavClickedLine = document.getElementsByClassName("nav-clicked-line")[0];
-let lastLeft = -Number.parseInt(css(oNavListLi , "width")),
+let lastLeft = -Number.parseInt(css(oNavListLi, "width")),
     initNavLiIndex = getIndex(),
     initObj = oNavListLi[initNavLiIndex],
     initLeft = initObj.offsetLeft;
 
-addClassName(initObj , "clicked");
-css(oNavClickedLine , {
+addClassName(initObj, "clicked");
+css(oNavClickedLine, {
     left: initLeft,
     display: "block",
-    width: css(initObj , "width")
+    width: css(initObj, "width")
 });
-[...oNavListLi].forEach((ele , index) => {
-    ele.addEventListener("click" , clickedFoo(index) , false);
-    ele.addEventListener("mouseenter" , moveFoo , false);
-    ele.addEventListener("mouseleave" , function(){
-        const width = Number.parseInt(css(oNavListLi , "width"));
-        $(oNavClickedLine).stop().animate({
-            width,
-            left: oNavListLi[initNavLiIndex].offsetLeft
-        });
-    } , false);
+[...oNavListLi].forEach((ele, index) => {
+    ele.addEventListener("click", clickedFoo(index), false);
+    ele.addEventListener("mouseenter", moveFoo, false);
+    ele.addEventListener("mouseleave", function() {
+        const width = Number.parseInt(css(oNavListLi, "width"));
+        $(oNavClickedLine).stop().animate({width, left: oNavListLi[initNavLiIndex].offsetLeft});
+    }, false);
 });
 // ele click callback function
-function clickedFoo(index){
-    return function(){
-        Foo(this , oNavClickedLine , true);
-        removeClass(silblings(addClassName(this , "clicked")) , "clicked");
+function clickedFoo(index) {
+    return function() {
+        Foo(this, oNavClickedLine, true);
+        removeClass(silblings(addClassName(this, "clicked")), "clicked");
     };
 };
 // ele mouseenter callback function
-function moveFoo(){
-    Foo(this , oNavClickedLine , false)
+function moveFoo() {
+    Foo(this, oNavClickedLine, false)
 };
-function Foo(_this ,target , isLastEle){
-    const width = Number.parseInt(css(_this , "width")),
+function Foo(_this, target, isLastEle) {
+    const width = Number.parseInt(css(_this, "width")),
         left = Number.parseInt(_this.offsetLeft);
     isLastEle && (lastLeft = left);
-    $(target).show().stop().animate({
-        width: width + 10,
-        left: left
-    } , function(){
-        $(this).stop().animate({
-            width,
-        } , 200);
-    });
+    $(target).show().stop().animate({width: width + 10, left: left} , function() {$(this).stop().animate({width}, 200)});
 };
 
 function getIndex() {
     let index = 0;
-    switch (window.location.pathname){
+    switch (window.location.pathname) {
         case "/home":
             index = 0;
             break;

@@ -14,6 +14,7 @@ router.get("/:year/:month/:day/:name.html", (req , res) => {
                 Article.findOne({order: [['id', 'ASC']], attributes: ["title", "href"], where: {id: {[Op.gt]: article.id}}})
             ]);
         article.tags = tags;
+        article.content = article.content.replace(/-\$-/g, "&");
 
         res.render("article", {article, prevArticle, nextArticle, title: `${article.title} | Merry's Blog`});
     })();
