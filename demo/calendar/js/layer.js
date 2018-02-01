@@ -7,17 +7,15 @@
         MONTH_NUMBER = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
         MONTH_NAME = ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
         layer = new Proxy({} , {
-            get(target, property){
+            get(target, property) {
                 return (attrs, ...children) => {
-                    const oElem = document.getElementById(attrs.elem.slice(1)), // 获取目标元素
-                        proxy = getProxy(oElem);    // 获得oElem的proxy
-                    attrs = Object.assign({}, {type: "day", offset: [10, oElem.offsetLeft], animate: "t"}, attrs); // attrs中的默认属性及参数值
-                    proxy.target.addEventListener("click", function() {
-                        if(property === "render"){
-                            /*
-                                先获取document中所有的css style
-                                遍历一遍，假如已经添加； 目标样式就不再添加
-                            */
+                    const oElem = document.getElementById(attrs.elem.slice(1)),
+                        proxy = getProxy(oElem),
+                        oElemOffset = getOffset(oElem);
+                    attrs = Object.assign({}, {type: "day", offset: [10 + oElemOffset.top + oElem.offsetHeight, oElemOffset.left], animate: "t"}, attrs);
+                    proxy.target.addEventListener("click", proxyClickHandler, false);
+                    function proxyClickHandler() {
+                        if(property === "render") {
                             const styleSheets = document.styleSheets;
                             if([...styleSheets].findIndex(ele => ele.href && ele.href.includes("layer")) === -1) {
                                 const oHead = document.getElementsByTagName("head")[0],
@@ -27,8 +25,8 @@
                                 oHead.appendChild(oLink);
                             };
                             const {type, offset} = attrs,
-                                [top, left] = getOffset(offset),
-                                oCalendar = document.getElementsByClassName("calendar"),
+                                [top, left] = getLayerOffset(offset),
+                                oCalendar = document.getElementsByClassName("layer-date-calendar"),
                                 [INIT_TOP, INIT_LEFT] = getInitOffset(top, left, attrs.animate);
                             if(oCalendar.length === 0) {
                                 const calendar = generateCalendar(proxy, type);
@@ -37,7 +35,7 @@
                                 setTimeout(() => css(calendar.main, {transform: `translate(${left}px, ${top}px)`, opacity: 1}), 20);
                             };
                         };
-                    }, false);
+                    };
                 }
             }
         });
@@ -46,26 +44,26 @@
         const calendar = {},
             minusYear = Math.floor(INIT_YEAR_NUMBER / 2),
             time = proxy.value ? new Date(proxy.value) : new Date(),
-            oCalendar = dom.div({class: "calendar"}, 
-                dom.div({class: "header"},
-                    dom.span({class: "prev changeYear prevYear"}, dom.i(), dom.i() ),
-                    dom.span({class: "prev changeMonth prevMonth"}, dom.i()),
-                    dom.div({} ,dom.span({class: "year"}), dom.span({class: "month"})),
-                    dom.span({class: "next changeMonth nextMonth"}, dom.i()),
-                    dom.span({class: "next changeYear nextYear"}, dom.i(), dom.i())
+            oCalendar = dom.div({class: "layer-date-calendar"}, 
+                dom.div({class: "layer-date-header"},
+                    dom.span({class: "prev changeYear layer-date-prevYear"}, dom.i({class: "layer-date-i"}), dom.i({class: "layer-date-i"})),
+                    dom.span({class: "prev changeMonth layer-date-prevMonth"}, dom.i({class: "layer-date-i"})),
+                    dom.div({} ,dom.span({class: "layer-date-year"}), dom.span({class: "layer-date-month"})),
+                    dom.span({class: "next changeMonth layer-date-nextMonth"}, dom.i({class: "layer-date-i"})),
+                    dom.span({class: "next changeYear layer-date-nextYear"}, dom.i({class: "layer-date-i"}), dom.i({class: "layer-date-i"}))
                 ),
-                dom.div({class: "main"}, dom.div({class: "content"})),
-                dom.div({class: "footer"},
-                    dom.span({class: "clear"} , "清除"),
-                    dom.span({class: "nowTime"} , "现在"),
-                    dom.span({class: "confirm"} , "确定")
+                dom.div({class: "layer-date-main"}, dom.div({class: "layer-date-content"})),
+                dom.div({class: "layer-date-footer"},
+                    dom.span({class: "layer-date-clear"} , "清除"),
+                    dom.span({class: "layer-date-nowTime"} , "现在"),
+                    dom.span({class: "layer-date-confirm"} , "确定")
                 )
             );
         let oChild = null, oContent = null, oMonth = null, oYear = null, oClear = null, oConfirm = null, oNowTime = null,
             oItem = null, oDayItem = null, oMonthItem = null, oYearItem = null, oChangeYear = null, oChangeMonth = null, children = null,
             [nowYearCount, nowMonthCount, nowDateCount] = time.toLocaleDateString().split("/").map(ele => Number(ele));
             
-        children = getAllChilds(oCalendar);
+        children = getAllChildren(oCalendar);
 
         switch (type) {
             case "day":
@@ -86,13 +84,13 @@
         document.body.appendChild(oCalendar);
 
         oItem = document.getElementsByClassName("item");
-        oYear = document.getElementsByClassName("year")[0];
-        oMonth = document.getElementsByClassName("month")[0];
-        oClear = document.getElementsByClassName("clear")[0];
+        oYear = document.getElementsByClassName("layer-date-year")[0];
+        oMonth = document.getElementsByClassName("layer-date-month")[0];
+        oClear = document.getElementsByClassName("layer-date-clear")[0];
         oDayItem = document.getElementsByClassName("day-item");
-        oContent = document.getElementsByClassName("content")[0];
-        oNowTime = document.getElementsByClassName("nowTime")[0];
-        oConfirm = document.getElementsByClassName("confirm")[0];
+        oContent = document.getElementsByClassName("layer-date-content")[0];
+        oNowTime = document.getElementsByClassName("layer-date-nowTime")[0];
+        oConfirm = document.getElementsByClassName("layer-date-confirm")[0];
         oYearItem = document.getElementsByClassName("year-item");
         oMonthItem = document.getElementsByClassName("month-item");
         oChangeYear = document.getElementsByClassName("changeYear");
@@ -146,12 +144,12 @@
 
         calendar.run = function() {
             this.init();
-            document.body.addEventListener("click", ev => (ev || window.event).target === this && calendar.destroy(), false);
+            document.body.addEventListener("click", destroyCalendar, false);
         };
 
         calendar.destroy = function() {
             document.body.removeEventListener("click", destroyCalendar, false);
-            [...document.getElementsByClassName("calendar")].forEach(ele => ele.remove());
+            [...document.getElementsByClassName("layer-date-calendar")].forEach(ele => ele.remove());
         };
         function chooseDay() {
             const className = this.className;
@@ -212,12 +210,12 @@
         }) {
             const oUl = dom.ul({class: ulClassName}),
                 dateType = typeOption ? typeOption : type;
-            let className = "item";
+            let className = "layer-date-item";
             if(dateType === "day") {
                 className += " day-item";
-            }else if(dateType === "month") {
+            } else if(dateType === "month") {
                 className += " month-item";
-            }else if(dateType === "year") {
+            } else if(dateType === "year") {
                 className += " year-item";
             };
             for(let i = 0; i < loopCount; i ++) {
@@ -236,7 +234,7 @@
                 count = prevMonthAllDays - day_of_week;
 
             for(let i = 0; i < INIT_ALL_NUMBER; i ++) {
-                let className = "item day-item";
+                let className = "layer-date-item day-item";
                 count ++;
                 columnCount ++;
                 if((count === prevMonthAllDays + 1 && rowCount === 0) || (count === nowMonthDays + 1 && rowCount !== 0)) {
@@ -261,7 +259,7 @@
         function setMonthCalendar() {
             oMonth.style.display = "none";
             [...oChangeMonth].forEach(ele => ele.style.opacity = 0);
-            const oUl = setDatePage({loopCount: INIT_MONTH_NUMBER, typeOption: "month", ulClassName: "month-ul"});
+            const oUl = setDatePage({loopCount: INIT_MONTH_NUMBER, typeOption: "month", ulClassName: "layer-date-month-ul"});
             oContent.appendChild(oUl);
             setMonthCalendarPageContent();
             [...oMonthItem].forEach((ele, index) => {
@@ -279,7 +277,7 @@
             oYear.removeEventListener("click", setYearCalendar, false);
             oMonth.style.display = "none";
             [...oChangeMonth].forEach(ele => ele.style.opacity = 0);
-            const oUl = setDatePage({loopCount: INIT_YEAR_NUMBER, typeOption: "year", ulClassName: "year-ul"});
+            const oUl = setDatePage({loopCount: INIT_YEAR_NUMBER, typeOption: "year", ulClassName: "layer-date-year-ul"});
             oContent.appendChild(oUl);
             oYear.innerHTML = `${nowYearCount - minusYear}年 - ${nowYearCount + minusYear}年`;
             setYearCalendarPageContent(nowYearCount);
@@ -325,18 +323,18 @@
             };
         };
         function setDayChildren() {
-            const oWeek = dom.div({class: "week"}, 
+            const oWeek = dom.div({class: "layer-date-week"}, 
                 dom.span({}, "日"), dom.span({}, "一"), dom.span({}, "二"), dom.span({}, "三"), 
                 dom.span({}, "四"), dom.span({}, "五"), dom.span({}, "六")
             );
             [...children].forEach(ele => {
                 const cName = ele.className;
-                if(cName === "content") {
+                if(cName === "layer-date-content") {
                     ele.appendChild(oWeek);
                     ele.appendChild(oChild);
-                }else if(cName === "year") {
+                }else if(cName === "layer-date-year") {
                     ele.innerHTML = `${nowYearCount}年`;
-                }else if(cName === "month") {
+                }else if(cName === "layer-date-month") {
                     ele.innerHTML = `${nowMonthCount}月`;
                 };
             });
@@ -344,9 +342,9 @@
         function setMonthOrYearChild() {
             [...children].forEach(ele => {
                 const cName = ele.className;
-                if(cName === "year") {
+                if(cName === "layer-date-year") {
                     ele.innerHTML = type === "month" ? `${nowYearCount}年` : `${nowYearCount - minusYear}年 - ${nowYearCount + minusYear}年`;
-                }else if(cName === "content") {
+                }else if(cName === "layer-date-content") {
                     ele.appendChild(oChild);
                 }else if(cName.includes("changeMonth")) {
                     css(ele, "opacity", 0);
@@ -355,7 +353,7 @@
         };
         function destroyCalendar(ev) {
             ev = ev || window.event;
-            !(ev.target === proxy.target || ev.target.className.includes("layer")) && calendar.destroy();
+            !(ev.target === proxy.target || ev.target.className.includes("layer-date")) && calendar.destroy();
         };
         return calendar;
     };
@@ -375,7 +373,7 @@
         });
         return proxy;
     };
-    function getOffset(offset) {
+    function getLayerOffset(offset) {
         const W = window.innerWidth,
             H = window.innerHeight;
         let top, left = 0;
@@ -408,20 +406,21 @@
         };
         return date;
     };
-    function getAllChilds(parent) {        const childrenArr = [],
-            children = getChilds(parent);
+    function getAllChildren(parent) {
+        const childrenArr = [],
+            children = getChildren(parent);
         
-        function getChilds(parent) {
+        function getChildren(parent) {
             const children = parent.children,
                 childrenLength = children.length;
             for(let i = 0; i < childrenLength; i ++) {
                 const nowChild = children[i];
                 childrenArr.push(nowChild);
                 if(nowChild.children.length) {
-                    getChilds(nowChild);
+                    getChildren(nowChild);
                 };
             };
-            return childrensArr;
+            return childrenArr;
         };
         return children;
     };
