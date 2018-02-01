@@ -7,30 +7,30 @@ const E = window.wangEditor,
 
 let editor;
 
-[...oItem].forEach((ele , index) => {
-    ele.addEventListener("click" , function(){
+[...oItem].forEach((ele, index) => {
+    ele.addEventListener("click", function() {
         const name = "clicked",
             subItem = oSubItem[index];
-        toggleClassName(ele , name);
-        css(subItem , {display: hasClassName(ele , name) ? "block" : "none"});
-    } , false);
-    ele.addEventListener("mouseenter" , function(){
+        toggleClassName(ele, name);
+        css(subItem, {display: hasClassName(ele, name) ? "block" : "none"});
+    }, false);
+    ele.addEventListener("mouseenter", function() {
         const top = ele.offsetTop;
-        css(oSlider , {
+        css(oSlider, {
             height: "50px",
             top,
             opacity: 1
         });
     } , false);
-    ele.addEventListener("mouseleave" , function(){
-        css(oSlider , {
+    ele.addEventListener("mouseleave", function() {
+        css(oSlider, {
             height: "0px",
             opacity: 0
         });
-    } , false);
+    }, false);
 });
 
-[...oMeunItem].forEach((ele , index) => {
+[...oMeunItem].forEach((ele, index) => {
     ele.onclick = ev => {
         ev.cancalBubble = true;
         ev.stopPropagation();
@@ -40,29 +40,31 @@ let editor;
             year = time.getFullYear(),
             month = time.getMonth() + 1;
         oMain.innerHTML = `<div class="loading"></div>`;
-        switch (index){
+        switch (index) {
             case 0:
                 generateWriteArticleContent();
                 break;
             case 1:
                 ajax({
                     url:`/article/${year}/${month}`,
-                    success(data){
-                        generatePageContent(JSON.parse(data) , time , false);
+                    success(data) {
+                        generatePageContent(JSON.parse(data), time, false);
                     }
                 });
                 break;
             case 2:
                 ajax({
                     url: `/article/${year}`,
-                    success(data) {generatePageContent(JSON.parse(data), time, true)}
+                    success(data) {
+                        generatePageContent(JSON.parse(data), time, true)
+                    }
                 });
                 break;
         };
     };
 });
 
-function generatePageContent(data, time, isByYear){
+function generatePageContent(data, time, isByYear) {
     oMain.innerHTML = "";
     const oDate = createElementByTag("div"),
         oDateSpan = createElementByTag("span"),
@@ -72,15 +74,18 @@ function generatePageContent(data, time, isByYear){
     oDateSpan.innerHTML = "时间";
     oDateInput.id = "date-input";
     oDateInput.isByYear = isByYear;
-    oDateInput.setAttribute("placeholder" , "yyyy-MM-dd");
+    oDateInput.setAttribute("placeholder", "yyyy-MM-dd");
     oDateInput.value = new Date().toLocaleDateString().split("/").map(ele => Number(ele) < 10 ? "0" + ele : ele).join("-");
     oArticles.className = "articles";
     oDate.appendChild(oDateSpan);
     oDate.appendChild(oDateInput);
     oMain.appendChild(oDate);
-    generateArticles(oArticles , data);
+    generateArticles(oArticles, data);
     oMain.appendChild(oArticles);
-    oDateInput.addEventListener("click" , renderDate , false);
+    layer.render({
+        elem: "#date-input",
+        type: "month"
+    });
 };
 
 function generateWriteArticleContent() {
@@ -110,9 +115,9 @@ function createArticle() {
     editArticle("文章已成功发布。", `/article`);
 };
 
-function generateArticles(oArticles , articles){
+function generateArticles(oArticles, articles) {
     oArticles.innerHTML = "";
-    for(let article of articles){
+    for(let article of articles) {
         const oArticle = createElementByTag("div");
         oArticle.className = "article";
         oArticle.innerHTML = article.createdAt.split("/").filter((ele , index) => index !== 0).join("-");
@@ -161,12 +166,8 @@ function updateArticlePage(articleID) {
                 oDescription.value = article.description;
                 oEng_title.value = article.eng_title;
                 editor.txt.html(article.content.replace(/-\$-/g, "&"));
-                tags.forEach(ele => {
-                    oTag.value += `${ele.content};`
-                });
-                classifications.forEach(ele => {
-                    oClassifications.value += `${ele.content};`
-                });
+                tags.forEach(ele => oTag.value += `${ele.content};`);
+                classifications.forEach(ele => oClassifications.value += `${ele.content};`);
             }
         });
         document.getElementsByClassName("submit")[0].addEventListener("click", updateArticle(articleID), false);
@@ -174,9 +175,7 @@ function updateArticlePage(articleID) {
 };
 
 function updateArticle(articleID) {
-    return () => {
-        editArticle("文章修改成功。", `/article/${articleID}`);
-    };
+    return () => editArticle("文章修改成功。", `/article/${articleID}`);
 };
 
 function editArticle(msg, url) {
@@ -219,30 +218,8 @@ function editArticle(msg, url) {
     };
 };
 
-function createElementByTag(tag){
+function createElementByTag(tag) {
     return document.createElement(tag);
-};
-
-function renderDate(ev) {
-    const oResult = ev.target,
-        elem = `#${oResult.id}`,
-        proxy = new Proxy(oResult , {
-            get(target , key) {
-                return key === "target" ? target : target[key]
-            },
-            set(target , key , value) {
-                value !== "" && target[key] !== value && (target.isByYear ? switchArticlesByYear(value) : switchArticlesByMonth(value));
-                target[key] = value;
-                return true;
-            }
-        });
-
-    layer.open({
-        elem,
-        proxy,
-        type: "calendar",
-        offset: [oResult.offsetTop + oResult.offsetHeight + 10, oResult.offsetLeft]
-    });
 };
 
 function switchArticlesByMonth(value) {
