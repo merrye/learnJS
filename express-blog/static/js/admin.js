@@ -94,6 +94,15 @@ function generatePageContent(data, time, type) {
         elem: "#date-input",
         type
     });
+    oDateInput.onchange = function() {
+        console.log("input value changed");
+        console.log(this.value);
+    };
+    // oDateInput.addEventListener("change", inputChangeHandler, false);
+};
+
+function inputChangeHandler() {
+    console.log(this.value);
 };
 
 function generateWriteArticleContent() {
