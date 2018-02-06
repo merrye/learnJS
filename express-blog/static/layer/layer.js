@@ -31,8 +31,8 @@
                             if(oCalendar.length === 0) {
                                 const calendar = generateCalendar(proxy, type);
                                 calendar.run();
-                                css(calendar.main, {transform: `translate(${INIT_LEFT}px, ${INIT_TOP}px)`, opacity: 0, transition: ".2s", height: 0, "bordere-width": "0"});
-                                setTimeout(() => css(calendar.main, {transform: `translate(${left}px, ${top}px)`, opacity: 1, height: 324, "bordere-width": "1px"}), 20);
+                                css(calendar.main, {left: INIT_LEFT,top: INIT_TOP, opacity: 0, transition: ".2s", height: 0, "bordere-width": "0"});
+                                setTimeout(() => css(calendar.main, {left, top, opacity: 1, height: 324, "bordere-width": "1px"}), 20);
                             };
                         };
                     };
@@ -390,13 +390,13 @@
         }else if(typeof date === "number") {
             return date;
         };
-        date = date.toLocaleDateString().split("/");
+        date = date.toLocaleDateString().split("/").map(addZero);
         switch (type) {
             case "day":
-                date = date.map(addZero).join("-");
+                date = date.join("-");
                 break;
             case "month":
-                date = date.map(addZero).join("-");
+                date = date.join("-");
                 date = date.slice(0, date.lastIndexOf("-"));
                 break;
             case "year":

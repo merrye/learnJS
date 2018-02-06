@@ -8,37 +8,46 @@ const E = window.wangEditor,
 let editor;
 
 [...oItem].forEach((ele, index) => {
-    ele.addEventListener("click", function() {
+    ele.addEventListener("mouseenter", itemMouseenterHandler, false);
+    ele.addEventListener("mouseleave", itemMouseleaveHandler, false);
+    ele.addEventListener("click", itemClickHandler(ele, index), false);
+});
+
+[...oMeunItem].forEach((ele, index) =>ele.addEventListener("click", menuItemClickHandler(ele, index), false));
+
+function itemClickHandler(ele, index) {
+    return function() {
         const name = "clicked",
             subItem = oSubItem[index];
         toggleClassName(ele, name);
         css(subItem, {display: hasClassName(ele, name) ? "block" : "none"});
-    }, false);
-    ele.addEventListener("mouseenter", function() {
-        const top = ele.offsetTop;
-        css(oSlider, {
-            height: "50px",
-            top,
-            opacity: 1
-        });
-    } , false);
-    ele.addEventListener("mouseleave", function() {
-        css(oSlider, {
-            height: "0px",
-            opacity: 0
-        });
-    }, false);
-});
+    };
+};
 
-[...oMeunItem].forEach((ele, index) => {
-    ele.onclick = ev => {
-        ev.cancalBubble = true;
+function itemMouseenterHandler() {
+    css(oSlider, {
+        opacity: 1,
+        height: "50px",
+        top: this.offsetTop
+    });
+};
+
+function itemMouseleaveHandler() {
+    css(oSlider, {
+        height: 0,
+        opacity: 0
+    });
+};
+
+function menuItemClickHandler(ele, index) {
+    return function(ev) {
         ev.stopPropagation();
         removeClass(oMeunItem, "clicked");
         addClassName(ele, "clicked");
         const time = new Date(),
             year = time.getFullYear(),
-            month = time.getMonth() + 1;
+            month = time.getMonth() + 1,
+            Month = (Number(month) ? "0" : "") + month;
         oMain.innerHTML = `<div class="loading"></div>`;
         switch (index) {
             case 0:
@@ -46,9 +55,9 @@ let editor;
                 break;
             case 1:
                 ajax({
-                    url:`/article/${year}/${month}`,
+                    url:`/article/${year}/${Month}`,
                     success(data) {
-                        generatePageContent(JSON.parse(data), time, false);
+                        generatePageContent(JSON.parse(data), `${year}-${Month}`, "month");
                     }
                 });
                 break;
@@ -56,15 +65,15 @@ let editor;
                 ajax({
                     url: `/article/${year}`,
                     success(data) {
-                        generatePageContent(JSON.parse(data), time, true)
+                        generatePageContent(JSON.parse(data), year, "year");
                     }
                 });
                 break;
         };
     };
-});
+};
 
-function generatePageContent(data, time, isByYear) {
+function generatePageContent(data, time, type) {
     oMain.innerHTML = "";
     const oDate = createElementByTag("div"),
         oDateSpan = createElementByTag("span"),
@@ -73,9 +82,8 @@ function generatePageContent(data, time, isByYear) {
     oDate.className = "date";
     oDateSpan.innerHTML = "时间";
     oDateInput.id = "date-input";
-    oDateInput.isByYear = isByYear;
-    oDateInput.setAttribute("placeholder", "yyyy-MM-dd");
-    oDateInput.value = new Date().toLocaleDateString().split("/").map(ele => Number(ele) < 10 ? "0" + ele : ele).join("-");
+    oDateInput.setAttribute("placeholder", "yyyy" + (type === "month" ? "-MM" : ""));
+    oDateInput.value = time;
     oArticles.className = "articles";
     oDate.appendChild(oDateSpan);
     oDate.appendChild(oDateInput);
@@ -84,7 +92,7 @@ function generatePageContent(data, time, isByYear) {
     oMain.appendChild(oArticles);
     layer.render({
         elem: "#date-input",
-        type: "month"
+        type
     });
 };
 
@@ -224,18 +232,18 @@ function createElementByTag(tag) {
 
 function switchArticlesByMonth(value) {
     ajax({
-        url: `/article/${value.substr(0 , value.lastIndexOf("-")).replace(/-/g , "/")}`,
+        url: `/article/${value.substr(0, value.lastIndexOf("-")).replace(/-/g , "/")}`,
         success(data) {
-            generateArticles(document.getElementsByClassName("articles")[0] , JSON.parse(data));
+            generateArticles(document.getElementsByClassName("articles")[0], JSON.parse(data));
         }
     });
 };
 
 function switchArticlesByYear(value) {
     ajax({
-        url: `/article/${value.substr(0 , value.indexOf("-"))}`,
+        url: `/article/${value.substr(0, value.indexOf("-"))}`,
         success(data) {
-            generateArticles(document.getElementsByClassName("articles")[0] , JSON.parse(data));
+            generateArticles(document.getElementsByClassName("articles")[0], JSON.parse(data));
         }
     });
 };

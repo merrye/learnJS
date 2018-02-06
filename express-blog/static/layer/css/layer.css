@@ -4,7 +4,8 @@
     border: 1px solid rgb(213, 213, 213);
     display: flex;
     flex-direction: column;
-    position: relative;
+    position: absolute;
+    z-index: 99999;
     font-size: .8em;
     user-select: none;
     background-color: #fff;
