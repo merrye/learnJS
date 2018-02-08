@@ -10,7 +10,7 @@
             get(target, property) {
                 return (attrs, ...children) => {
                     const oElem = document.getElementById(attrs.elem.slice(1)),
-                        proxy = getProxy(oElem),
+                        proxy = getProxy(oElem, attrs),
                         oElemOffset = getOffset(oElem);
                     attrs = Object.assign({}, {type: "day", offset: [10 + oElemOffset.top + oElem.offsetHeight, oElemOffset.left], animate: "t"}, attrs);
                     proxy.target.addEventListener("click", proxyClickHandler, false);
@@ -360,13 +360,15 @@
     function addZero(str) {
         return (Number(str) < 10 ? "0" : "") + str;
     };
-    function getProxy(elem) {
-        const proxy = new Proxy(elem, {
+    function getProxy(elem, attrs) {
+        const {yes} = attrs,
+            proxy = new Proxy(elem, {
             get(target, key) {
                 return key === "target" ? target : target[key];
             },
             set(target, key, value) {
                 target[key] = value;
+                yes(value);
                 return true;
             }
         });
