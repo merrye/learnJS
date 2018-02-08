@@ -13,7 +13,7 @@ let editor;
     ele.addEventListener("click", itemClickHandler(ele, index), false);
 });
 
-[...oMeunItem].forEach((ele, index) =>ele.addEventListener("click", menuItemClickHandler(ele, index), false));
+[...oMeunItem].forEach((ele, index) => ele.addEventListener("click", menuItemClickHandler(ele, index), false));
 
 function itemClickHandler(ele, index) {
     return function() {
@@ -92,17 +92,11 @@ function generatePageContent(data, time, type) {
     oMain.appendChild(oArticles);
     layer.render({
         elem: "#date-input",
-        type
+        type,
+        yes(date) {
+            switchArticles(date);
+        }
     });
-    oDateInput.onchange = function() {
-        console.log("input value changed");
-        console.log(this.value);
-    };
-    // oDateInput.addEventListener("change", inputChangeHandler, false);
-};
-
-function inputChangeHandler() {
-    console.log(this.value);
 };
 
 function generateWriteArticleContent() {
@@ -239,18 +233,9 @@ function createElementByTag(tag) {
     return document.createElement(tag);
 };
 
-function switchArticlesByMonth(value) {
+function switchArticles(date) {
     ajax({
-        url: `/article/${value.substr(0, value.lastIndexOf("-")).replace(/-/g , "/")}`,
-        success(data) {
-            generateArticles(document.getElementsByClassName("articles")[0], JSON.parse(data));
-        }
-    });
-};
-
-function switchArticlesByYear(value) {
-    ajax({
-        url: `/article/${value.substr(0, value.indexOf("-"))}`,
+        url: `/article/${date.replace(/-/g, "/")}`,
         success(data) {
             generateArticles(document.getElementsByClassName("articles")[0], JSON.parse(data));
         }
