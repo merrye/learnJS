@@ -5,7 +5,7 @@
 {% block main %}
     {% for article in article_list %}
         <div class="article-list">
-            <h3 class="title"><a href="{{article.href}}">{{ article.title }}</a></h3>
+            <h3 class="title"><a href="{{ article.href }}">{{ article.title }}</a></h3>
             <div class="dec">{{ article.description }}</div>
             <div class="article-info">
                 <span class="time">
@@ -15,7 +15,7 @@
                 <span class="tag">
                     <i class="fa fa-tag" aria-hidden="true"></i>
                     {% for tag in article.tags %} 
-                        <a href="/tag/{{tag.content}}">{{ tag.content }}</a>&nbsp;
+                        <a href="/tag/{{ tag.content }}">{{ tag.content }}</a>&nbsp;
                     {% endfor %}
                 </span>
             </div>

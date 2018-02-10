@@ -7,7 +7,7 @@
     <title>{{ title }}</title>
     <link rel="icon" href="/images/favicon.ico" />
     <link rel="bookmark" href="/images/favicon.ico" />
-    {% block css %}{% endblock %}
+    {% block css %} {% endblock %}
     <link rel="stylesheet" href="/css/bg.css">
     <script src="/js/merry.js"></script>
     <script src="/js/jquery-3.2.1.min.js"></script>
@@ -15,13 +15,13 @@
 <body>
     <!-- Blog start -->
     <div id="Blog">
-        {% block main %}{% endblock %}
+        {% block main %} {% endblock %}
         <!-- canvas start -->
         <canvas id="canvas"></canvas>
         <!-- canvas end -->
     </div>
     <!-- Blog end -->
     <script src="/js/bg.js"></script>
-    {% block js %}{% endblock %}
+    {% block js %} {% endblock %}
 </body>
 </html>

@@ -9,8 +9,8 @@
             <h3 class="year">{{ article_list[0] }}</h3>
             {% for article in article_list[1] %}
                 <div class="article">
-                    {{article.createdAt.substr(5).replace("/","-")}}
-                    <a href="{{article.href}}">{{article.title}}</a>
+                    {{ article.createdAt.substr(5).replace("/", "-") }}
+                    <a href="{{ article.href }}">{{ article.title }}</a>
                 </div>
             {% endfor %}
         {% endfor %}

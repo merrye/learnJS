@@ -4,7 +4,7 @@
 {% endblock %}
 {% block main %}
     <div class="tag_list">
-        <h3 class="title">目前共计{{tagArr.length}}个标签</h3>
+        <h3 class="title">目前共计{{ tagArr.length }}个标签</h3>
         {% for tag in tagArr %}
             {% if tag.count < 2 %}
                 {% set cssStyle = 'style="font-size: 18px; color: #8e8e8e;"' %}
@@ -13,7 +13,7 @@
             {% else %}
                 {% set cssStyle = 'style="font-size: 30px; color: #111;"' %}
             {% endif%}
-            <a class="tag" {{ cssStyle | safe }} href="/tag/{{tag.href}}">{{ tag.content }}</a>
+            <a class="tag" {{ cssStyle | safe }} href="/tag/{{ tag.href }}">{{ tag.content }}</a>
         {% endfor %}
     </div>
 {% endblock %}
