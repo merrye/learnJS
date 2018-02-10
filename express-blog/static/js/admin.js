@@ -235,7 +235,7 @@ function createElementByTag(tag) {
 
 function switchArticles(date) {
     ajax({
-        url: `/article/${date.replace(/-/g, "/")}`,
+        url: `/article/${String(date).replace(/-/g, "/")}`,
         success(data) {
             generateArticles(document.getElementsByClassName("articles")[0], JSON.parse(data));
         }
