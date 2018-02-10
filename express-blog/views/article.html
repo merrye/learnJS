@@ -34,6 +34,36 @@
         {% endif %}
     </div>
     <div class="comments">
-        
+        {% if comments.length === 0 %}
+            <p>暂无评论。</p>
+        {% else %}
+            {% for ingredient, amount in food%}
+                <p>Use{{ amount }} of ingredient</p>
+            {% endfor %}
+        {% endif %}
+        <p>发表评论：</p>
+        <div class="postComment" >
+            <p>
+                <input type="text" name="name" class="comment-name">
+                <label for="name">姓名*</label>
+            </p>
+            <p>
+                <input type="text" name="email" class="comment-email">
+                <label for="email">电子邮件*</label>
+            </p>
+            <p>
+                <input type="text" name="website" class="comment-website">
+                <label for="website">个人网址</label>
+            </p>
+            <p>
+                <textarea name="" id="comment-content" cols="30" rows="10"></textarea>
+            </p>
+            <p>
+                <button class="submit">发表评论</button>
+            </p>
+        </div>
     </div>
+{% endblock %}
+{% block js %}
+    <script src="/js/comment.js"></script>
 {% endblock %}

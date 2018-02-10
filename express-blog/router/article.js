@@ -15,7 +15,12 @@ router.get("/:year/:month/:day/:name.html", (req , res) => {
             ]);
         article.tags = tags;
         article.content = article.content.replace(/-\$-/g, "&");
-        res.render("article", {article, comments, prevArticle, nextArticle, title: `${article.title} | Merry's Blog`});
+        var food = {
+            ketchup: "5 tbsp",
+            mustard: "1 tbsp",
+            pickle: "0 tbsp"
+        };
+        res.render("article", {article, food, comments, prevArticle, nextArticle, title: `${article.title} | Merry's Blog`});
     })();
 });
 
