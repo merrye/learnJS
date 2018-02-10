@@ -45,6 +45,7 @@ ul, ol {
  }
  
 .article{
+    padding-top: 15px;
     border-bottom: 1px solid rgba(150 ,150 ,150, .2);
 }
 .article h3{
