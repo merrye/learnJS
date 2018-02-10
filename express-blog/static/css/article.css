@@ -43,59 +43,57 @@ pre code {
 ul, ol {
     margin: 10px 0 10px 20px;
  }
- 
-.article{
-    padding-top: 15px;
-    border-bottom: 1px solid rgba(150 ,150 ,150, .2);
+.content > div {
+    padding-top: 30px;
 }
-.article h3{
+.article {
+    border-bottom: 1px solid rgba(150, 150 ,150, .2);
+}
+.article h3 {
     letter-spacing: 1px;
     font: bold 22px / 32px "Microsoft yahei";
     text-align: center;
 }
-.article .article-info{
+.article .article-info {
     padding: 5px 0;
     font-size: 14px;
     text-align: center;
-    color: rgba(0,0,0,.6);
+    color: rgba(0, 0, 0, .6);
 }
-.article .article-info > span{
+.article .article-info > span {
     margin-right: 5px;
 }
-.article .article-info > span > i{
+.article .article-info > span > i {
     margin-right: 5px;
 }
-.article .article-info > span > a{
-    color: rgba(0,0,0,.6);
+.article .article-info > span > a {
+    color: rgba(0, 0, 0, .6);
 }
-.article .article-info > span > a:hover{
+.article .article-info > span > a:hover {
     color: #1296db;
 }
-.article-content{
+.article-content {
     padding-bottom: 20px;
-    color: rgba(0,0,0,.6);
+    color: rgba(0, 0, 0, .6);
 }
-.nav{
-    padding-top: 30px;
-}
-.nav > a{
+.nav > a {
     width: 200px;
     height: 50px;
     display: inline-block;
-    color: rgba(0,0,0,.6);
-    border: 1px solid rgba(0,0,0,.6);
+    color: rgba(0, 0, 0, .6);
+    border: 1px solid rgba(0, 0, 0, .6);
 }
-.nav > a.next{
+.nav > a.next {
     float: left;
 }
-.nav > a.next{
+.nav > a.next {
     float: right;
 }
-.nav > a:hover{
-    color: rgb(0,0,0);
-    border: 1px solid rgb(0,0,0);
+.nav > a:hover {
+    color: rgb(0, 0, 0);
+    border: 1px solid rgb(0, 0, 0);
 }
-.nav > a > p{
+.nav > a > p {
     text-align: center;
     line-height: 25px;
     display: block;
@@ -103,4 +101,24 @@ ul, ol {
     white-space: nowrap;
     text-overflow: ellipsis;
     margin: 0;
+}
+.comments > p {
+    padding: 10px 0;
+}
+.comments .postComment > p {
+    padding: 15px 0;
+}
+.comments .postComment > p > input {
+    width: 258px;
+    height: 38px;
+    border: 1px solid rgba(0, 0, 0, .6);
+    border-radius: 5px;
+    outline: none;
+    font-size: 1em;
+    text-indent: .5em;
+}
+.comments .postComment > p > textarea {
+    width: 90%;
+    font-size: 16px;
+    border-color: rgba(0, 0, 0, .6);
 }

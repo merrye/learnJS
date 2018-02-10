@@ -1,68 +1,68 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
-a{
+a {
     text-decoration: none;
 }
-body,html{
+body,html {
     height: 100%;
 }
-body{
+body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
-.header{
+.header {
     flex: 0 0 60px;
     width: 100%;
     background-color: #23262E;
-    color: rgba(255,255,255,.7);
+    color: rgba(255, 255, 255, .7);
     display: flex;
     justify-content: space-between;
     user-select: none;
 }
-.header > div{
+.header > div {
     flex: 0 0 200px;
     cursor: text;
 }
-.header .logo{
+.header .logo {
     font: normal 26px / 60px "Microsoft yahei";
     padding-left: 30px;
 }
-.header .userInfo{
+.header .userInfo {
     padding-right: 30px;
     display: flex;
 }
-.header .userInfo > img,.header .userInfo > span{
+.header .userInfo > img,.header .userInfo > span {
     flex: 1;
     line-height: 60px;
     cursor: pointer;
     text-align: center;
 }
-.header .userInfo > img{
+.header .userInfo > img {
     width: 50px;
     height: 50px;
     border-radius: 100%;
     flex: 0 0 50px;
     margin: 5px 0;
 }
-.header .userInfo > span > a{
-    color: rgba(255,255,255,.7);
+.header .userInfo > span > a {
+    color: rgba(255, 255, 255, .7);
 }
-.header .userInfo > span:hover , .header .userInfo > span > a:hover{
-    color: rgb(255,255,255);
+.header .userInfo > span:hover , .header .userInfo > span > a:hover {
+    color: rgb(255, 255, 255);
 }
-.container{
+.container {
     flex: 1;
     display: flex;
 }
-.container .slideMenu{
+.container .slideMenu {
     flex: 0 0 225px;
     background-color: #393D49;
     position: relative;
 }
-.container .slideMenu .item{
+.container .slideMenu .item {
     width: 100%;
     text-indent: 12px;
     font: normal 16px / 50px "Microsoft yahei";
@@ -71,7 +71,7 @@ body{
     position: relative;
     color: #FFF;
 }
-.container .slideMenu .item::after{
+.container .slideMenu .item::after {
     content: "";
     width: 0;
     height: 0;
@@ -85,29 +85,29 @@ body{
     transform: rotateZ(0deg);
     transition: .2s;
 }
-.container .slideMenu .item.clicked::after{
+.container .slideMenu .item.clicked::after {
     transform: rotateZ(180deg);
 }
-.container .slideMenu .item:hover{
+.container .slideMenu .item:hover {
     background-color: #4E5465;
 }
-.container .slideMenu .item .sub-item{
+.container .slideMenu .item .sub-item {
     display: none;
 }
-.container .slideMenu .item .sub-item > li{
-    background-color: rgba(0,0,0,.3)!important;
+.container .slideMenu .item .sub-item > li {
+    background-color: rgba(0, 0, 0, .3)!important;
     text-indent: 24px;
     font: normal 14px / 50px "Microsoft yahei";
-    color: rgba(255,255,255,.7);
+    color: rgba(255, 255, 255, .7);
     transition: .2s;
 }
-.container .slideMenu .item .sub-item > li:hover{
+.container .slideMenu .item .sub-item > li:hover {
     color: #FFF;
 }
-.container .slideMenu .item .sub-item > li.clicked{
+.container .slideMenu .item .sub-item > li.clicked {
     padding: 0 25px;
 }
-.container .slideMenu .slider{
+.container .slideMenu .slider {
     width: 8px;
     height: 0px;
     background-color: #5FB878;
@@ -117,31 +117,31 @@ body{
     opacity: 0;
     transition: .15s;
 }
-.container .content{
+.container .content {
     flex: 1;
     position: relative;
     overflow: hidden;
     overflow-y: auto;
 }
-.container .content .main{
+.container .content .main {
     padding: 20px;
 }
-.container .content .main .date > input{
+.container .content .main .date > input {
     width: 160px;
     height: 30px;
-    border: 1px solid rgb(230,230,230);
+    border: 1px solid rgb(230, 230, 230);
     outline: none;
     text-indent: 12px;
     font-size: 16px;
-    color: rgb(150,150,150);
+    color: rgb(150, 150, 150);
     margin-left: 15px;
 }
-.container .content .main .welcome{
+.container .content .main .welcome {
     text-indent: 16px;
     line-height: 60px;
     text-align: center;
 }
-.container .content .main .loading{
+.container .content .main .loading {
     width: 11px;
     height: 44px;
     margin: 88px auto;
@@ -149,7 +149,7 @@ body{
     background-color: #000;
     animation: p1 1s 0.16s ease-in-out infinite;
 }
-.container .content .main .loading::before{
+.container .content .main .loading::before {
     content: "";
     position: absolute;
     top: 0px;
@@ -159,7 +159,7 @@ body{
     animation: p1 1s 0.32s ease-in-out infinite;
     background-color: #000;
 }
-.container .content .main .loading::after{
+.container .content .main .loading::after {
     content: "";
     position: absolute;
     top: 0px;
@@ -169,23 +169,23 @@ body{
     animation: p1 1s ease-in-out infinite;
     background-color: #000;
 }
-@keyframes p1 {
-    0%, 80%, 100% {
+@keyframes p1  {
+    0%, 80%, 100%  {
         box-shadow: 0 0 #000;
         height: 44px;
     }
-    40% {
+    40%  {
         box-shadow: 0 -22px #000;
         height: 55px;
     }
 }
-.container .content .main .date{
+.container .content .main .date {
     padding: 20px 0;
 }
-.container .content .main .articles{
+.container .content .main .articles {
     position: relative;
 }
-.articles::after{
+.articles::after {
     content: "";
     position: absolute;
     top: 0px;
@@ -195,16 +195,16 @@ body{
     background: #e6e6e6;
     z-index: -1;
 }
-.container .content .main .articles .article{
+.container .content .main .articles .article {
     cursor: text;
     font-size: 14px;
-    color: rgba(0,0,0,.6);
+    color: rgba(0, 0, 0, .6);
     position: relative;
     margin: 30px 4px;
-    border-bottom: 1px dashed rgba(0,0,0,.6);
+    border-bottom: 1px dashed rgba(0, 0, 0, .6);
     text-indent: 1em;
 }
-.article::after{
+.article::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -216,55 +216,55 @@ body{
     overflow: hidden;
     background-color: #bbb;
 }
-.article > a{
-    color: rgba(0,0,0,.6);
+.article > a {
+    color: rgba(0, 0, 0, .6);
     cursor: pointer;
     font-size: 16px;
     padding: 0 1em;
 }
-.article a.update-article{
+.article a.update-article {
     float: right;
     padding: 0 15px;
     text-indent: 0;
 }
-.article:hover > a{
-    color: rgb(0,0,0);
+.article:hover > a {
+    color: rgb(0, 0, 0);
 }
-.article > a:hover{
+.article > a:hover {
     color: #1296db;
 }
-.article:hover{
-    color: rgb(0,0,0);
-    border-bottom-color: rgb(0,0,0);
+.article:hover {
+    color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
 }
-.article .update-article{
+.article .update-article {
     text-indent: 0;
     cursor: pointer;
     position: absolute;
     left: 20em;
 }
-.article .update-article:hover{
+.article .update-article:hover {
     color: #1296db;
 }
 /** 
     文章编辑部分
 */
-.wrap{
+.wrap {
     width: 960px;
     margin: 0 auto;
 }
-.wrap > h3{
+.wrap > h3 {
     font: normal 2em / 2em "Microsoft yahei";
 }
-.wrap > div{
+.wrap > div {
     margin: 10px 0;
 }
-.title{
+.title {
     height: 50px;
     line-height: 50px;
     display: flex;
 }
-.title > span{
+.title > span {
     height: 40px;
     flex: 0 0 6em;
     line-height: 40px;
@@ -275,7 +275,7 @@ body{
     border-right: none;
     text-indent: 1em;
 }
-.article_title{
+.article_title {
     flex: 1;
     height: 40px;
     align-self: center;
@@ -285,7 +285,7 @@ body{
     text-indent: 1em;
     font-family: "Microsoft yahei";
 }
-#description{
+#description {
     width: 100%;
     height: 2em;
     resize: none;
@@ -298,38 +298,38 @@ body{
     font-size: 1em;
     font-family: "Microsoft yahei";
 }
-.menu{
+.menu {
     display: flex;
     height: 50px;
     line-height: 50px;
 }
-.menu .menu-item{
+.menu .menu-item {
     flex: 1;
     display: flex;
     border: 1px solid silver;
     border-radius: 5px;
 }
-.menu .classification{
+.menu .classification {
     margin-right: 5px;
 }
-.menu .tag{
+.menu .tag {
     margin-left: 5px;
 }
-.menu .menu-item .row-left{
+.menu .menu-item .row-left {
     flex: 0 0 4em;
     text-indent: 1em;
 }
-.menu .menu-item .row-right{
+.menu .menu-item .row-right {
     flex: 1;
 }
-.menu .menu-item .row-right > input{
+.menu .menu-item .row-right > input {
     width: 90%;
     height: 40px;
     line-height: 40px;
     border: none;
     outline: none;
 }
-.wrap .footer .submit{
+.wrap .footer .submit {
     float: right;
     color: #FFF;
     margin: 0 20px;
@@ -339,16 +339,16 @@ body{
     background-color: silver;
     user-select: none;
 }
-.wrap .footer .submit:hover{
+.wrap .footer .submit:hover {
     background-color: rgb(180, 180, 180);
 }
 
-footer{
+footer {
     flex: 0 0 45px;
     line-height: 45px;
     text-align: center;
     background-color: #eee;
 }
-footer > a{
+footer > a {
     color: #000;
 }

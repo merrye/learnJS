@@ -1,35 +1,35 @@
-#main .content .article-list{
+#main .content .article-list {
     padding: 20px 0px;
-    border-bottom: 1px solid rgba(150 ,150 ,150, .5);
+    border-bottom: 1px solid rgba(150, 150, 150, .5);
 }
-#main .content .article-list .title{
+#main .content .article-list .title {
     letter-spacing: 1px;
     font: bold 22px / 45px "Microsoft yahei";
     cursor: pointer;
 }
-#main .content .article-list .title:hover a{
+#main .content .article-list .title:hover a {
     text-decoration: underline;
 }
-#main .content .article-list > div{
+#main .content .article-list > div {
     padding-top: 20px;
 }
-#main .content .article-list .article-info{
+#main .content .article-list .article-info {
     font-size: 14px;
 }
-#main .content .article-list .article-info > span{
+#main .content .article-list .article-info > span {
     margin: 0 5px;
 }
-#main .content .article-list .article-info > span > i{
+#main .content .article-list .article-info > span > i {
     margin-right: 5px;
 }
-#main .content .article-list .article-info > span > a:hover{
+#main .content .article-list .article-info > span > a:hover {
     color: #1296db;
 }
-.pagination{
+.pagination {
     text-align: center;
     line-height: 30px;
 }
-.pagination > a,.pagination > span{
+.pagination > a,.pagination > span {
     color: #555;
     cursor: pointer;
     display: inline-block;
@@ -37,17 +37,17 @@
     padding: 0 10px;
     border-top: 1px solid transparent;
 }
-.pagination > span{
+.pagination > span {
     cursor: text;
 }
-.pagination > a:hover{
+.pagination > a:hover {
     color: #222;
     border-top-color: #222;
 }
-.pagination > a.select{
+.pagination > a.select {
     color: #FFF;
     background-color: #CCC;
 }
-.pagination > a.select:hover{
+.pagination > a.select:hover {
     border-top-color: transparent;
 }

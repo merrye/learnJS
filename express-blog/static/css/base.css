@@ -1,26 +1,26 @@
-*{
+* {
     margin: 0;
     padding: 0;
 }
-body , html{
+body , html {
     height: 100%;
     overflow: hidden;
 }
-a{
-    color: rgb(50 ,50 ,50);
+a {
+    color: rgb(50, 50, 50);
     text-decoration: none;
 }
-li{
+li {
     list-style: none;
 }
-.icon{
+.icon {
     width: 1.5em;
     height: 1.5em;
     overflow: hidden;
     fill: currentColor;
     vertical-align: -0.15em;
 }
-#container{
+#container {
     width: 100%;
     height: 100%;
     display: flex;
@@ -29,81 +29,81 @@ li{
 /*
     introduction
 */
-#introduction{
+#introduction {
     flex: 4;
     border-right: 1px solid rgba(150, 150, 150, .3);
     position: relative;
     min-width: 310px;
 }
-.intro-content{
+.intro-content {
     width: 100%;
     height: 250px;
     margin: 35% auto 0;
 }
-.intro-content .intro-avator #intro-avator-canvas{
+.intro-content .intro-avator #intro-avator-canvas {
     width: 130px;
     height: 150px;
     display: block;
     margin: 0 auto;
 }
-.intro-content > h3{
+.intro-content > h3 {
     text-align: center;
     font-size: 36px;
     padding: 10px 0;
     cursor: pointer;
     user-select: none;
 }
-.intro-content > ul{
+.intro-content > ul {
     overflow: hidden;
     display: flex;
     justify-content: center;
 }
-.intro-content > ul > li{
+.intro-content > ul > li {
     float: left;
     width: 2.5em;
     height: 2.5em;
     position: relative;
     cursor: pointer;
 }
-.intro-content > ul > li > a{
+.intro-content > ul > li > a {
     width: 100%;
     height: 100%;
     display: block;
     position: absolute;
     left: 0;
 }
-.intro-content > ul > li:hover > a{
+.intro-content > ul > li:hover > a {
     animation: a_move .5s;
 }
-@keyframes a_move{
-    0%{
+@keyframes a_move {
+    0% {
         top: 0;
     }
-    60%{
+    60% {
         top: -100%;
     }
-    70%{
+    70% {
         top: 50%;
     }
-    100%{
+    100% {
         top: -0%;
     }
 }
-.intro-content > ul > li > a > svg{
+.intro-content > ul > li > a > svg {
     margin: .5em;
 }
-.intro-footer{
+.intro-footer {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     text-align: center;
     padding-bottom: 20px;
-    color: rgb(50 ,50 ,50);
+    color: rgb(50, 50, 50);
 }
 
 /* #main */
-#main{
+#main {
     flex: 6.5;
     display: flex;
     flex-direction: column;
@@ -112,7 +112,7 @@ li{
     overflow-x: hidden;
     z-index: 2;
 }
-.nav-list{
+.nav-list {
     position: fixed;
     top: 0;
     z-index: 1;
@@ -120,26 +120,26 @@ li{
     padding: 20px;
     flex: 0 0 21px;
     background: #fff;
-    border: 1px solid rgba(150 ,150 ,150, .2);
+    border: 1px solid rgba(150, 150, 150, .2);
     overflow: hidden;
 }
-.nav-list > ul{
+.nav-list > ul {
     margin: 0;
     overflow: hidden;
 }
-.nav-list > ul > li{
+.nav-list > ul > li {
     float: left;
     margin: 0 15px;
     cursor: pointer;
     user-select: none;
 }
-.nav-list > ul > li:hover > a{
+.nav-list > ul > li:hover > a {
     color: #1296db;
 }
-.nav-list > ul > li.clicked > a{
+.nav-list > ul > li.clicked > a {
     color: #1296db;
 }
-.nav-list .nav-line{
+.nav-list .nav-line {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -147,7 +147,7 @@ li{
     display: none;
     background-color: #1296db;
 }
-#main .content{
+#main .content {
     flex: 1;
     padding: 20px 40px;
     margin-top: 63px;
