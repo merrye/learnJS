@@ -10,6 +10,10 @@ const fs = require("fs"),
     to = "en",
     getTranslateUrl = "http://api.fanyi.baidu.com/api/trans/vip/translate?";
 
+function addZero(num) {
+    return Number(num) < 10 ? "0" : "" + num; 
+};
+
 function objForEach(obj, fn) {
     let result;
     for(let key in obj) {
@@ -22,64 +26,12 @@ function objForEach(obj, fn) {
     };
 };
 
-async function getArticleCount(){
+function getTimeString(date) {
+    return `${date.toLocaleDateString().split("-").map(addZero).join("/")} ${date.getHours()}:${addZero(date.getMinutes())}`;
+};
+
+async function getArticleCount() {
     return await Article.count();
-};
-
-async function getSortArticlesList(currentIndex){
-    const arr = [],
-        article_list = await Article.findAll({
-            order: [
-                ['createdAt', 'DESC']
-            ],
-            limit: 10,
-            offset: 10 * (currentIndex - 1),
-        });
-    [...article_list].forEach((ele) => {
-        arr.push((async ele => await Tag.findAll({where: {article_id: ele.id}}))(ele));
-    });
-    const [r , count] = await Promise.all([arr , getArticleCount()]);
-    [...article_list].forEach((ele , index) => {
-        ele.tags = r[index];
-    });
-    return {article_list,count};
-};
-
-async function getDateSortArticlesList(currentIndex){
-    const articles_list = [],
-        dateSet = new Set(),
-        {article_list , count} = await getSortArticlesList(currentIndex);
-    [...article_list].forEach(currentValue => {
-        dateSet.add(currentValue.createdAt.split("/")[0]);
-    });
-    [...dateSet].forEach((currentValue , index) => {
-        articles_list.push({
-            [currentValue]: []
-        });
-        article_list.forEach(article => {
-            article.createdAt.includes(currentValue) && articles_list[index][currentValue].push(article);
-        });
-    });
-    return {articles_list , count};
-};
-
-async function getArticlesBySearch(search, model) {
-    const pArr = [],
-        articles_list = new Map(),
-        models = await model.findAll({where: {href: search}});
-    const con = models[0].content;
-    [...models].forEach(ele => pArr.push((async ele => await Article.findById(ele.article_id))(ele)));
-    const articles = await Promise.all(pArr),
-        count = articles.length;
-    articles.sort((x, y) => new Date(y.createdAt) - new Date(x.createdAt)).forEach(element => {
-        const year = element.createdAt.split("/")[0];
-        articles_list.has(year) ? articles_list.get(year).push(element) : articles_list.set(year, [element]);
-    });
-    return {
-        con,
-        count,
-        articles_list: [...articles_list]
-    };
 };
 
 async function getSearchList(model) {
@@ -134,6 +86,62 @@ async function getUploadImageData(req) {
     });
 };
 
+async function getSortArticlesList(currentIndex) {
+    const arr = [],
+        article_list = await Article.findAll({
+            order: [
+                ['createdAt', 'DESC']
+            ],
+            limit: 10,
+            offset: 10 * (currentIndex - 1),
+        });
+    [...article_list].forEach((ele) => {
+        arr.push((async ele => await Tag.findAll({where: {article_id: ele.id}}))(ele));
+    });
+    const [r , count] = await Promise.all([arr , getArticleCount()]);
+    [...article_list].forEach((ele , index) => {
+        ele.tags = r[index];
+    });
+    return {article_list,count};
+};
+
+async function getArticlesBySearch(search, model) {
+    const pArr = [],
+        articles_list = new Map(),
+        models = await model.findAll({where: {href: search}});
+    const con = models[0].content;
+    [...models].forEach(ele => pArr.push((async ele => await Article.findById(ele.article_id))(ele)));
+    const articles = await Promise.all(pArr),
+        count = articles.length;
+    articles.sort((x, y) => new Date(y.createdAt) - new Date(x.createdAt)).forEach(element => {
+        const year = element.createdAt.split("/")[0];
+        articles_list.has(year) ? articles_list.get(year).push(element) : articles_list.set(year, [element]);
+    });
+    return {
+        con,
+        count,
+        articles_list: [...articles_list]
+    };
+};
+
+async function getDateSortArticlesList(currentIndex) {
+    const articles_list = [],
+        dateSet = new Set(),
+        {article_list , count} = await getSortArticlesList(currentIndex);
+    [...article_list].forEach(currentValue => {
+        dateSet.add(currentValue.createdAt.split("/")[0]);
+    });
+    [...dateSet].forEach((currentValue , index) => {
+        articles_list.push({
+            [currentValue]: []
+        });
+        article_list.forEach(article => {
+            article.createdAt.includes(currentValue) && articles_list[index][currentValue].push(article);
+        });
+    });
+    return {articles_list , count};
+};
+
 async function createModelArray(str, model, options) {
     const arr = [],
         spaceReg = /\s+/g,
@@ -168,6 +176,7 @@ async function createModelArray(str, model, options) {
 };
 
 module.exports = {
+    getTimeString,
     getSearchList,
     createModelArray,
     getUploadImageData,

@@ -105,6 +105,26 @@ ul, ol {
 .comments > p {
     padding: 10px 0;
 }
+.comments .comment-list .comment {
+    padding: .5em 0;
+    border-bottom: 1px dashed #000;
+}
+.comments .comment-list .comment .comment-info > a {
+    font-size: 16px;
+    font-style: italic;
+    border-bottom: 1px solid #000;
+}
+.comments .comment-list .comment .comment-info > a[href="#"] {
+    font-style: normal;
+    border: none;
+}
+.comments .comment-list .comment .comment-content {
+    padding: .5em;
+}
+.comments .comment-list .comment .time {
+    font-size: 16px;
+    text-align: right;
+}
 .comments .postComment > p {
     padding: 15px 0;
 }
@@ -120,8 +140,6 @@ ul, ol {
 .comments .postComment > p > textarea {
     width: 90%;
     font-size: 16px;
-    border-radius: 5px;
-    outline: none;
     border-color: rgba(0, 0, 0, .6);
 }
 .comments .postComment > p > button {  

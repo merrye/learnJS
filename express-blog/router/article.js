@@ -1,27 +1,25 @@
 const express = require("express"),
     Op = require("sequelize").Op,
-    {createModelArray} = require("../module/utils"),
-    {Tag, Comment, Article, Classification} = require("../module/model"),
+    {getTimeString, createModelArray} = require("../module/utils"),
+    {Tag, User, Comment, Article, Classification} = require("../module/model"),
     router = express.Router();
 
-router.get("/:year/:month/:day/:name.html", (req , res) => {
-    (async() => {
-        const article = await Article.findOne({where: {href: req.originalUrl}}),
-            [tags, comments, prevArticle, nextArticle] = await Promise.all([
-                Tag.findAll({where: {article_id: article.id}}),
-                Comment.findAll({where: {article_id: article.id}}),
-                Article.findOne({order: [['id', 'DESC']], attributes: ["title", "href"], where: {id: {[Op.lt]: article.id}}}),
-                Article.findOne({order: [['id', 'ASC']], attributes: ["title", "href"], where: {id: {[Op.gt]: article.id}}})
-            ]);
-        article.tags = tags;
-        article.content = article.content.replace(/-\$-/g, "&");
-        var food = {
-            ketchup: "5 tbsp",
-            mustard: "1 tbsp",
-            pickle: "0 tbsp"
-        };
-        res.render("article", {article, food, comments, prevArticle, nextArticle, title: `${article.title} | Merry's Blog`});
+router.get("/:year", (req, res) => {
+    (async () => {
+        const articles = await Article.findAll({order: [['createdAt', 'DESC']], where: {href: {[Op.like]: `${req.originalUrl}%`}}});
+        res.json(articles);
     })();
+});
+
+router.get("/:year/:month", (req, res) => {
+    (async() => {
+        const articles = await Article.findAll({order: [['createdAt', 'DESC']], where: {href: {[Op.like]: `${req.originalUrl}%`}}});
+        res.json(articles);
+    })();
+});
+
+router.get("/:id/comments", (req, res) => {
+    
 });
 
 router.get("/update/id/:id", (req, res) => {
@@ -36,17 +34,18 @@ router.get("/update/id/:id", (req, res) => {
     })();
 });
 
-router.get("/:year", (req, res) => {
-    (async () => {
-        const articles = await Article.findAll({order: [['createdAt', 'DESC']], where: {href: {[Op.like]: `${req.originalUrl}%`}}});
-        res.json(articles);
-    })();
-});
-
-router.get("/:year/:month", (req, res) => {
+router.get("/:year/:month/:day/:name.html", (req , res) => {
     (async() => {
-        const articles = await Article.findAll({order: [['createdAt', 'DESC']], where: {href: {[Op.like]: `${req.originalUrl}%`}}});
-        res.json(articles);
+        const article = await Article.findOne({where: {href: req.originalUrl}}),
+            [tags, comments, prevArticle, nextArticle] = await Promise.all([
+                Tag.findAll({where: {article_id: article.id}}),
+                Comment.findAll({where: {article_id: article.id}}),
+                Article.findOne({order: [['id', 'DESC']], attributes: ["title", "href"], where: {id: {[Op.lt]: article.id}}}),
+                Article.findOne({order: [['id', 'ASC']], attributes: ["title", "href"], where: {id: {[Op.gt]: article.id}}})
+            ]);
+        article.tags = tags;
+        article.content = article.content.replace(/-\$-/g, "&");
+        res.render("article", {article, comments, prevArticle, nextArticle, title: `${article.title} | Merry's Blog`});
     })();
 });
 
@@ -76,6 +75,17 @@ router.post("/:id", (req, res) => {
                 createModelArray(classifications, Classification, {article_id})
             ]);
         res.json({result: "ok"});
+    })();
+});
+
+router.post("/:id/comment", (req, res) => {
+    (async () => {
+        const date = new Date(),
+            article_id = req.params.id,
+            {name, email, website, content} = req.body,
+            href = website ? (website.startsWith("http://") ? website : `http://${website}`) : "#",
+            comment = await Comment.create({href, name, time: getTimeString(date), content: content.replace(/\n/g, "<br >"), article_id});
+        res.json(comment ? "success" : "fail");
     })();
 });
 

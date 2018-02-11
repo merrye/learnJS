@@ -8,7 +8,8 @@ window.onload = () => {
     oSubmit.addEventListener("click", postCommentHandler, false);
 
     function postCommentHandler() {
-        const name = oName.value,
+        const id = this.dataset.id,
+            name = oName.value,
             email = oEmail.value,
             website = oWebsite.value,
             content = oContent.value,
@@ -27,6 +28,17 @@ window.onload = () => {
             alert("评论内容不能为空。");
             return;
         };
-        ajax();
+        ajax({
+            type: "post",
+            url: `/article/${id}/comment`,
+            data: {name, email, website, content},
+            success(data) {
+                if(data === "success") {
+                    
+                }else if(data === "fail") {
+                    alert("评论失败。");
+                };
+            }
+        });
     };
 };

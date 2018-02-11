@@ -34,15 +34,24 @@
         {% endif %}
     </div>
     <div class="comments">
-        {% if comments.length === 0 %}
-            <p>暂无评论。</p>
-        {% else %}
-            {% for ingredient, amount in food%}
-                <p>Use{{ amount }} of ingredient</p>
-            {% endfor %}
-        {% endif %}
-        <p>发表评论：</p>
+        <div class="comment-list">
+            {% if comments.length === 0 %}
+                <p>暂无评论。</p>
+            {% else %}
+                <h3>留言（{{ comments.length }}条）</h3>
+                {% for comment in comments %}
+                    <div class="comment">
+                        <div class="comment-info">
+                            <a href="{{ comment.href }}">{{ comment.name }}</a>
+                        </div>
+                        <p class="comment-content">{{ comment.content | safe }}</p>
+                        <p class="time">{{ comment.time }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
         <div class="postComment" >
+            <p>发表评论：</p>
             <p>
                 <input type="text" name="name" class="comment-name">
                 <label for="name">姓名*</label>
@@ -56,10 +65,10 @@
                 <label for="website">个人网址</label>
             </p>
             <p>
-                <textarea name="" id="comment-content" cols="30" rows="10"></textarea>
+                <textarea name="content" id="comment-content" cols="30" rows="10"></textarea>
             </p>
             <p>
-                <button class="submit">发表评论</button>
+                <button class="submit" data-id="{{ article.id }}">发表评论</button>
             </p>
         </div>
     </div>

@@ -77,13 +77,15 @@ router.post("/upload-image", (req, res) => {
     })();
 });
 
+router.use("/tag", require("./tag"));
+
 router.use("/admin", require("./admin"));
 
 router.use("/article", require("./article"));
 
 router.use("/archives", require("./archives"));
 
-router.use("/tag", require("./tag"));
+router.use("/comments", require("./comments"));
 
 router.use("/classification", require("./classification"));
 
