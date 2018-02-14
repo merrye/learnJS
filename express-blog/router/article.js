@@ -39,7 +39,7 @@ router.get("/:year/:month/:day/:name.html", (req , res) => {
         const article = await Article.findOne({where: {href: req.originalUrl}}),
             [tags, comments, prevArticle, nextArticle] = await Promise.all([
                 Tag.findAll({where: {article_id: article.id}}),
-                Comment.findAll({where: {article_id: article.id}}),
+                Comment.findAll({order: [['createdAt', 'ASC']],where: {article_id: article.id}}),
                 Article.findOne({order: [['id', 'DESC']], attributes: ["title", "href"], where: {id: {[Op.lt]: article.id}}}),
                 Article.findOne({order: [['id', 'ASC']], attributes: ["title", "href"], where: {id: {[Op.gt]: article.id}}})
             ]);
@@ -85,7 +85,9 @@ router.post("/:id/comment", (req, res) => {
             {name, email, website, content} = req.body,
             href = website ? (website.startsWith("http://") ? website : `http://${website}`) : "#",
             comment = await Comment.create({href, name, time: getTimeString(date), content: content.replace(/\n/g, "<br >"), article_id});
-        res.json(comment ? "success" : "fail");
+        res.json({
+            msg: comment ? "success" : "fail"
+        });
     })();
 });
 

@@ -43,7 +43,7 @@ pre code {
 ul, ol {
     margin: 10px 0 10px 20px;
  }
-.content > div {
+.content .nav, .content .comments {
     padding-top: 30px;
 }
 .article {
@@ -106,7 +106,7 @@ ul, ol {
     padding: 10px 0;
 }
 .comments .comment-list .comment {
-    padding: .5em 0;
+    padding: 1em 0;
     border-bottom: 1px dashed #000;
 }
 .comments .comment-list .comment .comment-info > a {
@@ -118,12 +118,16 @@ ul, ol {
     font-style: normal;
     border: none;
 }
+.comments .comment-list .comment .comment-info > a:hover {
+    color: #1296db;
+}
 .comments .comment-list .comment .comment-content {
-    padding: .5em;
+    padding: 1em .5em;
 }
 .comments .comment-list .comment .time {
     font-size: 16px;
     text-align: right;
+    padding: 0 .5em;
 }
 .comments .postComment > p {
     padding: 15px 0;

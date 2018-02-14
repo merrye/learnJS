@@ -42,7 +42,7 @@
                 {% for comment in comments %}
                     <div class="comment">
                         <div class="comment-info">
-                            <a href="{{ comment.href }}">{{ comment.name }}</a>
+                            <a href="{{ comment.href }}" target="_blank">{{ comment.name }}</a>
                         </div>
                         <p class="comment-content">{{ comment.content | safe }}</p>
                         <p class="time">{{ comment.time }}</p>

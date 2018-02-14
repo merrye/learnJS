@@ -33,9 +33,10 @@ window.onload = () => {
             url: `/article/${id}/comment`,
             data: {name, email, website, content},
             success(data) {
-                if(data === "success") {
-                    
-                }else if(data === "fail") {
+                data = JSON.parse(data);
+                if(data.msg === "success") {
+                      window.location.reload();
+                }else if(data.msg === "fail") {
                     alert("评论失败。");
                 };
             }

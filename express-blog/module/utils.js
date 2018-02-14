@@ -11,7 +11,7 @@ const fs = require("fs"),
     getTranslateUrl = "http://api.fanyi.baidu.com/api/trans/vip/translate?";
 
 function addZero(num) {
-    return Number(num) < 10 ? "0" : "" + num; 
+    return (Number(num) < 10 ? "0" : "") + num; 
 };
 
 function objForEach(obj, fn) {
