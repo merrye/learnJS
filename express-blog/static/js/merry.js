@@ -170,7 +170,7 @@ function ajax({
     };
 };
 const dom = new Proxy({} , {
-    get(target1, property) {
+    get(target, property) {
         return function(attrs = {}, ...children) {
             const el = document.createElement(property);
             for (let prop of Object.keys(attrs)) {
