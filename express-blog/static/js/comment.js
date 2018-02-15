@@ -12,17 +12,13 @@ window.onload = () => {
     oSubmit.addEventListener("click", postCommentHandler, false);
 
     [...oQuote].forEach((ele, index) => ele.addEventListener("click", quoteHandler(index), false));
-let str = "";
+
     function quoteHandler(index) {
         return function () {
             const quoteCommnet = oComment[index],
                 quoteName = quoteCommnet.children[0].children[0].innerHTML,
                 quoteContent = quoteCommnet.children[1].innerHTML.replace(/<blockquote>.*<\/blockquote><br>/, "").replace(/<br.*>/, "\n"),
                 quoteHtml = `<blockquote>\n<pre>引用${quoteName}的评论</pre>\n${quoteContent}\n</blockquote>\n`;
-                const reg = /<blockquote>\.*<\/blockquote>/m;
-                window.str = quoteContent;
-                console.log(quoteContent)
-                console.log(quoteContent.replace(reg, ""));
             oContent.value = quoteHtml;
             const pos = oContent.value.length;
             oContent.focus();
