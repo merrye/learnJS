@@ -11,10 +11,12 @@
                     {{ article.createdAt }}
                 </span>
                 <span class="tag">
-                    <i class="fa fa-tag" aria-hidden="true"></i>
-                    {% for tag in article.tags %} 
-                        <a href="/tag/{{tag.content}}">{{ tag.content }}</a>&nbsp;&nbsp;
-                    {% endfor %}
+                    {% if article.tags.length !== 0 %}
+                        <i class="fa fa-tag" aria-hidden="true"></i>
+                        {% for tag in article.tags %} 
+                            <a href="/tag/{{tag.content}}">{{ tag.content }}</a>&nbsp;&nbsp;
+                        {% endfor %}
+                    {% endif %}
                 </span>
             </div>
         <div class="article-content">{{ article.content | safe }}</div>
@@ -41,11 +43,9 @@
                 <h3>留言（{{ comments.length }}条）</h3>
                 {% for comment in comments %}
                     <div class="comment">
-                        <div class="comment-info">
-                            <a href="{{ comment.href }}" target="_blank">{{ comment.name }}</a>
-                        </div>
-                        <p class="comment-content">{{ comment.content | safe }}</p>
-                        <p class="time">{{ comment.time }}</p>
+                        <div class="comment-info"><a href="{{ comment.href }}" target="_blank">{{ comment.name }}</a></div>
+                        <div class="comment-content">{{ comment.content | safe }}</div>
+                        <div class="time">{{ comment.time }} | <a href="#" class="quote">引用</a></div>
                     </div>
                 {% endfor %}
             {% endif %}

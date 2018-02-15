@@ -1,11 +1,35 @@
 window.onload = () => {
-    const oContent = document.getElementById("comment-content"),
+    const oMain = document.getElementById("main"),
+        oQuote = document.getElementsByClassName("quote"),
+        oComment = document.getElementsByClassName("comment"),
+        oContent = document.getElementById("comment-content"),
         oSubmit = document.getElementsByClassName("submit")[0],
         oName = document.getElementsByClassName("comment-name")[0],
-        oEmail = document.getElementsByClassName("comment-email")[0],
+        oEmail = document.getElementsByClassName("comment-email")[0],        
+        oPostComment = document.getElementsByClassName("postComment")[0],
         oWebsite = document.getElementsByClassName("comment-website")[0];
 
     oSubmit.addEventListener("click", postCommentHandler, false);
+
+    [...oQuote].forEach((ele, index) => ele.addEventListener("click", quoteHandler(index), false));
+let str = "";
+    function quoteHandler(index) {
+        return function () {
+            const quoteCommnet = oComment[index],
+                quoteName = quoteCommnet.children[0].children[0].innerHTML,
+                quoteContent = quoteCommnet.children[1].innerHTML.replace(/<blockquote>.*<\/blockquote><br>/, "").replace(/<br.*>/, "\n"),
+                quoteHtml = `<blockquote>\n<pre>引用${quoteName}的评论</pre>\n${quoteContent}\n</blockquote>\n`;
+                const reg = /<blockquote>\.*<\/blockquote>/m;
+                window.str = quoteContent;
+                console.log(quoteContent)
+                console.log(quoteContent.replace(reg, ""));
+            oContent.value = quoteHtml;
+            const pos = oContent.value.length;
+            oContent.focus();
+            oContent.setSelectionRange(pos, pos);
+            oMain.scrollTop = getOffset(oPostComment).top;
+        };
+    };
 
     function postCommentHandler() {
         const id = this.dataset.id,
@@ -35,7 +59,7 @@ window.onload = () => {
             success(data) {
                 data = JSON.parse(data);
                 if(data.msg === "success") {
-                      window.location.reload();
+                    window.location.reload();
                 }else if(data.msg === "fail") {
                     alert("评论失败。");
                 };

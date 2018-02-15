@@ -84,7 +84,7 @@ router.post("/:id/comment", (req, res) => {
             article_id = req.params.id,
             {name, email, website, content} = req.body,
             href = website ? (website.startsWith("http://") ? website : `http://${website}`) : "#",
-            comment = await Comment.create({href, name, time: getTimeString(date), content: content.replace(/\n/g, "<br >"), article_id});
+            comment = await Comment.create({href, name, time: getTimeString(date), content: content.replace(/\n/g, "<br />"), article_id});
         res.json({
             msg: comment ? "success" : "fail"
         });
