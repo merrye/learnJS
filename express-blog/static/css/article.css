@@ -77,7 +77,8 @@ ul, ol {
     color: rgba(0, 0, 0, .6);
 }
 .nav > a {
-    width: 200px;
+    width: 45%;
+    max-width: 12.5em;
     height: 50px;
     display: inline-block;
     color: rgba(0, 0, 0, .6);
@@ -150,7 +151,7 @@ ul, ol {
     border-color: rgba(0, 0, 0, .6);
 }
 .comments .postComment > p > button {  
-    padding: 5px 10px;
+    padding: .4em .8em;
     border-radius: 5px;
     color: rgba(0, 0, 0, .6);
     border: 1px solid rgba(0, 0, 0, .6);
