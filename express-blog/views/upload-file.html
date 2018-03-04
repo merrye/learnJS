@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Upload File</title>
+</head>
+<body>
+    <input type="file" id="file">
+    <button id="btn">Click</button>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        const reg = /\.(dae|kml)$/g,
+            oFile = document.getElementById("file"),
+            oBtn = document.getElementById("btn");
+
+        oBtn.addEventListener("click", function () {
+            const fr = new FileReader(),
+                file = oFile.files[0],
+                fileName = file.name;
+                if (reg.test(fileName)) {
+                    fr.onloadend = function (e) {
+                        const fileData = e.target.result;
+                        $.ajax({
+                            type: "post",
+                            url: "/upload-file",
+                            data: {
+                                fileData,
+                                fileName
+                            }
+                        });
+                    };
+                    fr.readAsDataURL(file);
+                };
+        }, false);
+    </script>
+</body>
+</html>

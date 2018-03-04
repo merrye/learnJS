@@ -56,7 +56,7 @@ async function getSearchList(model) {
 async function getUploadImageData(req) {
     const imgLinks = [],
         form = new formidable.IncomingForm();
-    return await new Promise((resolve, reject) => {
+    return await new Promise((r esolve, reject) => {
         form.parse(req, function (err, fields, files) {
             if(err) {
                 reject(err);
@@ -67,16 +67,17 @@ async function getUploadImageData(req) {
             };
             objForEach(files, (name, file) => {
                 const tempFilePath = file.path,
+                    fileType = file.name.slice(file.name.lastIndexOf(".")),
                     date = new Date(),
-                    fileName = date.getTime(),
-                    fullFileName = path.join(storePath, fileName),
+                    fileName = date.getTime().toString(),
+                    fullFileName = path.join(storePath, fileName) + fileType,
                     readStream = fs.createReadStream(tempFilePath),
                     writeStream = fs.createWriteStream(fullFileName);
                 readStream.pipe(writeStream);
                 readStream.on("end", function() {
                     fs.unlinkSync(tempFilePath);
                 });
-                imgLinks.push(`/images/upload/articles-image/${date.toLocaleDateString}/${fileName}`);
+                imgLinks.push(fullFileName.replace(/^.+static\\/, ""));
             });
             resolve({
                 errno: 0,
