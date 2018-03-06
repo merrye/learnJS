@@ -3,7 +3,10 @@ const path = require("path"),
     storage = multer.diskStorage({
         destination: path.join(process.cwd(), "static/upload"),
         filename (req, file, callback) {
-            console.log(file);
+            let filename = (file.originalname).split("."),
+            name = filename[filename.length - 1];
+            // 重命名
+            callback(null, `${Date.now()}.${name}`);
         }
     });
 

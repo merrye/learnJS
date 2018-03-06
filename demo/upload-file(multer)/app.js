@@ -1,7 +1,7 @@
 const fs = require("fs"),
     express = require("express"),
     bodyParser = require("body-parser"),
-    upload = require("./module/upload"),
+    multer = require("./module/multer"),
     app = express();
     
 app.set("views", ".\\views");                                                       
@@ -20,14 +20,12 @@ app.get("/upload", (req, res) => {
     res.render("upload");
 });
 
-app.post("/upload", upload.single("merry"), (req, res) => {
+app.post("/upload", multer.single("merry"), (req, res) => {
     console.log(req.files);
     console.log(req.file);
-    // const fileData = req.body.fileData,
-    //     fileName = req.body.fileName;
-    // res.json({
-    //     msg: "success"
-    // });
+    res.json({
+        result: "ok"
+    });
 });
 
 app.listen(3000, () => console.log("app start at port 3000..."));
