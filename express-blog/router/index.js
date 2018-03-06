@@ -84,20 +84,21 @@ const fs = require("fs"),
     path = require("path");
 
 router.post("/upload-file", (req, res) => {
-    
+    // console.log(req.body.fileData);
     const {fileData, fileName} = req.body;
         storePath = path.resolve(process.cwd(), "static/file");
     if(!fs.existsSync(storePath)) {
         fs.mkdirSync(storePath);
     };
-    console.log(fileData, fileName);
-    const readStream = fs.createReadStream(fileName),
-        writeStream = fs.createWriteStream(`./static/file/${fileName}`);
+    // console.log(fileData);
+    res.json(fileData);
+    // const readStream = fs.createReadStream(fileName),
+    //     writeStream = fs.createWriteStream(`./static/file/${fileName}`);
 
-    readStream.pipe(writeStream);
-    readStream.on("end", () => {
-        fs.unlinkSync(path.join(storePath, fileName));
-    });
+    // readStream.pipe(writeStream);
+    // readStream.on("end", () => {
+    //     fs.unlinkSync(path.join(storePath, fileName));
+    // });
 });
 
 router.use("/tag", require("./tag"));
