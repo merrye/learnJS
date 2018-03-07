@@ -3,14 +3,12 @@ const fs = require("fs"),
     bodyParser = require("body-parser"),
     multer = require("./module/multer"),
     app = express();
-    
+
 app.set("views", ".\\views");                                                       
 
 app.engine("html", require('ejs').renderFile);
 
 app.set("view engine", "html");
-
-app.use(express.static(".\\static"));
 
 app.use(bodyParser.json({limit: "50mb"}));
 
@@ -21,8 +19,6 @@ app.get("/upload", (req, res) => {
 });
 
 app.post("/upload", multer.single("merry"), (req, res) => {
-    console.log(req.files);
-    console.log(req.file);
     res.json({
         result: "ok"
     });
