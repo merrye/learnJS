@@ -7,9 +7,29 @@
     <title>Upload File</title>
 </head>
 <body>
-    <form action="/upload" enctype="multipart/form-data" method="post">
-        <input type="file" name="file" multiple="multiple" />
-        <input type="submit">
-    </form>
+    <!-- <form action="/upload" enctype="multipart/form-data" method="post"> -->
+        <input type="file" name="merry" multiple="multiple" />
+        <button id="btn">Click to upload file</button>
+        <!-- <input type="submit"> -->
+    <!-- </form> -->
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        const oBtn = document.getElementById("btn");
+        oBtn.addEventListener("click", clickHandler, false);
+
+        function clickHandler () {
+            $.ajax({
+                type: "post",
+                url: "/upload",
+                contentType: "multipart/form-data",
+                data: {
+
+                },
+                success (data) {
+                    console.log(data);
+                }
+            });
+        };
+    </script>
 </body>
 </html>
