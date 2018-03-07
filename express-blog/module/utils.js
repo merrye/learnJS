@@ -56,7 +56,7 @@ async function getSearchList(model) {
 async function getUploadImageData(req) {
     const imgLinks = [],
         form = new formidable.IncomingForm();
-    return await new Promise((r esolve, reject) => {
+    return await new Promise((resolve, reject) => {
         form.parse(req, function (err, fields, files) {
             if(err) {
                 reject(err);
