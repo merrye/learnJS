@@ -9,30 +9,45 @@
 <body>
     <input type="file" id="file">
     <button id="btn">Click</button>
-    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/js/merry.js"></script>
+    <!-- <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script> -->
     <script>
-        const reg = /\.(dae|kml)$/g,
-            oFile = document.getElementById("file"),
+        const oFile = document.getElementById("file"),
             oBtn = document.getElementById("btn");
 
         oBtn.addEventListener("click", function () {
             const fr = new FileReader(),
                 file = oFile.files[0],
                 fileName = file.name;
-                if (reg.test(fileName)) {
-                    fr.onloadend = function (e) {
-                        const fileData = e.target.result;
-                        $.ajax({
-                            type: "post",
-                            url: "/upload-file",
-                            data: {
-                                fileData,
-                                fileName
-                            }
-                        });
-                    };
-                    fr.readAsDataURL(file);
+                console.log(file);
+                fr.onloadend = function (e) {
+                    const fileData = e.target.result;
+                /*
+                    // $.ajax({
+                    //     type: "post",
+                    //     url: "/upload-file",
+                    //     data: {
+                    //         fileData,
+                    //         fileName
+                    //     },
+                    //     dataType: "arraybuffer"
+                    // });
+                */
+                    ajax({
+                        type: "post",
+                        url: "/upload-file",
+                        data: {
+                            fileData,
+                            fileName
+                        },
+                        dataType: "arraybuffer",
+                        success (data) {
+                            console.log(data);
+                        }
+                    });
                 };
+                // fr.readAsDataURL(file);
+                fr.readAsArrayBuffer(file);
         }, false);
     </script>
 </body>

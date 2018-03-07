@@ -115,8 +115,9 @@ function ajax({
     type = "GET",
     isAsync = true,
     data,
+    dataType,
     success,
-    error
+    error,
 }) {
     const xhr = new XMLHttpRequest();
     
@@ -138,6 +139,9 @@ function ajax({
     };
 
     xhr.open(type, url, isAsync);
+    if (dataType === "arraybuffer") {
+        xhr.responseType = dataType;
+    };
     xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
     xhr.send(data);
 
@@ -161,10 +165,16 @@ function ajax({
     };
 
     function handleStateChange() {
-        const {readyState, status, responseText, statusText} = xhr;
+        const {readyState, status, statusText} = xhr;
+        let result;
+        if (dataType === "arraybuffer") {
+            result = xhr.response;
+        } else {
+            result = xhr.responseText;
+        };
         if(readyState === XMLHttpRequest.DONE) {
             (status >= 200 && status < 300) || status === 300
-                ? success(responseText)
+                ? success(result)
                 : (error ? error(statusText) : console.log(statusText));
         };
     };
