@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Uncontrolled Components</title>
+    <script src="build/react.js"></script>
+    <script src="build/react-dom.js"></script>
+	<script src="build/browser.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class NameForm extends React.Component {
+            constructor (props) {
+                super(props);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+            handleSubmit (ev) {
+                alert('A name was submitted: ' + this.input.value);
+                ev.preventDefault();
+            }
+            render () {
+                return (
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            Name:
+                            <input type="text" ref={(input) => this.input = input}/>
+                        </label>
+                        <input type="submit" value="Submit"/>
+                    </form>
+                );
+            }
+        }
+        ReactDOM.render(<NameForm />, document.getElementById("root"));
+    </script>
+</body>

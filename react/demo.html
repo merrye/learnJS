@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+	<script src="build/react.js"></script>
+	<script src="build/react-dom.js"></script>
+	<script src="build/browser.min.js"></script>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			user-select: none;
+		}
+		ul {
+			padding: 50px;
+		}
+		ul > li {
+			padding: 10px 0;
+			float: left;
+			width: 40px;
+			height: 20px;
+			margin: 5px;
+			border-radius: 100%;
+			text-align: center;
+			line-height: 20px;
+			list-style: none;
+			cursor: pointer;
+			border: 1px solid #CCC;
+		}
+		ul > li:hover {
+			border-color: aqua;
+		}
+	</style>
+</head>
+<body>
+	<div id="root"></div>
+	<!-- <script type="text/babel">
+		class Item extends React.Component {
+			constructor (props) {
+				super(props);
+				this.handlerChange = this.handlerChange.bind(this);
+			}
+			handlerChange () {
+				let value = this.props.value,
+					name = this.props.name;
+				value = !value;
+				console.log(name, value);
+				this.props.onStateChange(name, value);
+			}
+			render () {
+				const value = this.props.value;
+				return (
+					<div>
+						<button  onClick={this.handlerChange}>Click</button>
+						<p style={{display: value ? "block" : "none"}}>Test</p>
+					</div>
+				);
+			}
+		}
+		class Demo extends React.Component {
+		  	constructor(props) {
+		    	super(props);
+		    	this.state = {
+					item1: false,
+					item2: false,
+					item3: false,
+		    	}
+				this.handleChange = this.handleChange.bind(this);
+		  	}
+		 	handleChange (key, value) {
+				this.setState({[key]: value});
+		 	}
+			render() {
+			    return (
+			        <div>
+			         	<Item value={this.state.item1} name="item1" onStateChange={this.handleChange} />
+			         	<Item value={this.state.item2} name="item2" onStateChange={this.handleChange} />
+			         	<Item value={this.state.item3} name="item3" onStateChange={this.handleChange} />
+			        </div>
+			    );
+		    }
+		}
+		ReactDOM.render(<div><h1>text</h1><Demo /></div>, document.getElementById('root'));
+	</script> -->
+	<!-- <script type="text/babel">
+		class Item extends React.Component {
+			constructor (props) {
+				super(props);
+				this.handleChange = this.handleChange.bind(this);
+			}
+			handleChange () {
+				let name = this.props.name,
+					value = this.props.value;
+				value = !value;
+				this.props.onStateChange(name, value);
+			}
+			render () {
+				return (
+					<a href="javascript:;" className="nav-link tpl-left-nav-link-list" onClick={this.handleChange}>
+						<i className="iconfont icon-gongnengguanli"></i>
+						<span>{this.props.title}</span>
+						<i className="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+					</a>
+				)
+			}
+		}
+		class Menu extends React.Component {
+			constructor(props) {
+				super(props);
+				this.state = {
+					item1: false,
+					item2: false,
+					item3: false,
+				}
+				this.handleChange = this.handleChange.bind(this);
+			}
+			handleChange (key, value) {
+				this.setState({[key]: value});
+			}
+			render() {
+				const state1 = this.state.item1 ? "block" : "none",
+					state2 = this.state.item2 ? "block" : "none",
+					state3 = this.state.item3 ? "block" : "none";
+				console.log(state1, state2, state3);
+				return (
+					<div className="tpl-left-nav tpl-left-nav-hover">
+						<div className="tpl-left-nav-title">用户中心</div>
+						<div className="tpl-left-nav-list">
+							<ul className="tpl-left-nav-menu">
+								<li className="tpl-left-nav-item">
+									<a to="/" className="nav-link active">
+										<i className="am-icon-home"></i><span>首页</span>
+									</a>
+								</li>
+								<li className="tpl-left-nav-item">
+									<Item name="item1" value={this.state.item1} title="功能选项" onStateChange={this.handleChange} />
+									{/* <a href="javascript:;" className="nav-link tpl-left-nav-link-list">
+										<i className="iconfont icon-gongnengguanli"></i>
+										<span>功能选项</span>
+										<i className="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+									</a> */}
+									<ul className="tpl-left-nav-sub-menu" style={{"display": state1 }}>
+										<li>
+											<a to="/feature/uploadPhoto" className="nav-link active">
+												<i className="am-icon-angle-right"></i>
+												<span>上传照片</span>
+												<i className="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+											</a>
+											<a to="/feature/myProject" className="nav-link active">
+												<i className="am-icon-angle-right"></i>
+												<span>我的项目</span>
+												<i className="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li className="tpl-left-nav-item">
+									<Item name="item2" value={this.state.item2} title="个人信息" onStateChange={this.handleChange} />
+									{/* <a href="javascript:;" className="nav-link tpl-left-nav-link-list">
+										<i className="iconfont icon-iconfontgerenzhongxin"></i>
+										<span>个人信息</span>
+										<i className="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+									</a> */}
+									<ul className="tpl-left-nav-sub-menu" style={{"display": state2 }}>
+										<li>
+											<a to="/info/profile">
+												<i className="am-icon-angle-right"></i>
+												<span>基本信息</span>
+												<i className="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+											</a>
+											<a to="/info/password">
+												<i className="am-icon-angle-right"></i><span>密码修改</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li className="tpl-left-nav-item">
+									<Item name="item3" value={this.state.item3} title="售后服务" onStateChange={this.handleChange} />
+									<ul className="tpl-left-nav-sub-menu" style={{"display": state3 }}>
+										<li>
+											<a to="/service/afterSales">
+												<i className="am-icon-angle-right"></i>
+												<span>售后服务</span>
+												<i className="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>);
+			}
+		}
+		ReactDOM.render(<Menu />, document.getElementById("root"));
+	</script> -->
+	<!-- <script type="text/babel">
+	  	class Span extends React.Component {
+			render () {
+				return (<span>{this.props.name}</span>);
+			}	
+		}
+		class UploadFile extends React.Component {
+			constructor (props) {
+				super(props);
+				this.state = {str: [], date, progress: "上传文件"};
+				this.handleChange = this.handleChange.bind(this);
+			}
+			componentWillMount () {}
+			componentDidMount () {
+
+			}
+			handleChange (ev) {
+				for (let i = 0;i < 10000; i ++) {
+					let progress = i;
+					const oBtn = $("button");
+					oBtn.html(i)
+				};
+			}
+			render () {
+				return (
+					<div>
+						<input type="file" multiple onChange={this.handleChange}/>
+						<div>已选择的文件：{this.state.str}</div>
+						<button ref="button">{this.state.progress}</button>
+						<span>{this.state.date}</span>	
+					</div>
+				);
+			}
+		}
+		ReactDOM.render(<UploadFile />, document.getElementById("root"));
+	</script> -->
+	<!-- <script type="text/babel">
+		class Span extends React.Component {
+			render () {
+				return (<span>{this.props.name}</span>);
+			}	
+		}
+		class UploadFile extends React.Component {
+			constructor (props) {
+				super(props);
+				this.state = {str: [], progress: this.props.progress};
+				this.handleChange = this.handleChange.bind(this);
+				this.handleChanga = this.handleChanga.bind(this);
+			}
+			handleChange (ev) {
+				const btn = this.refs.btn;
+				if (ev.target.files.length) {
+					btn.removeAttribute("disabled");
+					btn.addEventListener("click", this.handleChanga, false)
+				} else {
+					btn.setAttribute("disabled", "disabled");
+				}
+				// ev.target.files.length
+				// 	? btn.removeAttribute("disabled")
+				// 	: btn.setAttribute("disabled", "disabled");
+			}
+			handleChanga () {
+				for (let i = 0;i < 11; i ++) {
+					((i) => {
+						setTimeout(() => {
+							this.props.handleChange(i * 10);
+						}, i * 100);
+					})(i);
+				};
+			}
+			render () {
+				return (
+					<div progress={this.props.progress}>
+						<input type="file" multiple onChange={this.handleChange}/>
+						<div>已选择的文件：{this.state.str}</div>
+						<button disabled ref="btn" onClick={this.handleChanga}>{this.props.progress}</button>
+						<span>{this.state.date}</span>
+					</div>
+				);
+			}
+		}
+		class Clock extends React.Component {
+			constructor (props) {
+				super(props);
+				this.state = {progress: "开始上传"};
+				this.handleChange = this.handleChange.bind(this);
+			}
+			handleChange (progress) {
+				this.setState({progress: `上传：${progress}%`});
+			}
+			render () {
+				return (
+					<div>
+						<UploadFile progress={this.state.progress}  handleChange={this.handleChange} />
+						time is <span>{new Date().toLocaleTimeString()}</span>
+					</div>
+				);
+			}
+		}
+		function tick () {
+			ReactDOM.render(<Clock />, document.getElementById("root"));
+		};
+		setInterval(tick, 1000);
+		ReactDOM.render(<Clock />, document.getElementById("root"));
+	</script> -->
+	<!-- <script type="text/babel">
+		class Demo extends React.Component {
+			constructor (props) {
+				super(props);
+				this.state = {
+					download_url: "C:\\Users\\ypc\\Desktop\\react\\build\\react.js",
+					a_url: "C:\\Users\\ypc\\Desktop\\react\\build\\react.js",
+					b_url: "C:\\Users\\ypc\\Desktop\\react\\build\\react-dom.js"
+				};
+				this.changeDownload = this.changeDownload.bind(this);
+			}
+			changeDownload (ev) {
+				this.setState({download_url: ev.target.value});
+			}
+			render () {
+				return (
+					<div>
+						<select value={this.state.download_url} onChange={this.changeDownload}>
+							<option value={this.state.a_url}>FBX</option>
+							<option value={this.state.b_url}>3MX</option>
+						</select>
+						<a href={this.state.download_url} download="">Download</a>
+					</div>
+				);
+			}
+		}
+		ReactDOM.render(<Demo />, document.getElementById("root"));
+	</script> -->
+	<!-- <script type="text/babel">
+		class Item extends React.Component {
+			constructor (props) {
+				super(props);
+				this.handleChange = this.handleChange.bind(this);
+			}
+			handleChange () {
+				let {name, value} = this.props;
+				console.log(this.props);
+				value = !value;
+				name && this.props.onStateChange(name, value);
+			}
+			render () {
+				let {to, name, title, value} = this.props,
+					classNameA = "nav-link tpl-left-nav-link-list " + (value ? "active" : ""),
+					classNameI = "am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right " + (value ? "tpl-left-nav-more-ico-rotate" : "");
+				classNameI = name ? classNameI : "";
+
+				return (
+					<a className={classNameA} onClick={this.handleChange}>
+						<i className="iconfont icon-gongnengguanli"></i>
+						<span>{title}</span>
+						<i className={classNameI}></i>
+					</a>
+				)
+			}
+		}
+		class SubItem extends React.Component {
+			constructor (props) {
+				super(props);
+			}
+			render () {
+				return (
+					<a className="nav-link">
+						<i className="am-icon-angle-right"></i><span>{this.props.title}</span>
+					</a>);
+			}
+		}
+		class UserManage extends React.Component {
+			render () {
+				const value = this.props.value,
+					state = value ? "block" : "none";
+				return (
+					<li className="tpl-left-nav-item">
+						<Item name="item3" value={value} title="用户管理"  onStateChange={this.props.handleChange} />
+						<ul className="tpl-left-nav-sub-menu" style={{"display": state}}>
+							<li>
+								<SubItem title="用户列表" />
+								<SubItem title="创建用户" />
+							</li>
+						</ul>
+					</li>
+				);
+			}
+		}
+		class IndexPage extends React.Component {
+			constructor (props) {
+				super(props);
+				this.state = {
+					item0: false,
+					item1: false,
+					item2: false,
+					item3: false,
+					item4: false,
+					usermanage: false
+				}
+        		this.handleChange = this.handleChange.bind(this);
+			}
+			handleChange (key, value) {
+				this.setState({[key]: value});
+			}
+			componentWillMount () {
+				const _this = this,
+					value = _this.state.item3;
+				this.setState({
+					// usermanage: <UserManage value={value} handleChange={_this.handleChange} />
+					usermanage: true
+				});
+			}
+			componentDidMount () {
+				this.setState({
+					// usermanage: <UserManage value={value} handleChange={_this.handleChange} />
+					usermanage: false
+				});
+			}
+			render () {
+				const {item0, item1, item2, item3, usermanage} = this.state,
+					state1 = item1 ? "block" : "none",
+					state2 = item2 ? "block" : "none",
+					state3 = item3 ? "block" : "none",
+					display = usermanage ? "block" : "none";
+				return (
+					<ul className="tpl-left-nav-menu">
+						<li className="tpl-left-nav-item">
+							<Item value={item0} title="首页" />
+						</li>
+						<li className="tpl-left-nav-item">
+							<Item name="item1" value={item1} title="功能选项" onStateChange={this.handleChange} />
+							<ul className="tpl-left-nav-sub-menu" style={{"display": state1}}>
+								<li>
+									<SubItem link="/feature/createProject" title="创建项目" />
+									<SubItem link="/feature/myProject" title="我的项目" />
+								</li>
+							</ul>
+						</li>
+						<li className="tpl-left-nav-item">
+							<Item name="item2" value={item2} title="个人信息" onStateChange={this.handleChange} />
+							<ul className="tpl-left-nav-sub-menu" style={{"display": state2}}>
+								<li>
+									<SubItem title="基本信息" />
+									<SubItem title="密码修改" />
+								</li>
+							</ul>
+						</li>
+						<li className="tpl-left-nav-item" style={{display: display}}>
+							<Item name="item3" value={item3} title="用户管理"  onStateChange={this.handleChange} />
+							<ul className="tpl-left-nav-sub-menu" style={{"display": state3}}>
+								<li>
+									<SubItem title="用户列表" />
+									<SubItem title="创建用户" />
+								</li>
+							</ul>
+						</li>
+					</ul>
+				);
+			}
+		}
+		class Demo extends React.Component {
+			constructor (props) {
+				super(props);
+				this.clickHandler = this.clickHandler.bind(this);
+			}
+			clickHandler () {
+				console.log(this.demo);
+			}
+			render () {
+				return (
+					<div ref={(el) => this.demo = el}>
+						<h1>Demo.</h1>
+						<p onClick={this.clickHandler}>Click to add SubItem</p>
+					</div>
+				);
+			}
+		};
+		ReactDOM.render(<Demo />, document.getElementById("root"));
+	</script> -->
+	<!-- <script type="text/babel">
+		class UpdateItem extends React.Component {
+			constructor (props) {
+				super(props);
+				this.clickHandler = this.clickHandler.bind(this);
+			}
+			clickHandler () {
+				this.props.delHandler();
+			}
+			render () {
+				return (
+					<div style={{width: "200px", height: "300px", border: "1px solid #000"}} ref={(el) => this.subitem = el}>
+						<h1>This is SubItem.</h1>
+						<p>id: {this.props.data.id}</p>
+						<p>name: {this.props.data.name}</p>
+						<button onClick={this.clickHandler}>Click to Delete it.</button>
+					</div>
+				);
+			}
+		}
+		class Item extends React.Component {
+			constructor (props) {
+				super(props);
+				this.clickHandler = this.clickHandler.bind(this);
+			}
+			clickHandler () {
+				this.props.updateHandler(this.props.data);
+			}
+			render () {
+				return (
+					<li>{this.props.data.name}<button onClick={this.clickHandler}>update</button></li>
+				);
+			}
+		}
+		class Demo extends React.Component {
+			constructor (props) {
+				super(props);
+				this.state = {child: null, children: null, isSendEmail: true};
+				this.delHandler = this.delHandler.bind(this);
+				this.updateHandler = this.updateHandler.bind(this);
+				this.changeHandler = this.changeHandler.bind(this);
+			}
+			delHandler () {
+				this.setState({child: null});
+			}
+			updateHandler (data) {
+				this.setState({child: <UpdateItem data={data} delHandler={this.delHandler} />});
+			}
+			componentDidMount () {
+				// const data = [
+				// 	{id: 0, name: "item0"},
+				// 	{id: 1, name: "item1"},
+				// 	{id: 2, name: "item2"},
+				// 	{id: 3, name: "item3"},
+				// 	{id: 4, name: "item4"},
+				// ], children = [];
+				// data.forEach((element, index) => {
+				// 	children.push(<Item key={index} data={element} updateHandler={this.updateHandler} />);
+				// });
+				// this.setState({children});
+			}
+			changeHandler () {
+				this.
+			}
+			render () {
+				return (<div>
+						<input type="radio" onChange={this.changeHandler} />
+						<input type="radio" onChange={this.changeHandler} />
+					</div>);
+				// return (
+				// 	<div ref={(el) => this.demo = el}>
+				// 		<h1>Demo List</h1>
+				// 		<ul>{this.state.children}</ul>
+				// 		{this.state.child}
+				// 	</div>
+				// );
+			}
+		};
+		ReactDOM.render(<Demo />, document.getElementById("root"));
+	</script> -->
+	<!-- <script type="text/babel">
+		class Item extends React.Component {
+			constructor (props) {
+				super(props);
+				this.clickHandler = this.clickHandler.bind(this);
+			}
+			clickHandler () {
+				this.props.updateList(Number(this.item.innerText));
+			}
+			render () {
+				return (
+					<li onClick={this.clickHandler} ref={ele => this.item = ele}>{this.props.name}</li>
+				);
+			}
+		}
+		class Demo extends React.Component {
+			constructor (props) {
+				super(props);
+				this.state = {list: [], pageIndex: 1, sum: 7};
+				this.updateList = this.updateList.bind(this);
+			}
+			updateList (pageIndex) {
+				let list = [], {sum} = this.state, pageCount = sum > 5 ? 5 : sum, minusIndex = Math.floor(pageCount / 2);
+				if (sum > 5) {
+					if (pageIndex <= minusIndex) {
+						pageIndex = 1;
+					} else if (sum - pageIndex <= minusIndex) {
+						pageIndex = sum - pageCount + 1;
+					} else {
+						pageIndex = pageIndex - minusIndex;
+					};
+				} else {
+					pageIndex = 1;
+				};
+				for (let i = 0; i < pageCount; i ++) {
+					list.push(<Item key={i} name={i + pageIndex} updateList={this.updateList} />);
+				};
+				this.setState({list});
+			}
+			componentWillMount () {
+				let list = [], {sum, pageIndex} = this.state, pageCount = sum > 5 ? 5 : sum; 
+				for (let i = 0; i < pageCount; i ++) {
+					list.push(<Item key={i} name={i + pageIndex} updateList={this.updateList} />);
+				};
+				this.setState({list});
+			}
+			render () {
+				return (
+					<ul>
+						<li>&lt;&lt;</li>
+						{this.state.list}
+						<li>&gt;&gt;</li>
+					</ul>
+				);
+			}
+		}
+		ReactDOM.render(<Demo />, document.getElementById("root"));
+	</script> -->
+	<script type="text/babel">
+	class PageListItem extends React.Component {
+
+		render () {
+
+		}
+	}
+	class PageList extends React.Component {
+		constructor (props) {
+			super(props);
+			const {Pages, option, pageNumber, updateDataList} = props;
+			this.state = {list: [], Pages, option, pageNumber, updateDataList};
+			console.log(this.props);
+			this.clickHandler = this.clickHandler.bind(this);
+		}
+		clickHandler (ev) {
+			
+		}
+		componentDidMount () {
+			const list = [],
+				{Pages, option, pageNumber, updateDataList} = this.props,
+				pageCount = Pages <= 5 ? Pages : 5, minusIndex = Math.floor(pageCount / 2);
+			let pageIndex = pageNumber;
+			if (Pages > 5) {
+				if (pageIndex <= minusIndex) {
+					pageIndex = 1;
+				} else if (Pages - pageIndex <= minusIndex) {
+					pageIndex = Pages - pageCount + 1;
+				} else {
+					pageIndex = pageIndex - minusIndex;
+				};
+			} else {
+				pageIndex = 1;
+			};
+			for (let i = 0; i < pageCount; i ++) {
+				const nowPageNumber = i + pageIndex;
+				list.push(<li key={nowPageNumber} className={nowPageNumber === pageNumber ? "am-active" : ""}><a onClick={updateDataList(nowPageNumber, option)}>{nowPageNumber}</a></li>);
+			};
+			this.setState({list});
+		}
+		render () {
+			const {list, Pages, option, pageNumber, updateDataList} = this.state;
+			console.log(this.props);
+			return (
+				<ul id="page-list" className="am-pagination tpl-pagination">
+					<li><a onClick={updateDataList(Math.max(pageNumber - 1, 1), {option})}>«</a></li>
+					{list}
+					{/*<PageListItem option={this.props.option} pageNumber={this.props.pageNumber} option={this.props.option} />*/}
+					<li><a onClick={updateDataList(Math.min(pageNumber + 1, Pages), {option})}>»</a></li>
+				</ul>
+			);
+		}
+	}
+	class ProjectPage extends React.Component {
+			constructor(props) {
+				super(props);
+				this.state = { option: "", pageNumber: 1, Pages: 0, pageList: []};
+				this.updateDataList = this.updateDataList.bind(this);
+			}
+			updateDataList (pageNumber, select) {
+				return () => {
+					const _this = this, reg = /\d+/g, {userlevel, userName} = _this.state, children = [], pageList = [];
+					let data  = {Pages: 40};
+					const Pages = data.Pages, pageCount = Pages > 5 ? 5 : Pages;
+					_this.setState({
+						Pages, pageNumber, 
+						pageList: <PageList Pages={Pages} option={select} pageNumber={pageNumber} updateDataList={this.updateDataList} />
+					});
+				}
+			}
+			componentWillMount () {
+				const _this = this, reg = /\d+/g, {pageNumber, option} = _this.state;
+				let data  = {Pages: 40};
+				const Pages = data.Pages;
+				_this.setState({
+					Pages, 
+					pageList: <PageList Pages={Pages} option={option} pageNumber={pageNumber} updateDataList={this.updateDataList} />
+				});
+			}
+			render(){
+				const {pageList} = this.state;
+				return (<div id="content-page">{pageList}</div>);
+			}
+		}
+		ReactDOM.render(<ProjectPage />, document.getElementById("root"));
+	</script>
+</body>
+</html>
