@@ -11,30 +11,99 @@
 </head>
 <body>
     <div id='root'></div>
-    <script type='text/babel'>
-        const ThemeContext = React.createContext('light');
-        class App extends React.Component {
-            render () {
-                return (
-                    <ThemeContext.Provider value="drak">
-                        <Toolbar />
-                    </ThemeContext.Provider>
-                );
-            }
-        }
+    <!-- <script type='text/babel'>
+        const themes = {
+                light: {
+                    foreground: "#FFFFFF",
+                    background: "#222222"
+                },
+                dark: {
+                    foreground: '#000000',
+                    background: '#eeeeee'
+                }
+            },
+            ThemeContext = React.createContext(themes.dark);
+        
         function Toolbar (props) {
             return (
-                <div><ThemedButton /></div>
+                <ThemedButton onClick={props.changeTheme}>
+                    Change Theme
+                </ThemedButton>
             );
         }
         function ThemedButton (props) {
             return (
                 <ThemeContext.Consumer>
-                    {theme => <button {...props} theme={theme} />}    
+                    {theme => <button {...props} style={{ backgroundColor: theme.background }} />}    
                 </ThemeContext.Consumer>
             );
         };
+        class App extends React.Component {
+            constructor (props) {
+                super(props);
+                this.state = {
+                    theme: themes.light
+                };
+                this.toggleTheme = () => {
+                    this.setState(state => ({
+                        theme:
+                            state.theme === themes.dark
+                                ? themes.light
+                                : themes.dark
+                    }));
+                };
+            }
+            render () {
+                return (                       
+                    <ThemeContext.Provider value={this.state.theme}>
+                        <Toolbar changeTheme={this.toggleTheme} />
+                    </ThemeContext.Provider>
+                );
+            }
+        }
         ReactDOM.render(<App />, document.getElementById('root'));
+    </script> -->
+    <script type="text/babel">
+        const ThemeContext = React.createContext("light"),
+            UserContext = React.createContext();
+
+        class App extends React.Component {
+            render () {
+                const {signedInUser, theme} = this.props;
+                console.log(signedInUser, theme)
+                return (
+                    <ThemeContext.Provider value={theme}>
+                        <UserContext.Provider value={signedInUser}>
+                            <Layout />
+                        </UserContext.Provider>
+                    </ThemeContext.Provider>
+                );
+            }
+        }
+        function Layout (props) {
+            return (
+                <div>
+                    <Context />    
+                </div>
+            );
+        };
+        function Context (props) {
+            return (
+                <ThemeContext.Consumer>
+                    {theme => (
+                        <UserContext.Consumer>
+                            {user => (
+                                <ProfilePage user={user} theme={theme} />
+                            )}
+                        </UserContext.Consumer>
+                    )}
+                </ThemeContext.Consumer>
+            );
+        };
+        function ProfilePage (props) {
+            return <div {...props}>{props.user}</div>
+        };
+        ReactDOM.render(<App theme="light" signedInUser="Merry" />, document.getElementById("root"));
     </script>
 </body>
 </html>

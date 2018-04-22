@@ -1,2 +1,5 @@
 Explicitly  明确地
 subscribe   订阅
+Portals     门户
+gracefully  优雅
+widget      小部件
