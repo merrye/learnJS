@@ -9,3 +9,5 @@ straightforward 直截了当
 excel       高强
 concerned   关心
 contract    名词：合同, 收缩, 合约 动词： 承包, 缩, 感染 形容词：简约的
+swap        交换, 掉换, 互换
+isolate     隔离, 孤立, 离析
