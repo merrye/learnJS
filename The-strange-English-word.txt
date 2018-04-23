@@ -3,3 +3,9 @@ subscribe   订阅
 Portals     门户
 gracefully  优雅
 widget      小部件
+emerges     出现
+compositional   成分
+straightforward 直截了当
+excel       高强
+concerned   关心
+contract    名词：合同, 收缩, 合约 动词： 承包, 缩, 感染 形容词：简约的

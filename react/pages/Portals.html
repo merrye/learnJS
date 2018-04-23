@@ -11,10 +11,10 @@
     <style>
         *{ margin: 0; padding: 0;}
         #app-root {
-        height: 10em;
-        width: 10em;
-        background: lightblue;
-        overflow: hidden;
+            height: 10em;
+            width: 10em;
+            background: lightblue;
+            overflow: hidden;
         }
 
         #modal-root {
@@ -54,9 +54,9 @@
             }
             render () {
                 return ReactDOM.createPortal(
-                        this.props.children,
-                        this.el
-                    );
+                    this.props.children,
+                    this.el
+                );
             }
         }
         class Parent extends React.Component {
