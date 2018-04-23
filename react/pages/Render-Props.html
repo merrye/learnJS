@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>React Document</title>
+    <script crossorigin src='https://unpkg.com/react@16/umd/react.development.js'></script>
+    <script crossorigin src='https://unpkg.com/react-dom@16/umd/react-dom.development.js'></script>
+    <script src='../build/browser.min.js'></script>
+</head>
+<body>
+    <div id='root'></div>
+    <script type='text/babel'>
+        class Cat extends React.Component {
+            render () {
+                const mouse = this.props.mouse;
+                return (
+                    <img 
+                        src="https://www.argospetinsurance.co.uk/assets/uploads/2017/12/cat-pet-animal-domestic-104827.jpeg"
+                        style={{position: "absolute", left: mouse.x, top: mouse.y}} />
+                );
+            }
+        }
+        class Mouse extends React.Component {
+            constructor (props) {
+                super(props);
+                this.state = {x: 0, y: 0};
+                this.mouseHandler = this.mouseHandler.bind(this);
+            }
+            mouseHandler (ev) {
+                this.setState({x: ev.clientX, y: ev.clientY});
+            }
+            render () {
+                return (
+                    <div style={{height: "100%"}} onMouseMove={this.mouseHandler}>
+                        {this.props.render(this.state) }
+                    </div>
+                );
+            }
+        }
+        class MouseTracker extends React.Component {
+            render () {
+                return (
+                    <div>
+                        <h1>Move the mouse around!</h1>
+                        <Mouse render={mouse => (
+                            <Cat mouse={mouse} />
+                        )} />
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<MouseTracker />, document.getElementById('root'));
+    </script>
+</body>
+</html>

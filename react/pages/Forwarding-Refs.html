@@ -12,8 +12,15 @@
 <body>
     <div id='root'></div>
     <script type='text/babel'>
-        
-        ReactDOM.render(<App />, document.getElementById('root'));
+        const FancyButton = React.forwardRef((props, ref) => (
+            <button ref={ref} className="FancyButton">
+                {props.children}
+            </button>
+        )),
+        ref = React.createRef();
+        ReactDOM.render(
+            <FancyButton ref={ref}>Click me!</FancyButton>,
+            document.getElementById('root'));
     </script>
 </body>
 </html>
