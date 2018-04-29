@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+    <title>React Document</title>
+</head>
+<body>
+    <div id='root'></div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script crossorigin src='https://unpkg.com/react@16/umd/react.development.js'></script>
+    <script crossorigin src='https://unpkg.com/react-dom@16/umd/react-dom.development.js'></script>
+    <script src='../build/browser.min.js'></script>
+    <script type='text/babel'>
+        function Example () {
+            return (
+                <Chosen onChange={value => console.log(value)}>
+                    <option>vanilla</option>
+                    <option>chocolate</option>
+                    <option>strawberry</option>
+                </Chosen>
+            );
+        };
+        class Chosen extends React.Component {
+            componentDidMount () {
+                this.$el = $(this.el);
+                // this.$el.chosen();
+            }
+            componentWillUnmount () {
+                // this.$el.chosen("destroy");
+            }
+            render () {
+                return (
+                    <div>
+                        <select className="Chosen-select" ref={el => this.el = el}>
+                            {this.props.children}
+                        </select>
+                    </div>
+                );
+            }
+        }
+        ReactDOM.render(<Example />, document.getElementById('root'));
+    </script>
+</body>
+</html>
