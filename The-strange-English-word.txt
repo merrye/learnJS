@@ -16,3 +16,4 @@ inconvenient 麻烦
 manner      方式, 态度, 举止
 obtain      获得, 取得
 negate      否定
+concept     概念
