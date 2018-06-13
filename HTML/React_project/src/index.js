@@ -9,7 +9,6 @@ import {createStore} from 'redux';
 
 let store = createStore(reducer);
 
-
 // Render the main component into the dom
 const render = () => ReactDOM.render(<App
         value={store.getState()}

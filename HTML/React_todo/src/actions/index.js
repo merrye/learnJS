@@ -6,12 +6,12 @@ const addTodo = text => ({
         text
     }),
     toggleTodo = id => ({
-        type: 'TOGGLE_TODO',
-        id
+        id,
+        type: 'TOGGLE_TODO'
     }),
     setVisibilityFilter = filter => ({
-        type: 'SET_VISIBILITY_FILTER',
-        filter
+        filter,
+        type: 'SET_VISIBILITY_FILTER'
     });
 
-export {addTodo, toggleTodo, setVisibilityFilter};
+export { addTodo, toggleTodo, setVisibilityFilter };

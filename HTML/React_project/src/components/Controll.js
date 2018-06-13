@@ -9,7 +9,7 @@ class UnControll extends React.Component {
            <form onSubmit={this.handleSubmit}>
             <input type="text" value="UnControll" />
             <button>提交</button>
-           </form> 
+           </form>
         );
     }
 }

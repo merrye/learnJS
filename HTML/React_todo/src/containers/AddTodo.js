@@ -2,7 +2,7 @@ import React from 'react';
 import { addTodo } from '../actions/index';
 import { connect } from 'react-redux';
 
-let AddTodo = ({dispatch}) => {
+let AddTodo = ({ dispatch }) => {
     let node;
     return (
         <div>

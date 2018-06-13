@@ -10,7 +10,7 @@ class Binging extends React.Component {
     render () {
         return (
             <div>
-                <input type="text" onChange={this.} />
+                <input type="text" onChange={this} />
                 <p>{this.state.text}</p>
             </div>
         );
